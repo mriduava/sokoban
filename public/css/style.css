@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face{
+    font-family: 'pacfont';
+    src: url(../fonts/pacfont.TTF);
+}
+
+.home-info{
+    max-width: 400px;
+    /* min-width: 60%; */
+    margin: 25vh auto;
+    padding: 3%;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+
+.game-name{
+    font-family: 'pacfont';
+    font-size: 2.5em;
+    color: #d3a13b;
+    margin: 35px;
+}
+
+.start-btn{
+    color: #d3a13b;
+    background: none;
+    padding: 5px 8px;
+    margin: 10px;
+    border: 1px solid #888;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.start-btn:hover{
+    color: #ffffff;
+    background: #d3a13b;
+}
