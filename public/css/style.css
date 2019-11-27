@@ -10,8 +10,7 @@
 }
 
 .home-info{
-    max-width: 400px;
-    /* min-width: 60%; */
+    max-width: 410px;
     margin: 25vh auto;
     padding: 3%;
     text-align: center;
@@ -39,4 +38,23 @@
 .start-btn:hover{
     color: #ffffff;
     background: #d3a13b;
+}
+
+
+/* BOARD STYLE */
+#grid{
+    width: 410px;
+    height: 410px;
+    border: 1px solid #d3a13b;
+    margin: 0 auto;
+}
+.grid-block{
+    display: flex;
+    flex-wrap: wrap;
+}
+.block{
+    width: 34px;
+    height: 34px;
+    background: #888;
+    border: 1px solid #ddd;
 }
