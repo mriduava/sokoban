@@ -5,16 +5,16 @@ export default{
     name: "app",
     components: {
        Home,
-       Board
+       Board,
     },
     template: `
         <div id="app">
 
-            <div @click="isShow ^= true">
+            <!-- <div @click="isShow ^= true">
                 <Home/>
-            </div>
+            </div> -->
 
-            <div v-show="isShow">
+            <div v-show="isShow = true">
                 <Board/>
             </div>
                      
