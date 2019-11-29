@@ -43,29 +43,39 @@
 
 /* BOARD STYLE */
 #grid{
-    width: 418px;
-    height: 418px;
+    width: 194px;
+    height: 194px;
     border: 1px solid #d3a13b;
     margin: 0 auto;
     position: relative;
 }
+
 .grid-block{
     display: flex;
     flex-wrap: wrap;
 }
+
 .block{
     width: 32px;
     height: 32px;
     border: 1px solid #ddd;
-    position: relative;
 }
 
-.obj{
+.obj,
+.target{
     width: 32px;
     height: 32px;
     border: 1px solid #888;
-    background: #ddd;
     top: 0;
     position: absolute;  
     z-index: +1;  
+}
+
+.obj{
+    background: #ddd;
+    border-radius: 45%;
+}
+
+.target{
+    background: #d3a13b;
 }

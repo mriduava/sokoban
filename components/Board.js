@@ -13,11 +13,13 @@ export default{
               v-bind:key="'block' + i + block.x + block.y"
             />      
             <div class="obj"></div>
+            <div class="target"></div>
           </div>
         </div>`,
     data() {
         return {
-            blocks: []
+            blocks: [],
+            object: []
         }
     },
     computed: {
@@ -26,9 +28,9 @@ export default{
         }
     },
     created() {
-        for(let row=0; row<13; row++){
+        for(let row=0; row<6; row++){
             this.blocks[row] = []
-            for(let col=0; col<13; col++){
+            for(let col=0; col<6; col++){
                 let position = {
                     x: col,
                     y: row
@@ -39,10 +41,20 @@ export default{
     },
     mounted() {
         let unit = 32;
-        let gridWidth = 384;
-        let gridHeight = 384;
+        let gridWidth = 160;
+        let gridHeight = 160;
         let row = 0;
         let col = 0;
+
+        let objPos = {
+            x: 0,
+            y: 0
+        }
+
+        let tarPos = {
+            x: 0,
+            y: 0
+        }
 
         document.addEventListener('keydown', direction);
         let obj = document.querySelector('.obj')
@@ -51,26 +63,57 @@ export default{
             if (e.keyCode == 37) {
                 if (row > 0) {   
                     row -= unit;         
-                    obj.style.left = row + 'px' 
+                    obj.style.left = row + 'px'
+                    objPos.x = row/unit
+                    objPos.y = col/unit
+                    // console.log(row/unit, col/unit);                     
+                    console.log(objPos);                     
                 }           
             }else if (e.keyCode == 38) {
                 if (col > 0) {
                     col -= unit;
                     obj.style.top = col + 'px'
+                    objPos.x = row/unit
+                    objPos.y = col/unit
+                    // console.log(row/unit, col/unit);
+                    console.log(objPos); 
                 }                
             }else if (e.keyCode == 39) {
                 if (row < gridWidth) {
                     row += unit;        
                     obj.style.left = row + 'px'
+                    objPos.x = row/unit
+                    objPos.y = col/unit
+                    // console.log(row/unit, col/unit);
+                    console.log(objPos); 
                 }
             }else if (e.keyCode == 40) {
                 if (col < gridHeight) {
                     col += unit;
                     obj.style.top = col + 'px'
+                    objPos.x = row/unit
+                    objPos.y = col/unit
+                    // console.log(row/unit, col/unit);
+                    console.log(objPos);
                 }        
             } 
         }
+
+        let randNumX = Math.floor(Math.random()*5 +1)
+        let randNumY = Math.floor(Math.random()*5 +1)
+
+        let target = document.querySelector('.target')
+
+        tarPos.x = randNumX
+        tarPos.y = randNumY
+
+        target.style.left = randNumX*unit + 'px'
+        target.style.top = randNumY*unit + 'px'
+
+        // console.log(randNumX, randNumY);
+        console.log(tarPos);
         
-    },
+        
+    }
 
 }
