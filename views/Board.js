@@ -12,8 +12,9 @@ export default{
               v-bind:position="block"
               v-bind:key="'block' + i + block.x + block.y"
             />      
-            <div class="obj"></div>
+            <div class="obj"><i class="far fa-smile"></i></div>
             <div class="target"></div>
+            <!-- <div class="target"></div> -->
           </div>
         </div>`,
     data() {
@@ -28,9 +29,9 @@ export default{
         }
     },
     created() {
-        for(let row=0; row<10; row++){
+        for(let row=0; row<12; row++){
             this.blocks[row] = []
-            for(let col=0; col<10; col++){
+            for(let col=0; col<12; col++){
                 let position = {
                     x: col,
                     y: row
@@ -41,8 +42,8 @@ export default{
     },
     mounted() {
         let unit = 32;
-        let gridWidth = 288;
-        let gridHeight = 288;
+        let gridWidth = 352;
+        let gridHeight = 352;
         let row = 0;
         let col = 0;
 

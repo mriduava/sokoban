@@ -1,4 +1,4 @@
-import App from '../components/App.js'
+import App from '../views/App.js'
 
 new Vue({
     render: h => h(App)

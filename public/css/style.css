@@ -1,50 +1,53 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
+@import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
 
 @font-face{
     font-family: 'pacfont';
     src: url(../fonts/pacfont.TTF);
 }
 
-.home-info{
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#home{
     max-width: 410px;
-    margin: 25vh auto;
-    padding: 3%;
-    text-align: center;
     border: 2px solid #ddd;
-    border-radius: 4px;
+    margin: 10vw auto;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 10px;
+    font-family: sans-serif;
+    padding-bottom: 10px;
+}
+
+.nav> .label, .score{
+    padding: 4px 5px;
+    font-size: 19px;
+    border: 1px solid #ddd;
+    color: #0abde3;
 }
 
 .game-name{
     font-family: 'pacfont';
-    font-size: 2.5em;
+    font-size: 2em;
     color: #d3a13b;
-    margin: 35px;
 }
 
-.start-btn{
-    color: #d3a13b;
-    background: none;
-    padding: 5px 8px;
-    margin: 10px;
-    border: 1px solid #888;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.start-btn:hover{
-    color: #ffffff;
-    background: #d3a13b;
+.board{
+    margin: 15px auto;
 }
 
 
 /* BOARD STYLE */
 #grid{
-    width: 322px;
-    height: 322px;
+    width: 386px;
+    height: 386px;
     border: 1px solid #d3a13b;
     margin: 0 auto;
     position: relative;
@@ -58,21 +61,20 @@
 .block{
     width: 32px;
     height: 32px;
-    border: 1px solid #ddd;
+    border: 1px dotted #ddd;
 }
 
 .obj,
 .target{
     width: 32px;
     height: 32px;
-    border: 1px solid #888;
     position: absolute;  
     z-index: +1;  
 }
 
 .obj{
-    background: #ddd;
-    border-radius: 45%;
+    font-size: 32px;
+    color: rgb(118, 13, 216);
 }
 
 .target{
