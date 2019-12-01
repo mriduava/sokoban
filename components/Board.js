@@ -28,9 +28,9 @@ export default{
         }
     },
     created() {
-        for(let row=0; row<6; row++){
+        for(let row=0; row<10; row++){
             this.blocks[row] = []
-            for(let col=0; col<6; col++){
+            for(let col=0; col<10; col++){
                 let position = {
                     x: col,
                     y: row
@@ -41,10 +41,13 @@ export default{
     },
     mounted() {
         let unit = 32;
-        let gridWidth = 160;
-        let gridHeight = 160;
+        let gridWidth = 288;
+        let gridHeight = 288;
         let row = 0;
         let col = 0;
+
+        let tarRow = 0;
+        let tarCol = 0;
 
         let objPos = {
             x: 0,
@@ -58,6 +61,10 @@ export default{
 
         document.addEventListener('keydown', direction);
         let obj = document.querySelector('.obj')
+        let randNumX = Math.floor(Math.random()*6)
+        let randNumY = Math.floor(Math.random()*6)
+
+        let target = document.querySelector('.target')
 
         function direction(e) {
             if (e.keyCode == 37) {
@@ -66,17 +73,31 @@ export default{
                     obj.style.left = row + 'px'
                     objPos.x = row/unit
                     objPos.y = col/unit
-                    // console.log(row/unit, col/unit);                     
-                    console.log(objPos);                     
-                }           
+
+                    console.log(objPos); 
+                    tarPos.x = tarRow/unit
+                    tarPos.y = tarCol/unit
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        console.log('Hit');
+                        tarRow -= unit
+                        target.style.left = tarRow + 'px'
+                    }                                       
+                }                            
             }else if (e.keyCode == 38) {
                 if (col > 0) {
                     col -= unit;
                     obj.style.top = col + 'px'
                     objPos.x = row/unit
                     objPos.y = col/unit
-                    // console.log(row/unit, col/unit);
+
                     console.log(objPos); 
+                    tarPos.x = tarRow/unit
+                    tarPos.y = tarCol/unit
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        console.log('Hit');
+                        tarCol -= unit
+                        target.style.top = tarCol + 'px'
+                    } 
                 }                
             }else if (e.keyCode == 39) {
                 if (row < gridWidth) {
@@ -84,8 +105,15 @@ export default{
                     obj.style.left = row + 'px'
                     objPos.x = row/unit
                     objPos.y = col/unit
-                    // console.log(row/unit, col/unit);
+ 
                     console.log(objPos); 
+                    tarPos.x = tarRow/unit
+                    tarPos.y = tarCol/unit
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        console.log('Hit');
+                        tarRow += unit
+                        target.style.left = tarRow + 'px'
+                    } 
                 }
             }else if (e.keyCode == 40) {
                 if (col < gridHeight) {
@@ -93,25 +121,30 @@ export default{
                     obj.style.top = col + 'px'
                     objPos.x = row/unit
                     objPos.y = col/unit
-                    // console.log(row/unit, col/unit);
-                    console.log(objPos);
+  
+                    tarPos.x = tarRow/unit
+                    tarPos.y = tarCol/unit
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        console.log('Hit');
+                        tarCol += unit
+                        target.style.top = tarCol + 'px'
+                    }
                 }        
             } 
         }
 
-        let randNumX = Math.floor(Math.random()*5 +1)
-        let randNumY = Math.floor(Math.random()*5 +1)
-
-        let target = document.querySelector('.target')
+        target.style.left = randNumX*unit + 'px'
+        target.style.top = randNumY*unit + 'px'
 
         tarPos.x = randNumX
         tarPos.y = randNumY
 
-        target.style.left = randNumX*unit + 'px'
-        target.style.top = randNumY*unit + 'px'
+        tarRow = randNumX*unit
+        tarCol = randNumY*unit
 
         // console.log(randNumX, randNumY);
-        console.log(tarPos);
+        console.log('Target ' + JSON.stringify(tarPos));
+        
         
         
     }
