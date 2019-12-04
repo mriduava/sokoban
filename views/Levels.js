@@ -8,11 +8,3 @@ export default{
         Board,
         Grid
     }
-    template:
-        `
-        
-        <div id="grid"></div>
-        
-        `
-}
-}

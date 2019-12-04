@@ -93,7 +93,7 @@ export default {
         let target = document.querySelector('.target')
         let goal = document.querySelector('.goal')
 
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', (e) => { //left-key
             if (e.keyCode == 37) {
                 if (row > 1) {   
                     row -= unit;  
@@ -108,13 +108,13 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && 0 < tarRow){                        
                         console.log('Hit');
                         tarRow -= unit
                         target.style.left = tarRow + 'px'
                     }                                       
                 }                            
-            }else if (e.keyCode == 38) {
+            }else if (e.keyCode == 38) { //up-key
                 if (col > 1) {
                     col -= unit;
                     obj.style.top = col + 'px'
@@ -125,13 +125,13 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && 0 < tarCol){                        
                         console.log('Hit');
                         tarCol -= unit
                         target.style.top = tarCol + 'px'
                     } 
                 }                
-            }else if (e.keyCode == 39) {
+            }else if (e.keyCode == 39) {//right-key
                 if (row < gridWidth) {
                     row += unit;        
                     obj.style.left = row + 'px'
@@ -153,13 +153,13 @@ export default {
                         // this.updateScore(score)
                                                  
                     }
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && tarRow < gridWidth){                        
                         console.log('Hit');
                         tarRow += unit
                         target.style.left = tarRow + 'px'                        
                     } 
                 }
-            }else if (e.keyCode == 40) {
+            }else if (e.keyCode == 40) {//down-key
                 if (col < gridHeight) {
                     col += unit;
                     obj.style.top = col + 'px'
@@ -168,7 +168,7 @@ export default {
   
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && tarCol < gridHeight){                        
                         console.log('Hit');
                         tarCol += unit
                         target.style.top = tarCol + 'px'
