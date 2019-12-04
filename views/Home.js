@@ -1,9 +1,11 @@
 import Board from './Board.js'
+import Grid from './Grid.js'
 
 export default{
     name: "home",
     components: {
-        Board       
+        Board,
+        Grid      
     },
     template: `
         <div id="home">
@@ -15,7 +17,8 @@ export default{
             </div>
 
             <div class="board">
-                <Board/>
+                <!-- <Board/> -->
+                <Grid/>
             </div>
 
         </div>`,
