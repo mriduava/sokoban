@@ -1,0 +1,114 @@
+
+@import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
+
+@font-face{
+    font-family: 'pacfont';
+    src: url(../fonts/pacfont.TTF);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#home{
+    max-width: 410px;
+    border: 2px solid #ddd;
+    margin: 5vw auto;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 10px;
+    font-family: sans-serif;
+    padding-bottom: 10px;
+}
+
+.nav> .label, .score{
+    padding: 4px 5px;
+    font-size: 19px;
+    border: 1px solid #ddd;
+    color: #0abde3;
+}
+
+.game-name{
+    font-family: 'pacfont';
+    font-size: 2em;
+    color: #d3a13b;
+}
+
+.board{
+    margin: 15px auto;
+}
+
+
+/* BOARD STYLE */
+#grid{
+    width: 386px;
+    height: 386px;
+    border: 1px solid #d3a13b;
+    margin: 0 auto;
+    position: relative;
+}
+
+.grid-block{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.block{
+    width: 32px;
+    height: 32px;
+    border: 1px dotted #ddd;
+}
+
+.obj,
+.target,
+.goal{
+    width: 32px;
+    height: 32px;
+    position: absolute;  
+    z-index: +1;  
+}
+
+.obj{
+    font-size: 32px;
+    color: rgb(118, 13, 216);
+}
+
+.target{
+    background: #d3a13b;
+}
+
+.goal{
+    background: #3bd3a05e;
+    left: 128px;
+    top: 160px;
+}
+
+
+/* STYLE TO GRID */
+
+.grid{
+    margin: 0 auto;
+    position: relative;
+    top: 10vh;
+    left: 2%;
+}
+
+.all-blocks{
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    /* background: #f34533; */
+    border: 1px solid #ddd;
+    /* background: url("../img/brick.gif"); */
+}
+
+.wall,
+.object{
+    width: 32px;
+    height: 32px;
+}
