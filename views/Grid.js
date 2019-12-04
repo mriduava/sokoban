@@ -83,24 +83,23 @@ export default {
         let row = 64;
         let col = 32;
 
-        let tarRow = 0;
-        let tarCol = 0;
+        let tarRow = 5*unit;
+        let tarCol = 3*unit;
 
         let objPos = {x: 2, y: 1}
         obj.style.left = 2*unit + 'px'
         obj.style.top = 1*unit + 'px'
         let tarPos = {x: 0, y: 0}
         let goalPos = {x: 3, y: 5}
-        // let valueOfW = 0;
-        // for(valueOfW of this.posOfW){
-        //     console.log(valueOfW.xValue)
-        // }
-        // let obj = document.querySelector('.obj')
+        
 
-        let randNumX = Math.floor(Math.random()*6)
-        let randNumY = Math.floor(Math.random()*6)
+        // let randNumX = Math.floor(Math.random()*6)
+        // let randNumY = Math.floor(Math.random()*6)
 
         let target = document.querySelector('.target')
+        target.style.left = tarRow + 'px';
+        target.style.top = tarCol + 'px';
+
         let goal = document.querySelector('.goal')
 
         document.addEventListener('keydown', (e) => { 
@@ -231,14 +230,14 @@ export default {
             } 
         })
 
-        target.style.left = randNumX*unit + 'px'
-        target.style.top = randNumY*unit + 'px'
+        // target.style.left = randNumX*unit + 'px'
+        // target.style.top = randNumY*unit + 'px'
 
-        tarPos.x = randNumX
-        tarPos.y = randNumY
+        // tarPos.x = randNumX
+        // tarPos.y = randNumY
 
-        tarRow = randNumX*unit
-        tarCol = randNumY*unit
+        // tarRow = randNumX*unit
+        // tarCol = randNumY*unit
 
         // console.log(randNumX, randNumY);
         console.log('Target ' + JSON.stringify(tarPos));         
