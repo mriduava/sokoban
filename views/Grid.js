@@ -10,23 +10,35 @@ export default {
                  :style="{ top: row*32 + 'px', left: col*32 + 'px'}">
                 <div class="wall" v-if="block == 'W'" 
                      :style="{backgroundColor: '#F93409'}">
-                     <!-- {{block}}   -->
+                     {{block}}  
                 </div>              
 
                 <div class="object" v-else-if="block === 'O'" 
                      :style="{backgroundColor: '#ddd'}">
                     <!-- {{block}} -->
-                </div>  
+                </div> 
 
-                <!-- <div class="obj" v-if="block === 'W'" v-show="showAvatar"><i class="far fa-smile"></i></div>
-                <div class="obj" v-else v-show="showAvatar ^= true"><i class="far fa-smile"></i></div> -->
+                <div class="av" v-else-if="block === 'A'" 
+                     :style="{backgroundColor: '#ddd'}">
+                    <!-- {{block}} -->
+                    <!-- <div class="avatar"><i class="far fa-smile"></i></div> -->
+                </div> 
+
+                <div class="object" v-else-if="block === 'G'" 
+                     :style="{backgroundColor: '#999fff'}">
+                    <!-- {{block}} -->
+                </div>
+
+                <!-- {{block}} -->
             </div>
+
+              
                 
 
         </div>
-        <div class="obj"><i class="far fa-smile"></i></div>
-                <div class="target"></div>
-                <div class="goal"></div>
+            <div class="avatar"><i class="far fa-smile"></i></div>
+            <div class="target"></div>
+            <div class="goal"></div>
      </div>`,
      data() {
          return {
@@ -39,34 +51,57 @@ export default {
                 ['W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', ' ', 'W', 'W', ' ', 'W', 'W', ' ', ' ', 'W'],
-                ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+                ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
-            showAvatar: false
+            goalPositions: []
              
          }
+     },
+     created() {
+
      },
      computed: {
         //  grids(){
         //      return this.$store.state.grids;
         //  }
+
+        
      },
      methods() {
          
          
      },
      mounted() {
-        //  this.grids = this.$store.state.grids;
-        let obj = document.querySelector('.obj')
-         for(let x=0; x<this.grids.length; x++){
-             for(let y=0; y<this.grids.length; y++){
-                 if (this.grids[y][x] == 'O') {
-                    this.grids[y][x] = 'Hi'
-                    // console.log(this.grids[x][y]);                                                     
-                 }
-             } 
-            //  console.log(this.grids[2][1]);              
-         }
+        this.grids = this.$store.state.grids;
 
+        for(let x=0; x<this.grids.length; x++){
+            for(let y=0; y<this.grids[x].length; y++){
+                if (this.grids[x][y] === 'G') {
+
+                    var indexs = [];
+                    this.grids[x].filter(function(elem, index, array){
+                        if(elem == 'G') {
+                            indexs.push(index);
+                        }
+                    });
+
+                    let rowId = ''
+                    for(let i=0; i<indexs.length; i++){
+                        rowId += indexs[i]
+                    }
+
+                    let objectPosition = {
+                        x: +rowId,                    
+                        y: x
+                    }
+                    this.goalPositions.push(objectPosition)
+                }
+            }            
+        }
+
+        console.log(this.goalPositions);        
+
+        let avatar = document.querySelector('.avatar')  
 
         let score = 0;
         let unit = 32;
@@ -95,10 +130,11 @@ export default {
 
         document.addEventListener('keydown', (e) => {
             if (e.keyCode == 37) {
-                if (row > 1) {   
+                if (row > 0) {   
                     row -= unit;  
 
-                    obj.style.left = row + 'px'
+                    // avatar.style.left = row + 'px'
+                    $('.avatar').css('left', row + 'px')
 
                     objPos.x = row/unit
                     objPos.y = col/unit
@@ -117,7 +153,8 @@ export default {
             }else if (e.keyCode == 38) {
                 if (col > 1) {
                     col -= unit;
-                    obj.style.top = col + 'px'
+                    avatar.style.top = col + 'px'
+
                     objPos.x = row/unit
                     objPos.y = col/unit
 
@@ -134,7 +171,8 @@ export default {
             }else if (e.keyCode == 39) {
                 if (row < gridWidth) {
                     row += unit;        
-                    obj.style.left = row + 'px'
+                    avatar.style.left = row + 'px'
+
                     objPos.x = row/unit
                     objPos.y = col/unit
  
@@ -145,7 +183,6 @@ export default {
                         console.log('Good job!'); 
                         score ++ 
                         this.score = score; 
-
 
                         this.$store.state.score = this.score                    
                         console.log(this.score);
@@ -162,7 +199,8 @@ export default {
             }else if (e.keyCode == 40) {
                 if (col < gridHeight) {
                     col += unit;
-                    obj.style.top = col + 'px'
+                    avatar.style.top = col + 'px'
+
                     objPos.x = row/unit
                     objPos.y = col/unit
   

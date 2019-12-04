@@ -64,7 +64,7 @@
     border: 1px dotted #ddd;
 }
 
-.obj,
+.avatar,
 .target,
 .goal{
     width: 32px;
@@ -73,7 +73,7 @@
     z-index: +1;  
 }
 
-.obj{
+.avatar{
     font-size: 32px;
     color: rgb(118, 13, 216);
 }
