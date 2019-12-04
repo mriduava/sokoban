@@ -87,3 +87,28 @@
     left: 128px;
     top: 160px;
 }
+
+
+/* STYLE TO GRID */
+
+.grid{
+    margin: 0 auto;
+    position: relative;
+    top: 10vh;
+    left: 2%;
+}
+
+.all-blocks{
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    /* background: #f34533; */
+    border: 1px solid #ddd;
+    /* background: url("../img/brick.gif"); */
+}
+
+.wall,
+.object{
+    width: 32px;
+    height: 32px;
+}

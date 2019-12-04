@@ -11,10 +11,12 @@ export default{
               v-for="(block, i) of flatTiles"
               v-bind:position="block"
               v-bind:key="'block' + i + block.x + block.y"
-            />      
+            /> 
+
             <div class="obj"><i class="far fa-smile"></i></div>
             <div class="target"></div>
             <div class="goal"></div>
+
           </div>
         </div>`,
     data() {
@@ -52,6 +54,7 @@ export default{
         let unit = 32;
         let gridWidth = 352;
         let gridHeight = 352;
+
         let row = 0;
         let col = 0;
 
@@ -59,11 +62,13 @@ export default{
         let tarCol = 0;
 
         let objPos = {x: 0, y: 0}
+
         let tarPos = {x: 0, y: 0}
         let goalPos = {x: 3, y: 5}
 
          
         let obj = document.querySelector('.obj')
+
         let randNumX = Math.floor(Math.random()*6)
         let randNumY = Math.floor(Math.random()*6)
 
@@ -73,14 +78,18 @@ export default{
         document.addEventListener('keydown', (e) => {
             if (e.keyCode == 37) {
                 if (row > 0) {   
-                    row -= unit;         
+                    row -= unit;  
+
                     obj.style.left = row + 'px'
+
                     objPos.x = row/unit
                     objPos.y = col/unit
 
                     console.log(objPos); 
+
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
+
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
                         tarRow -= unit
@@ -97,6 +106,7 @@ export default{
                     console.log(objPos); 
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
+
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
                         tarCol -= unit
@@ -116,7 +126,9 @@ export default{
                     if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
                         console.log('Good job!'); 
                         score ++ 
-                        this.score = score;  
+                        this.score = score; 
+
+
                         this.$store.state.score = this.score                    
                         console.log(this.score);
                     
