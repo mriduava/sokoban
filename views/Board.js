@@ -14,13 +14,20 @@ export default{
             />      
             <div class="obj"><i class="far fa-smile"></i></div>
             <div class="target"></div>
-            <!-- <div class="target"></div> -->
+            <div class="goal"></div>
           </div>
         </div>`,
     data() {
         return {
+            score: 0,
             blocks: [],
             object: []
+        }
+    },
+    props: ['name'],
+    methods: {
+        updateScore(){
+            this.$emit('final', 'Hi');
         }
     },
     computed: {
@@ -41,6 +48,7 @@ export default{
         }
     },
     mounted() {
+        let score = 0;
         let unit = 32;
         let gridWidth = 352;
         let gridHeight = 352;
@@ -50,24 +58,19 @@ export default{
         let tarRow = 0;
         let tarCol = 0;
 
-        let objPos = {
-            x: 0,
-            y: 0
-        }
+        let objPos = {x: 0, y: 0}
+        let tarPos = {x: 0, y: 0}
+        let goalPos = {x: 3, y: 5}
 
-        let tarPos = {
-            x: 0,
-            y: 0
-        }
-
-        document.addEventListener('keydown', direction);
+         
         let obj = document.querySelector('.obj')
         let randNumX = Math.floor(Math.random()*6)
         let randNumY = Math.floor(Math.random()*6)
 
         let target = document.querySelector('.target')
+        let goal = document.querySelector('.goal')
 
-        function direction(e) {
+        document.addEventListener('keydown', (e) => {
             if (e.keyCode == 37) {
                 if (row > 0) {   
                     row -= unit;         
@@ -110,10 +113,20 @@ export default{
                     console.log(objPos); 
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
+                    if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
+                        console.log('Good job!'); 
+                        score ++ 
+                        this.score = score;  
+                        this.$store.state.score = this.score                    
+                        console.log(this.score);
+                    
+                        // this.updateScore(score)
+                                                 
+                    }
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
                         tarRow += unit
-                        target.style.left = tarRow + 'px'
+                        target.style.left = tarRow + 'px'                        
                     } 
                 }
             }else if (e.keyCode == 40) {
@@ -132,7 +145,7 @@ export default{
                     }
                 }        
             } 
-        }
+        })
 
         target.style.left = randNumX*unit + 'px'
         target.style.top = randNumY*unit + 'px'
@@ -144,8 +157,7 @@ export default{
         tarCol = randNumY*unit
 
         // console.log(randNumX, randNumY);
-        console.log('Target ' + JSON.stringify(tarPos));
-        
+        console.log('Target ' + JSON.stringify(tarPos));       
         
         
     }

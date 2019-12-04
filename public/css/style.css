@@ -15,7 +15,7 @@
 #home{
     max-width: 410px;
     border: 2px solid #ddd;
-    margin: 10vw auto;
+    margin: 5vw auto;
 }
 
 .nav{
@@ -65,7 +65,8 @@
 }
 
 .obj,
-.target{
+.target,
+.goal{
     width: 32px;
     height: 32px;
     position: absolute;  
@@ -79,4 +80,10 @@
 
 .target{
     background: #d3a13b;
+}
+
+.goal{
+    background: #3bd3a05e;
+    left: 128px;
+    top: 160px;
 }

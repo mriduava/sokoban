@@ -8,10 +8,10 @@ export default{
     template: `
         <div id="home">
 
-            <div class="nav">
+            <div class="nav" v-on:final="updateScore">
                 <span class="label">LABEL {{label}}</span>
                 <span class="game-name">{{gameName}}</span> 
-                <span class="score">SCORE {{score}}</span>
+                <span class="score" >SCORE {{totalScore}}</span>
             </div>
 
             <div class="board">
@@ -24,8 +24,18 @@ export default{
             gameName: 'Sokoban',
             show: false,
             label: 1,
-            score: 0
+            score: this.$store.state.score
+        }        
+    },
+    methods:  {
+        updateScore(value){
+            console.log(value);            
         }
-        
-    }
+    },
+    computed: {
+        totalScore(){
+            return this.$store.state.score
+        }
+    },
+
 }
