@@ -142,7 +142,7 @@ export default {
                     let valueOfW = 0;
                     let trueW = true;
                     let trueT= true;
-                    for(valueOfW of this.posOfW){
+                    for(valueOfW of this.wallPositions){
                         if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
                             trueT = false
                         }
@@ -179,7 +179,7 @@ export default {
                     let valueOfW = 0;
                     let trueW = true;
                     let trueT =true
-                    for(valueOfW of this.posOfW){
+                    for(valueOfW of this.wallPositions){
                         if(valueOfW.xValue == t & valueOfW.yValue == tarCol){
                             trueT = false
                         }
@@ -218,7 +218,7 @@ export default {
                     let valueOfW = 0;
                     let trueT=true;
                     let trueW = true;
-                    for(valueOfW of this.posOfW){
+                    for(valueOfW of this.wallPositions){
                         if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
                             trueT = false
                         }
