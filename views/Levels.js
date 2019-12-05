@@ -8,3 +8,4 @@ export default{
         Board,
         Grid
     }
+}
