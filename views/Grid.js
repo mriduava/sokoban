@@ -50,16 +50,20 @@ export default {
         let gridWidth = 352;
         let gridHeight = 224;
 
-        let row = 32;
-        let col = 32;
+        let row = 1*unit;
+        let col = 1*unit;
 
-        let tarRow = 0;
-        let tarCol = 0;
+        let tarRow = 5*unit;
+        let tarCol = 3*unit;
 
         let objPos = {x: 1, y: 1}
 
-        let tarPos = {x: 0, y: 0}
+        let tarPos = {x: 5, y: 3}
         let goalPos = {x: 8, y: 6}
+
+        target.style.left = 5*unit + 'px'
+        target.style.top = 3*unit + 'px'
+
         /**
         * To find the position of each blocks in the array
         * 
@@ -143,8 +147,10 @@ export default {
 
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
-                        tarCol -= unit
-                        target.style.left = tarCol + 'px'
+                        console.log(tarRow)
+                        console.log(tarRow + unit)
+                        tarRow -= unit
+                        target.style.left = tarRow + 'px'
                     }                                      
                 } 
             // Up arrow key                          
@@ -266,14 +272,14 @@ export default {
         * To give a position of the Target
         * The position is fixed now
         */
-        target.style.left = 5*unit + 'px'
-        target.style.top = 3*unit + 'px'
+        // target.style.left = 5*unit + 'px'
+        // target.style.top = 3*unit + 'px'
 
-        tarPos.x = 5
-        tarPos.y = 3
+        // tarPos.x = 5
+        // tarPos.y = 3
 
-        tarRow = 5*unit
-        tarCol = 3*unit
+        // tarRow = 5*unit
+        // tarCol = 3*unit
 
         console.log('Target ' + JSON.stringify(tarPos));         
     
