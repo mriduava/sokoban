@@ -183,10 +183,10 @@ export default {
                     let trueT = true;
                     let valueOfW = 0;
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow-unit & valueOfW.y*unit == tarCol){
+                        if(JSON.stringify(objPos)===JSON.stringify(tarPos)){
                             trueT = false
                         }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+                        if(JSON.stringify(objPos)===JSON.stringify(valueOfW)){
                             trueW = false;
                             row += unit;
                             objPos.x = row*unit
@@ -217,10 +217,10 @@ export default {
                     let trueW = true;
                     let trueT= true;
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol-unit){
+                        if(JSON.stringify(objPos)===JSON.stringify(tarPos)){
                             trueT = false
                         }
-                        if(valueOfW.x *unit == row & valueOfW.y*unit == col){
+                        if(JSON.stringify(objPos)===JSON.stringify(valueOfW)){
                             trueW = false;
                             col += unit;
                             objPos.x = row*unit
@@ -253,11 +253,11 @@ export default {
                     let trueT =true
                     for(valueOfW of this.wallPositions){
                         
-                        if(valueOfW.x*unit == tarRow+unit & valueOfW.y*unit == tarCol){
+                        if(JSON.stringify(objPos)===JSON.stringify(tarPos)){
                             trueT = false
                             console.log(trueT)
                         }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+                        if(JSON.stringify(objPos)===JSON.stringify(valueOfW)){
                             trueW = false;
                             console.log(trueW)
                             row -= unit;
@@ -299,10 +299,10 @@ export default {
                     let trueT=true;
                     let trueW = true;
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol+unit){
+                        if(JSON.stringify(objPos) === JSON.stringify(tarPos)){
                             trueT = false
                         }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+                        if(JSON.stringify(objPos) === JSON.stringify(valueOfW)){
                             trueW = false;
                             col -= unit;
                             objPos.x = row*unit
