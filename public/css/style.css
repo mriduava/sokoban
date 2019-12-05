@@ -64,7 +64,7 @@
     border: 1px dotted #ddd;
 }
 
-.obj,
+.avatar,
 .target,
 .goal{
     width: 32px;
@@ -73,7 +73,9 @@
     z-index: +1;  
 }
 
-.obj{
+.avatar{
+    top: 32px;
+    left: 32px;
     font-size: 32px;
     color: rgb(118, 13, 216);
 }
@@ -82,11 +84,11 @@
     background: #d3a13b;
 }
 
-.goal{
+/* .goal{
     background: #3bd3a05e;
     left: 128px;
     top: 160px;
-}
+} */
 
 
 /* STYLE TO GRID */
