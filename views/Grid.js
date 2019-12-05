@@ -10,30 +10,14 @@ export default {
                  :style="{ top: row*32 + 'px', left: col*32 + 'px'}">
                 <div class="wall" v-if="block == 'W'" 
                      :style="{backgroundColor: '#F93409'}">
-                     {{block}}  
+                     <!-- {{block}}   -->
                 </div>              
 
-                <div class="object" v-else-if="block === 'O'" 
-                     :style="{backgroundColor: '#ddd'}">
-                    <!-- {{block}} -->
-                </div> 
-
-                <div class="av" v-else-if="block === 'A'" 
-                     :style="{backgroundColor: '#ddd'}">
-                    <!-- {{block}} -->
-                    <!-- <div class="avatar"><i class="far fa-smile"></i></div> -->
-                </div> 
-
                 <div class="object" v-else-if="block === 'G'" 
-                     :style="{backgroundColor: '#999fff'}">
-                    <!-- {{block}} -->
+                     :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
+                    {{block}}
                 </div>
-
-                <!-- {{block}} -->
             </div>
-
-              
-                
 
         </div>
             <div class="avatar"><i class="far fa-smile"></i></div>
@@ -42,99 +26,96 @@ export default {
      </div>`,
      data() {
          return {
-            //  grids: [],
              grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
-                ['W', 'W', 'G', ' ', ' ', 'W', ' ', ' ', 'W', 'W', 'W', 'W'],
+                ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', 'W', 'W', 'W'],
                 ['W', 'A', ' ', 'O', 'W', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', 'W', 'W', ' ', 'W', 'W', ' ', 'W', 'W', ' ', ' ', 'W'],
+                ['W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', 'W', 'W', ' ', 'W', 'W', ' ', ' ', ' ', 'G', 'G', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
-            goalPositions: []
-             
+            wallPositions: []   
          }
      },
-     created() {
-
-     },
-     computed: {
-        //  grids(){
-        //      return this.$store.state.grids;
-        //  }
-
-        
-     },
-     methods() {
-         
-         
-     },
      mounted() {
-        this.grids = this.$store.state.grids;
 
-        for(let x=0; x<this.grids.length; x++){
-            for(let y=0; y<this.grids[x].length; y++){
-                if (this.grids[x][y] === 'G') {
-
-                    var indexs = [];
-                    this.grids[x].filter(function(elem, index, array){
-                        if(elem == 'G') {
-                            indexs.push(index);
-                        }
-                    });
-
-                    let rowId = ''
-                    for(let i=0; i<indexs.length; i++){
-                        rowId += indexs[i]
-                    }
-
-                    let objectPosition = {
-                        x: +rowId,                    
-                        y: x
-                    }
-                    this.goalPositions.push(objectPosition)
-                }
-            }            
-        }
-
-        console.log(this.goalPositions);        
-
-        let avatar = document.querySelector('.avatar')  
+        let avatar = document.querySelector('.avatar')
+        let target = document.querySelector('.target')
+        let goal = document.querySelector('.goal')
 
         let score = 0;
         let unit = 32;
         let gridWidth = 352;
         let gridHeight = 224;
 
-        let row = 0;
-        let col = 0;
+        let row = 32;
+        let col = 32;
 
         let tarRow = 0;
         let tarCol = 0;
 
-        let objPos = {x: 0, y: 0}
+        let objPos = {x: 1, y: 1}
 
         let tarPos = {x: 0, y: 0}
-        let goalPos = {x: 3, y: 5}
+        let goalPos = {x: 8, y: 6}
 
-         
-        // let obj = document.querySelector('.obj')
+        /**
+        * To find the position of each blocks in the array
+        * 
+        */
+        //ToDO 
+        for(var x=0; x<this.grids.length; x++){
+         var indexes = [];
+         let row  = x;
+            for(var y=0; y<this.grids[x].length; y++){
+                if (this.grids[x][y] === 'W') {
+                    
+                    let rowArr = this.grids[x];
+                    indexes = rowArr
+                        .map((row, i) => row === "W" ? i : null)
+                        .filter(i => i !== null)
+                }                   
+            }
+            for(var i=0; i<indexes.length; i++){       
+            var objectPosition = {
+                x: +indexes[i],                    
+                y: +row
+            }
+            this.wallPositions.push(objectPosition);                  
+            }       
+        }
 
-        let randNumX = Math.floor(Math.random()*6)
-        let randNumY = Math.floor(Math.random()*6)
+        console.log(this.wallPositions);     
 
-        let target = document.querySelector('.target')
-        let goal = document.querySelector('.goal')
+        /**
+        * To find if an object exist in the array
+        * The function takes one array of objects and one comparable object
+        */
+        function existObj(arrObj, compObj){
+            let found = false;
+            for(var i = 0; i < arrObj.length; i++) {
+                if (arrObj[i].x == compObj.x  && arrObj[i].y == compObj.y) {
+                    found = true;
+                    break;
+                }
+            }
+            return found;
+        }
 
+        /**
+        * Event key listener
+        * For the movement of the Avatar and Target by
+        * pressing Arrow Key from Keyboard
+        */
         document.addEventListener('keydown', (e) => {
+            // Left arrow key
             if (e.keyCode == 37) {
-                if (row > 0) {   
+                if (row > 32 && !existObj(this.wallPositions, objPos)) {   
                     row -= unit;  
 
-                    // avatar.style.left = row + 'px'
-                    $('.avatar').css('left', row + 'px')
+                    avatar.style.left = row + 'px'
 
                     objPos.x = row/unit
                     objPos.y = col/unit
@@ -149,9 +130,10 @@ export default {
                         tarRow -= unit
                         target.style.left = tarRow + 'px'
                     }                                       
-                }                            
+                } 
+            // Up arrow key                          
             }else if (e.keyCode == 38) {
-                if (col > 1) {
+                if (col > 32 && !existObj(this.wallPositions, objPos)) {
                     col -= unit;
                     avatar.style.top = col + 'px'
 
@@ -167,9 +149,10 @@ export default {
                         tarCol -= unit
                         target.style.top = tarCol + 'px'
                     } 
-                }                
+                } 
+            // Right arrow key              
             }else if (e.keyCode == 39) {
-                if (row < gridWidth) {
+                if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
                     row += unit;        
                     avatar.style.left = row + 'px'
 
@@ -179,16 +162,13 @@ export default {
                     console.log(objPos); 
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
+
+                    //If the Target & Goals positions are same, it will give One Point
                     if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
-                        console.log('Good job!'); 
                         score ++ 
                         this.score = score; 
-
-                        this.$store.state.score = this.score                    
-                        console.log(this.score);
-                    
-                        // this.updateScore(score)
-                                                 
+                        //The score in store.js file will be filled with this data
+                        this.$store.state.score = this.score                                                 
                     }
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
@@ -196,8 +176,9 @@ export default {
                         target.style.left = tarRow + 'px'                        
                     } 
                 }
+            // Down arrow key
             }else if (e.keyCode == 40) {
-                if (col < gridHeight) {
+                if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
                     col += unit;
                     avatar.style.top = col + 'px'
 
@@ -215,16 +196,19 @@ export default {
             } 
         })
 
-        target.style.left = randNumX*unit + 'px'
-        target.style.top = randNumY*unit + 'px'
+        /**
+        * To give a position of the Target
+        * The position is fixed now
+        */
+        target.style.left = 5*unit + 'px'
+        target.style.top = 3*unit + 'px'
 
-        tarPos.x = randNumX
-        tarPos.y = randNumY
+        tarPos.x = 5
+        tarPos.y = 3
 
-        tarRow = randNumX*unit
-        tarCol = randNumY*unit
+        tarRow = 5*unit
+        tarCol = 3*unit
 
-        // console.log(randNumX, randNumY);
         console.log('Target ' + JSON.stringify(tarPos));         
     
      }
