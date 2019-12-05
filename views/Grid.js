@@ -216,17 +216,23 @@ export default {
                     }
                     
                     if(trueW){
-                        console.log(trueW)
                     avatar.style.left = row + 'px' 
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        console.log('Hit');
+                        tarRow += unit
+                        target.style.left = tarRow + 'px'
+                    } 
                     //If the Target & Goals positions are same, it will give One Point
                     if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
                         score ++ 
                         this.score = score; 
                         //The score in store.js file will be filled with this data
-                        this.$store.state.score = this.score                                                 
+                        this.$store.state.score = this.score
+                        console.log('hit') 
+
                     }
                 }
             // Down arrow key
