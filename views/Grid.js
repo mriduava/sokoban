@@ -28,12 +28,19 @@ export default {
          return {
              grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', 'W', 'W', 'W'],
-                ['W', 'A', ' ', 'O', 'W', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
+                ['W', 'A', ' ', 'O', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', 'W', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'G', 'G', 'W'],
-                ['W', 'W', 'W', ' ', 'W', 'W', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
             wallPositions: []   
@@ -44,11 +51,15 @@ export default {
         let avatar = document.querySelector('.avatar')
         let target = document.querySelector('.target')
         let goal = document.querySelector('.goal')
-
+        
         let score = 0;
         let unit = 32;
-        let gridWidth = 352;
-        let gridHeight = 224;
+
+        let yWidth = this.grids.length * unit
+        let xWidth = this.grids[0].length * unit
+
+        let gridWidth = xWidth;
+        let gridHeight = yWidth;
 
         let row = 1*unit;
         let col = 1*unit;
