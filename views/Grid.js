@@ -29,7 +29,7 @@ export default {
              grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
-                ['W', 'A', ' ', 'O', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
@@ -40,7 +40,7 @@ export default {
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
             wallPositions: []   
@@ -70,36 +70,44 @@ export default {
         let objPos = {x: 1, y: 1}
 
         let tarPos = {x: 5, y: 3}
-        let goalPos = {x: 8, y: 6}
+        let goalPos = [
+                       {x: 8, y: 6},
+                       {x: 5, y: 3},
+                       {x: 3, y: 5},
+                 ]
 
         target.style.left = 5*unit + 'px'
         target.style.top = 3*unit + 'px'
 
         /**
         * To find the position of each blocks in the array
-        * 
+        * It takes two parameters. First one is the elemnt or object
+        * which positions need tp find.
+        * Second parameter is the Array where all positions will be stored.
         */
-        //ToDO 
-        for(var x=0; x<this.grids.length; x++){
-         var indexes = [];
-         let row  = x;
-            for(var y=0; y<this.grids[x].length; y++){
-                if (this.grids[x][y] === 'W') {
-                    
-                    let rowArr = this.grids[x];
-                    indexes = rowArr
-                        .map((row, i) => row === "W" ? i : null)
-                        .filter(i => i !== null)
-                }                   
+        const findPositions = (elementToFind, positionsArray) => {
+            for(var x=0; x<this.grids.length; x++){
+            var indexes = [];
+            let row  = x;
+                for(var y=0; y<this.grids[x].length; y++){
+                    if (this.grids[x][y] === elementToFind) {                        
+                        let rowArr = this.grids[x];
+                        indexes = rowArr
+                            .map((row, i) => row === elementToFind ? i : null)
+                            .filter(i => i !== null)
+                    }                   
+                }
+                for(var i=0; i<indexes.length; i++){       
+                var objectPosition = {
+                    x: +indexes[i],                    
+                    y: +row
+                }
+                 positionsArray.push(objectPosition);                  
+                }       
             }
-            for(var i=0; i<indexes.length; i++){       
-            var objectPosition = {
-                x: +indexes[i],                    
-                y: +row
-            }
-            this.wallPositions.push(objectPosition);                  
-            }       
         }
+
+        findPositions('W', this.wallPositions);
 
         console.log(this.wallPositions);     
 
@@ -107,7 +115,7 @@ export default {
         * To find if an object exist in the array
         * The function takes one array of objects and one comparable object
         */
-        function existObj(arrObj, compObj){
+        const existObj = (arrObj, compObj) => {
             let found = false;
             for(var i = 0; i < arrObj.length; i++) {
                 if (arrObj[i].x == compObj.x  && arrObj[i].y == compObj.y) {
@@ -161,9 +169,9 @@ export default {
                         target.style.left = tarRow + 'px'
                     }                                      
                 } 
-            // Up arrow key                          
+                                   
             }
-        }
+          }   // Up arrow key   
             else if (e.keyCode == 38) {
                 if (col > 32 && !existObj(this.wallPositions, objPos)) {
                     col -= unit;
@@ -281,9 +289,7 @@ export default {
                 }        
             } 
         }
-    )
-
-        console.log('Target ' + JSON.stringify(tarPos));         
+    )       
     
-     }
+    }
 }
