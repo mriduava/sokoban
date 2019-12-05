@@ -127,11 +127,13 @@ export default {
                     tarPos.y = tarCol/unit
 
                     let trueW = true;
+                    let trueT = true;
                     let valueOfW = 0;
                     for(valueOfW of this.wallPositions){
-                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == tarCol){
-                        //     trueT = false
-                        // }
+                        if(valueOfW.x*unit == tarRow-unit & valueOfW.y*unit == tarCol){
+                            trueT = false
+                            console.log(trueT)
+                        }
                         if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             row += unit;
@@ -145,7 +147,7 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                         console.log('Hit');
                         console.log(tarRow)
                         console.log(tarRow + unit)
@@ -166,9 +168,10 @@ export default {
                     let trueW = true;
                     let trueT= true;
                     for(valueOfW of this.wallPositions){
-                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == tarCol){
-                        //     trueT = false
-                        // }
+                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol-unit){
+                            trueT = false
+                            console.log(trueT)
+                        }
                         if(valueOfW.x *unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             col += unit;
@@ -182,7 +185,7 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) & trueT){                        
                         console.log('Hit');
                         tarCol -= unit
                         target.style.top = tarCol + 'px'
@@ -194,18 +197,19 @@ export default {
             else if (e.keyCode == 39) {
                 if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
                     row += unit;        
-                    // avatar.style.left = row + 'px'
-
+                
                     objPos.x = row/unit
                     objPos.y = col/unit
 
                     let valueOfW = 0;
                     let trueW = true;
-                    // let trueT =true
+                    let trueT =true
                     for(valueOfW of this.wallPositions){
-                        // if(valueOfW.xValue == row & valueOfW.yValue == tarCol){
-                        //     trueT = false
-                        // }
+                        
+                        if(valueOfW.x*unit == tarRow+unit & valueOfW.y*unit == tarCol){
+                            trueT = false
+                            console.log(trueT)
+                        }
                         if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             console.log(trueW)
@@ -220,7 +224,7 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                         console.log('Hit');
                         tarRow += unit
                         target.style.left = tarRow + 'px'
@@ -248,9 +252,10 @@ export default {
                     let trueT=true;
                     let trueW = true;
                     for(valueOfW of this.wallPositions){
-                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == col){
-                        //     trueT = false
-                        // }
+                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol+unit){
+                            trueT = false
+                            console.log(trueT)
+                        }
                         if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             col -= unit;
