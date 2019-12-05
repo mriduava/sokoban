@@ -132,8 +132,6 @@ export default {
                     objPos.x = row/unit
                     objPos.y = col/unit
 
-                    console.log(objPos); 
-
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
@@ -143,7 +141,6 @@ export default {
                     for(valueOfW of this.wallPositions){
                         if(valueOfW.x*unit == tarRow-unit & valueOfW.y*unit == tarCol){
                             trueT = false
-                            console.log(trueT)
                         }
                         if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
@@ -160,8 +157,6 @@ export default {
 
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                         console.log('Hit');
-                        console.log(tarRow)
-                        console.log(tarRow + unit)
                         tarRow -= unit
                         target.style.left = tarRow + 'px'
                     }                                      
@@ -181,7 +176,6 @@ export default {
                     for(valueOfW of this.wallPositions){
                         if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol-unit){
                             trueT = false
-                            console.log(trueT)
                         }
                         if(valueOfW.x *unit == row & valueOfW.y*unit == col){
                             trueW = false;
@@ -265,7 +259,6 @@ export default {
                     for(valueOfW of this.wallPositions){
                         if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol+unit){
                             trueT = false
-                            console.log(trueT)
                         }
                         if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
@@ -289,19 +282,6 @@ export default {
             } 
         }
     )
-
-        /**
-        * To give a position of the Target
-        * The position is fixed now
-        */
-        // target.style.left = 5*unit + 'px'
-        // target.style.top = 3*unit + 'px'
-
-        // tarPos.x = 5
-        // tarPos.y = 3
-
-        // tarRow = 5*unit
-        // tarCol = 3*unit
 
         console.log('Target ' + JSON.stringify(tarPos));         
     
