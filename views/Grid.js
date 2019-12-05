@@ -42,8 +42,6 @@ export default {
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
             ],
             posOfW:[],
-            posOfWX:[],
-            posOfWY:[],
             showAvatar: false
              
          }
@@ -66,8 +64,6 @@ export default {
                  if(this.grids[y][x] == 'W'){
                      let pair = {xValue:x*32, yValue:y*32}
                      this.posOfW.push(pair)
-                     this.posOfWX.push(x*32)
-                     this.posOfWY.push(y*32)
                     //  console.log(JSON.stringify(pair))
                  }
                  
@@ -80,8 +76,8 @@ export default {
         let gridWidth = 352;
         let gridHeight = 224;
 
-        let row = 64;
-        let col = 32;
+        let row = 2*unit;
+        let col = 1*unit;
 
         let tarRow = 5*unit;
         let tarCol = 3*unit;
@@ -89,7 +85,7 @@ export default {
         let objPos = {x: 2, y: 1}
         obj.style.left = 2*unit + 'px'
         obj.style.top = 1*unit + 'px'
-        let tarPos = {x: 0, y: 0}
+        let tarPos = {x: 5, y: 3}
         let goalPos = {x: 3, y: 5}
         
 
@@ -97,8 +93,8 @@ export default {
         // let randNumY = Math.floor(Math.random()*6)
 
         let target = document.querySelector('.target')
-        target.style.left = tarRow + 'px';
-        target.style.top = tarCol + 'px';
+        target.style.left = 5*unit + 'px';
+        target.style.top = 3*unit + 'px';
 
         let goal = document.querySelector('.goal')
 
@@ -106,11 +102,18 @@ export default {
             if (e.keyCode == 37) {//left-key
                 if (row > 1) {   
                     row -= unit;
+                    let t = tarRow
+                    t -= unit;
+
                     objPos.x = row/unit
                     objPos.y = col/unit
                     let valueOfW = 0;
                     let trueW = true;
+                    let trueT = true;
                     for(valueOfW of this.posOfW){
+                        if(valueOfW.xValue == t & valueOfW.yValue == tarCol){
+                            trueT = false
+                        }
                         if(valueOfW.xValue == row & valueOfW.yValue == col){
                             trueW = false;
                             row += unit;
@@ -123,7 +126,7 @@ export default {
                         obj.style.left = row + 'px'
                         tarPos.x = tarRow/unit
                         tarPos.y = tarCol/unit
-                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && 0 < tarRow){                        
+                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                             console.log('Hit');
                             tarRow -= unit
                             target.style.left = tarRow + 'px'
@@ -133,11 +136,17 @@ export default {
             }else if (e.keyCode == 38) { //up-key
                 if (col > 1) {
                     col -= unit;
+                    let t = tarCol
+                    t -= unit;
                     objPos.x = row/unit
                     objPos.y = col/unit
                     let valueOfW = 0;
                     let trueW = true;
+                    let trueT= true;
                     for(valueOfW of this.posOfW){
+                        if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
+                            trueT = false
+                        }
                         if(valueOfW.xValue == row & valueOfW.yValue == col){
                             trueW = false;
                             col += unit;
@@ -150,7 +159,7 @@ export default {
                     obj.style.top = col + 'px'
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
-                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && 0 < tarCol){                        
+                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                             console.log('Hit');
                             tarCol -= unit
                             target.style.top = tarCol + 'px'
@@ -159,13 +168,19 @@ export default {
                 }                
             }else if (e.keyCode == 39) {//right-key
                 if (row < gridWidth) {
-                    row += unit;        
+                    row += unit;
+                    let t = tarRow
+                    t += unit;       
                     objPos.x = row/unit
                     objPos.y = col/unit
 
                     let valueOfW = 0;
                     let trueW = true;
+                    let trueT =true
                     for(valueOfW of this.posOfW){
+                        if(valueOfW.xValue == t & valueOfW.yValue == tarCol){
+                            trueT = false
+                        }
                         if(valueOfW.xValue == row & valueOfW.yValue == col){
                             trueW = false;
                             row -= unit;
@@ -191,7 +206,7 @@ export default {
                             // this.updateScore(score)
                                                     
                         }
-                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && tarRow < gridWidth){                        
+                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                             console.log('Hit');
                             tarRow += unit
                             target.style.left = tarRow + 'px'                        
@@ -201,13 +216,18 @@ export default {
             }else if (e.keyCode == 40) {//down-key
                 if (col < gridHeight) {
                     col += unit;
-                    
+                    let t = tarCol
+                    t += unit; 
                     objPos.x = row/unit
                     objPos.y = col/unit
 
                     let valueOfW = 0;
+                    let trueT=true;
                     let trueW = true;
                     for(valueOfW of this.posOfW){
+                        if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
+                            trueT = false
+                        }
                         if(valueOfW.xValue == row & valueOfW.yValue == col){
                             trueW = false;
                             col -= unit;
@@ -220,7 +240,7 @@ export default {
                     obj.style.top = col + 'px'
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
-                        if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
+                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
                             console.log('Hit');
                             tarCol += unit
                             target.style.top = tarCol + 'px'
