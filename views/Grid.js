@@ -60,7 +60,6 @@ export default {
 
         let tarPos = {x: 0, y: 0}
         let goalPos = {x: 8, y: 6}
-
         /**
         * To find the position of each blocks in the array
         * 
@@ -132,7 +131,8 @@ export default {
                     }                                       
                 } 
             // Up arrow key                          
-            }else if (e.keyCode == 38) {
+            }
+            else if (e.keyCode == 38) {
                 if (col > 32 && !existObj(this.wallPositions, objPos)) {
                     col -= unit;
                     avatar.style.top = col + 'px'
@@ -166,7 +166,9 @@ export default {
                     } 
                 } 
             // Right arrow key              
-            }else if (e.keyCode == 39) {
+            }
+        }
+            else if (e.keyCode == 39) {
                 if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
                     row += unit;        
                     avatar.style.left = row + 'px'
@@ -204,7 +206,8 @@ export default {
                     }
                 }
             // Down arrow key
-            }else if (e.keyCode == 40) {
+            }
+        }else if (e.keyCode == 40) {
                 if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
                     col += unit;
                     avatar.style.top = col + 'px'
@@ -239,7 +242,8 @@ export default {
                     }
                 }        
             } 
-        })
+        }
+    )
 
         /**
         * To give a position of the Target
