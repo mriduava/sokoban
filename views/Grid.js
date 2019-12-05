@@ -17,39 +17,41 @@ export default {
                      :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
                     {{block}}
                 </div>
+
+                <!-- <div class="target" v-else-if="block === 'T'" 
+                     :style="{backgroundColor: '#ddd', textAlign: 'center'}">
+                    {{block}}
+                </div> -->
             </div>
 
         </div>
             <div class="avatar"><i class="far fa-smile"></i></div>
-            <div class="target"></div>
-            <div class="goal"></div>
+            <div class="targets"></div>
+            <!-- <div class="goal"></div> -->
      </div>`,
      data() {
          return {
-             grids: [
+            grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
-                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'T', ' ', 'W', 'W'],
+                ['W', ' ', ' ', 'T', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', 'T', 'T', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
-            wallPositions: []   
+            wallPositions: [],
+            targetPositions: [],
+            goalPositions: [] 
          }
      },
      mounted() {
 
         let avatar = document.querySelector('.avatar')
-        let target = document.querySelector('.target')
+        let target = document.querySelector('.targets')
         let goal = document.querySelector('.goal')
         
         let score = 0;
@@ -64,20 +66,29 @@ export default {
         let row = 1*unit;
         let col = 1*unit;
 
-        let tarRow = 5*unit;
-        let tarCol = 3*unit;
+        let tarRow = 1*unit;
+        let tarCol = 1*unit;
 
         let objPos = {x: 1, y: 1}
 
-        let tarPos = {x: 5, y: 3}
-        let goalPos = [
-                       {x: 8, y: 6},
+        // let tarPos = [{x: 5, y: 3},
+        //               {x: 3, y: 3},
+        //               {x: 5, y: 3},
+        //               {x: 5, y: 3}]
+
+        let tarPos = this.targetPositions;
+
+
+        let goalPos = [{x: 8, y: 6},
                        {x: 5, y: 3},
                        {x: 3, y: 5},
-                 ]
+                       {x: 3, y: 5}]
 
         target.style.left = 5*unit + 'px'
         target.style.top = 3*unit + 'px'
+
+        
+        // console.log(this.targetPositions)
 
         /**
         * To find the position of each blocks in the array
@@ -107,9 +118,16 @@ export default {
             }
         }
 
+        // To find Wall positions
         findPositions('W', this.wallPositions);
+        
+        // To find Target positions
+        findPositions('T', this.targetPositions);
 
-        console.log(this.wallPositions);     
+        // To find Goal positions
+        findPositions('G', this.goalPositions);
+
+           
 
         /**
         * To find if an object exist in the array
@@ -125,6 +143,24 @@ export default {
             }
             return found;
         }
+
+        /**
+        * Functions to create movable Targets
+        * It creates Targert according to grid's Targets positions
+        */
+        const createTargets = () => {
+            for(let i=0; i<tarPos.length; i++){
+                target.insertAdjacentHTML('afterend',
+                     `<div class="target2"
+                           style="left: ${(tarPos[i].x)*unit}px; top: ${(tarPos[i].y)*unit}px">
+                      </div>`) 
+            }            
+        }
+        createTargets()
+
+        //To select all Targets which is created by the createTargets function
+        let target2 = document.querySelector('.target2')
+        // let target2 = $('.target2')
 
         /**
         * Event key listener
@@ -168,8 +204,7 @@ export default {
                         tarRow -= unit
                         target.style.left = tarRow + 'px'
                     }                                      
-                } 
-                                   
+                }                                    
             }
           }   // Up arrow key   
             else if (e.keyCode == 38) {
@@ -203,10 +238,9 @@ export default {
                         tarCol -= unit
                         target.style.top = tarCol + 'px'
                     } 
-                } 
-            // Right arrow key              
+                }                          
             }
-        }
+        }  // Right arrow key 
             else if (e.keyCode == 39) {
                 if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
                     row += unit;        
@@ -237,10 +271,10 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
+                    if(existObj(this.targetPositions, objPos) && trueT){                        
                         console.log('Hit');
                         tarRow += unit
-                        target.style.left = tarRow + 'px'
+                        target2.style.left = tarRow + 'px'
                     } 
                     //If the Target & Goals positions are same, it will give One Point
                     if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
@@ -251,9 +285,9 @@ export default {
                         console.log('hit') 
 
                     }
-                }
-            // Down arrow key
+                }            
             }
+            // Down arrow key
         }else if (e.keyCode == 40) {
                 if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
                     col += unit;
@@ -288,8 +322,7 @@ export default {
                     }
                 }        
             } 
-        }
-    )       
+        });       
     
-    }
+     }
 }

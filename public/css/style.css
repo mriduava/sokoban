@@ -80,8 +80,16 @@
     color: rgb(118, 13, 216);
 }
 
-.target{
+.target,
+.target2{
+    width: 32px;
+    height: 32px;
+}
+
+.target2{
+    position: absolute;
     background: #d3a13b;
+    border: 1px solid #ddd;
 }
 
 /* .goal{
