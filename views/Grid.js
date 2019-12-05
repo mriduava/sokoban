@@ -114,8 +114,6 @@ export default {
                 if (row > 32 && !existObj(this.wallPositions, objPos)) {   
                     row -= unit;  
 
-                    avatar.style.left = row + 'px'
-
                     objPos.x = row/unit
                     objPos.y = col/unit
 
@@ -124,18 +122,37 @@ export default {
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
+                    let trueW = true;
+                    let valueOfW = 0;
+                    for(valueOfW of this.wallPositions){
+                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == tarCol){
+                        //     trueT = false
+                        // }
+                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+                            trueW = false;
+                            row += unit;
+                            objPos.x = row*unit
+                            objPos.y = col*unit
+                            return;
+                        }
+                    }
+                    if(trueW){
+                    avatar.style.left = row + 'px'
+                    tarPos.x = tarRow/unit
+                    tarPos.y = tarCol/unit
+
                     if(JSON.stringify(objPos) == JSON.stringify(tarPos)){                        
                         console.log('Hit');
-                        tarRow -= unit
-                        target.style.left = tarRow + 'px'
-                    }                                       
+                        tarCol -= unit
+                        target.style.left = tarCol + 'px'
+                    }                                      
                 } 
             // Up arrow key                          
             }
+        }
             else if (e.keyCode == 38) {
                 if (col > 32 && !existObj(this.wallPositions, objPos)) {
                     col -= unit;
-                    avatar.style.top = col + 'px'
 
                     objPos.x = row/unit
                     objPos.y = col/unit
@@ -143,10 +160,10 @@ export default {
                     let trueW = true;
                     let trueT= true;
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
-                            trueT = false
-                        }
-                        if(valueOfW.xValue == row & valueOfW.yValue == col){
+                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == tarCol){
+                        //     trueT = false
+                        // }
+                        if(valueOfW.x *unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             col += unit;
                             objPos.x = row*unit
@@ -155,7 +172,7 @@ export default {
                         }
                     }
                     if(trueW){
-                    obj.style.top = col + 'px'
+                    avatar.style.top = col + 'px'
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
@@ -171,29 +188,30 @@ export default {
             else if (e.keyCode == 39) {
                 if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
                     row += unit;        
-                    avatar.style.left = row + 'px'
+                    // avatar.style.left = row + 'px'
 
                     objPos.x = row/unit
                     objPos.y = col/unit
 
                     let valueOfW = 0;
                     let trueW = true;
-                    let trueT =true
+                    // let trueT =true
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.xValue == t & valueOfW.yValue == tarCol){
-                            trueT = false
-                        }
-                        if(valueOfW.xValue == row & valueOfW.yValue == col){
+                        // if(valueOfW.xValue == row & valueOfW.yValue == tarCol){
+                        //     trueT = false
+                        // }
+                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
+                            console.log(trueW)
                             row -= unit;
-                            objPos.x = row*unit
-                            objPos.y = col*unit
+                            objPos.x = row/unit
                             return;
                         }
                     }
                     
                     if(trueW){
-                    obj.style.left = row + 'px' 
+                        console.log(trueW)
+                    avatar.style.left = row + 'px' 
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
 
@@ -210,7 +228,6 @@ export default {
         }else if (e.keyCode == 40) {
                 if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
                     col += unit;
-                    avatar.style.top = col + 'px'
 
                     objPos.x = row/unit
                     objPos.y = col/unit
@@ -219,10 +236,10 @@ export default {
                     let trueT=true;
                     let trueW = true;
                     for(valueOfW of this.wallPositions){
-                        if(valueOfW.xValue == tarRow & valueOfW.yValue == t){
-                            trueT = false
-                        }
-                        if(valueOfW.xValue == row & valueOfW.yValue == col){
+                        // if(valueOfW.xValue == tarRow & valueOfW.yValue == col){
+                        //     trueT = false
+                        // }
+                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
                             trueW = false;
                             col -= unit;
                             objPos.x = row*unit
@@ -231,7 +248,7 @@ export default {
                         }
                     }
                     if(trueW){
-                    obj.style.top = col + 'px'
+                    avatar.style.top = col + 'px'
                     tarPos.x = tarRow/unit
                     tarPos.y = tarCol/unit
                         if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
