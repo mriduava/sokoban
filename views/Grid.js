@@ -17,42 +17,37 @@ export default {
                      :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
                     {{block}}
                 </div>
-
-                <!-- <div class="target" v-else-if="block === 'T'" 
-                     :style="{backgroundColor: '#ddd', textAlign: 'center'}">
-                    {{block}}
-                </div> -->
             </div>
 
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>
-            <div class="targets"></div>
-            <!-- <div class="goal"></div> -->
+            <div class="emoticon"></div>
+            <div class="boxes"></div>
      </div>`,
      data() {
          return {
+            // grids: [],
             grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
-                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'T', ' ', 'W', 'W'],
-                ['W', ' ', ' ', 'T', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
+                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'B', ' ', 'W', 'W'],
+                ['W', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
-                ['W', ' ', 'T', 'T', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', 'B', 'B', ' ', ' ', 'A', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ],
             wallPositions: [],
-            targetPositions: [],
+            avatarPosition: [],
+            boxPositions: [],
             goalPositions: [] 
          }
      },
      mounted() {
 
-        let avatar = document.querySelector('.avatar')
-        let target = document.querySelector('.targets')
-        let goal = document.querySelector('.goal')
+        let emoticon = document.querySelector('.emoticon')
+        let boxes = document.querySelector('.boxes')
         
         let score = 0;
         let unit = 32;
@@ -69,26 +64,25 @@ export default {
         let tarRow = 1*unit;
         let tarCol = 1*unit;
 
-        let objPos = {x: 1, y: 1}
+        let objPos = this.avatarPosition
 
-        // let tarPos = [{x: 5, y: 3},
-        //               {x: 3, y: 3},
-        //               {x: 5, y: 3},
-        //               {x: 5, y: 3}]
+        let currentAvatarPos = {x: (this.avatarPosition[0])*unit,
+                                y: (this.avatarPosition[0])*unit}
 
-        let tarPos = this.targetPositions;
+        let tarPos = this.boxPositions;
+
+        let tar2Pos = [{x: 0, x: 0}];
+
+        let goalPos = [];
 
 
-        let goalPos = [{x: 8, y: 6},
-                       {x: 5, y: 3},
-                       {x: 3, y: 5},
-                       {x: 3, y: 5}]
+        let avatarId = 0;
 
-        target.style.left = 5*unit + 'px'
-        target.style.top = 3*unit + 'px'
-
+        for(let el in objPos){
+            console.log(el.x);
+            
+        }
         
-        // console.log(this.targetPositions)
 
         /**
         * To find the position of each blocks in the array
@@ -109,20 +103,23 @@ export default {
                     }                   
                 }
                 for(var i=0; i<indexes.length; i++){       
-                var objectPosition = {
-                    x: +indexes[i],                    
-                    y: +row
-                }
-                 positionsArray.push(objectPosition);                  
+                    var objectPosition = {
+                        x: +indexes[i],                    
+                        y: +row
+                    }
+                    positionsArray.push(objectPosition);                  
                 }       
             }
         }
 
         // To find Wall positions
         findPositions('W', this.wallPositions);
+
+        // To find Avatar position
+        findPositions('A', this.avatarPosition);
         
         // To find Target positions
-        findPositions('T', this.targetPositions);
+        findPositions('B', this.boxPositions);
 
         // To find Goal positions
         findPositions('G', this.goalPositions);
@@ -145,184 +142,225 @@ export default {
         }
 
         /**
-        * Functions to create movable Targets
-        * It creates Targert according to grid's Targets positions
+        * Functions to create movable Avatar and Boxes
+        * It creates Avatar & Boxes according to grid's 'A' & 'B' positions
+        * This function takes three parameters-
+        * First: Positions-Array of Element
+        * Second: HTML tag, where it will create new HTML element
+        * Thire: Created element's class name
         */
-        const createTargets = () => {
-            for(let i=0; i<tarPos.length; i++){
-                target.insertAdjacentHTML('afterend',
-                     `<div class="target2"
-                           style="left: ${(tarPos[i].x)*unit}px; top: ${(tarPos[i].y)*unit}px">
+        const createElement = (positionArray, parentTag, myClass) => {
+            for(let i=0; i<positionArray.length; i++){
+                parentTag.insertAdjacentHTML('afterend',
+                     `<div class="${myClass}" id="${(positionArray[i].x)*unit}${(positionArray[i].y)*unit}"
+                           style="left: ${(positionArray[i].x)*unit}px; top: ${(positionArray[i].y)*unit}px">
                       </div>`) 
             }            
         }
-        createTargets()
+
+        //To create Boxes, where 'box' is class name 
+        createElement(this.boxPositions, boxes, 'box')
+
+        //To create Avatar wher 'avatar' is it's class name
+        createElement(this.avatarPosition, emoticon, 'avatar')
 
         //To select all Targets which is created by the createTargets function
-        let target2 = document.querySelector('.target2')
-        // let target2 = $('.target2')
+        let target2 = document.querySelectorAll('.box')
+
+        //To select the Avatar
+        let avatar = document.querySelector('.avatar')
+
+        //ToDo
+        for(let i=0; i<target2.length; i++){
+            target2[i].addEventListener('click', ()=>{
+                let idNum = target2[i].getAttribute('id');
+                // console.log(idNum)
+                let leftDist = target2[i].style.left.replace('px', '')
+                let topDist = target2[i].style.top
+                console.log(leftDist, topDist);
+            })
+        }
 
         /**
         * Event key listener
-        * For the movement of the Avatar and Target by
+        * For the movement of the Avatar and Boxes by
         * pressing Arrow Key from Keyboard
         */
-        document.addEventListener('keydown', (e) => {
-            // Left arrow key
-            if (e.keyCode == 37) {
-                if (row > 32 && !existObj(this.wallPositions, objPos)) {   
-                    row -= unit;  
+        // document.addEventListener('keydown', (e) => {
+        //     // Left arrow key
+        //     if (e.keyCode == 37) {
+        //         if (row > 32 && !existObj(this.wallPositions, objPos)) {   
+        //             row -= unit;  
 
-                    objPos.x = row/unit
-                    objPos.y = col/unit
+        //             objPos.x = row/unit
+        //             objPos.y = col/unit
 
-                    tarPos.x = tarRow/unit
-                    tarPos.y = tarCol/unit
+        //             tarPos.x = tarRow/unit
+        //             tarPos.y = tarCol/unit
 
-                    let trueW = true;
-                    let trueT = true;
-                    let valueOfW = 0;
-                    for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow-unit & valueOfW.y*unit == tarCol){
-                            trueT = false
-                        }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
-                            trueW = false;
-                            row += unit;
-                            objPos.x = row*unit
-                            objPos.y = col*unit
-                            return;
-                        }
-                    }
-                    if(trueW){
-                    avatar.style.left = row + 'px'
-                    tarPos.x = tarRow/unit
-                    tarPos.y = tarCol/unit
+        //             let trueW = true;
+        //             let trueT = true;
+        //             let valueOfW = 0;
+        //             for(valueOfW of this.wallPositions){
+        //                 if(valueOfW.x*unit == tarRow-unit & valueOfW.y*unit == tarCol){
+        //                     trueT = false
+        //                 }
+        //                 if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+        //                     trueW = false;
+        //                     row += unit;
+        //                     objPos.x = row*unit
+        //                     objPos.y = col*unit
+        //                     return;
+        //                 }
+        //             }
+        //             if(trueW){
+        //             avatar.style.left = row + 'px'
+        //             tarPos.x = tarRow/unit
+        //             tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
-                        console.log('Hit');
-                        tarRow -= unit
-                        target.style.left = tarRow + 'px'
-                    }                                      
-                }                                    
-            }
-          }   // Up arrow key   
-            else if (e.keyCode == 38) {
-                if (col > 32 && !existObj(this.wallPositions, objPos)) {
-                    col -= unit;
+        //             if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
+        //                 console.log('Hit');
+        //                 tarRow -= unit
+        //                 target.style.left = tarRow + 'px'
+        //             }                                      
+        //         }                                    
+        //     }
+        //   }   // Up arrow key   
+        //     else if (e.keyCode == 38) {
+        //         if (col > 32 && !existObj(this.wallPositions, objPos)) {
+        //             col -= unit;
 
-                    objPos.x = row/unit
-                    objPos.y = col/unit
-                    let valueOfW = 0;
-                    let trueW = true;
-                    let trueT= true;
-                    for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol-unit){
-                            trueT = false
-                        }
-                        if(valueOfW.x *unit == row & valueOfW.y*unit == col){
-                            trueW = false;
-                            col += unit;
-                            objPos.x = row*unit
-                            objPos.y = col*unit
-                            return;
-                        }
-                    }
-                    if(trueW){
-                    avatar.style.top = col + 'px'
-                    tarPos.x = tarRow/unit
-                    tarPos.y = tarCol/unit
+        //             objPos.x = row/unit
+        //             objPos.y = col/unit
+        //             let valueOfW = 0;
+        //             let trueW = true;
+        //             let trueT= true;
+        //             for(valueOfW of this.wallPositions){
+        //                 if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol-unit){
+        //                     trueT = false
+        //                 }
+        //                 if(valueOfW.x *unit == row & valueOfW.y*unit == col){
+        //                     trueW = false;
+        //                     col += unit;
+        //                     objPos.x = row*unit
+        //                     objPos.y = col*unit
+        //                     return;
+        //                 }
+        //             }
+        //             if(trueW){
+        //             avatar.style.top = col + 'px'
+        //             tarPos.x = tarRow/unit
+        //             tarPos.y = tarCol/unit
 
-                    if(JSON.stringify(objPos) == JSON.stringify(tarPos) & trueT){                        
-                        console.log('Hit');
-                        tarCol -= unit
-                        target.style.top = tarCol + 'px'
-                    } 
-                }                          
-            }
-        }  // Right arrow key 
-            else if (e.keyCode == 39) {
-                if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
-                    row += unit;        
+        //             if(JSON.stringify(objPos) == JSON.stringify(tarPos) & trueT){                        
+        //                 console.log('Hit');
+        //                 tarCol -= unit
+        //                 target.style.top = tarCol + 'px'
+        //             } 
+        //         }                          
+        //     }
+        // }  // Right arrow key 
+        //     else if (e.keyCode == 39) {
+        //         if (row < gridWidth-32 && !existObj(this.wallPositions, objPos)) {
+        //             row += unit;        
                 
-                    objPos.x = row/unit
-                    objPos.y = col/unit
+        //             objPos.x = row/unit
+        //             objPos.y = col/unit
 
-                    let valueOfW = 0;
-                    let trueW = true;
-                    let trueT =true
-                    for(valueOfW of this.wallPositions){
+        //             let valueOfW = 0;
+        //             let trueW = true;
+        //             let trueT =true
+        //             for(valueOfW of this.wallPositions){
                         
-                        if(valueOfW.x*unit == tarRow+unit & valueOfW.y*unit == tarCol){
-                            trueT = false
-                            console.log(trueT)
-                        }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
-                            trueW = false;
-                            console.log(trueW)
-                            row -= unit;
-                            objPos.x = row/unit
-                            return;
-                        }
-                    }
+        //                 if(valueOfW.x*unit == tarRow+unit & valueOfW.y*unit == tarCol){
+        //                     trueT = false
+        //                     console.log(trueT)
+        //                 }
+        //                 if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+        //                     trueW = false;
+        //                     console.log(trueW)
+        //                     row -= unit;
+        //                     objPos.x = row/unit
+        //                     return;
+        //                 }
+        //             }
                     
-                    if(trueW){
-                    avatar.style.left = row + 'px' 
-                    tarPos.x = tarRow/unit
-                    tarPos.y = tarCol/unit
+        //             if(trueW){
+        //             avatar.style.left = row + 'px' 
+                    
+        //             //ToDo
+        //             for(let t=0; t<tarPos.length; t++){
 
-                    if(existObj(this.targetPositions, objPos) && trueT){                        
-                        console.log('Hit');
-                        tarRow += unit
-                        target2.style.left = tarRow + 'px'
-                    } 
-                    //If the Target & Goals positions are same, it will give One Point
-                    if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
-                        score ++ 
-                        this.score = score; 
-                        //The score in store.js file will be filled with this data
-                        this.$store.state.score = this.score
-                        console.log('hit') 
+        //                 let newTarPos = {
+        //                     x: tarPos[t].x,
+        //                     y: tarPos[t].y
+        //                 }
+        //                 tar2Pos.push(newTarPos) 
+        //                 tarRow = (tarPos[t].x)*unit
+                    
+        //             }
+                    
 
-                    }
-                }            
-            }
-            // Down arrow key
-        }else if (e.keyCode == 40) {
-                if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
-                    col += unit;
+        //             if(existObj(tar2Pos, objPos) && trueT){                        
+        //                 console.log('Hit');
+        //                 tarRow += unit
+        //                 for(let i=0; i<target2.length; i++){
+        //                     target2[i].style.left = tarRow + 'px'
 
-                    objPos.x = row/unit
-                    objPos.y = col/unit
+        //                     let leftDist = target2[i].getAttribute('style')
+        //                     let topDist = target2[i].getAttribute('style')
+        //                     console.log(leftDist. topDist);                            
+        //                 }                        
+        //             } 
+        //             //If the Target & Goals positions are same, it will give One Point
+        //             if(JSON.stringify(tarPos) === JSON.stringify(goalPos)){
+        //                 score ++ 
+        //                 this.score = score; 
+        //                 //The score in store.js file will be filled with this data
+        //                 this.$store.state.score = this.score
+        //                 console.log('hit') 
 
-                    let valueOfW = 0;
-                    let trueT=true;
-                    let trueW = true;
-                    for(valueOfW of this.wallPositions){
-                        if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol+unit){
-                            trueT = false
-                        }
-                        if(valueOfW.x*unit == row & valueOfW.y*unit == col){
-                            trueW = false;
-                            col -= unit;
-                            objPos.x = row*unit
-                            objPos.y = col*unit
-                            return;
-                        }
-                    }
-                    if(trueW){
-                    avatar.style.top = col + 'px'
-                    tarPos.x = tarRow/unit
-                    tarPos.y = tarCol/unit
-                        if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
-                            console.log('Hit');
-                            tarCol += unit
-                            target.style.top = tarCol + 'px'
-                        }
-                    }
-                }        
-            } 
-        });       
+        //             }
+        //         }            
+        //     }
+        //     // Down arrow key
+        // }else if (e.keyCode == 40) {
+        //         if (col < gridHeight-32 && !existObj(this.wallPositions, objPos)) {
+        //             col += unit;
+
+        //             objPos.x = row/unit
+        //             objPos.y = col/unit
+
+        //             let valueOfW = 0;
+        //             let trueT=true;
+        //             let trueW = true;
+        //             for(valueOfW of this.wallPositions){
+        //                 if(valueOfW.x*unit == tarRow & valueOfW.y*unit == tarCol+unit){
+        //                     trueT = false
+        //                 }
+        //                 if(valueOfW.x*unit == row & valueOfW.y*unit == col){
+        //                     trueW = false;
+        //                     col -= unit;
+        //                     objPos.x = row*unit
+        //                     objPos.y = col*unit
+        //                     return;
+        //                 }
+        //             }
+        //             if(trueW){
+        //             avatar.style.top = col + 'px'
+
+        //             tarPos.x = tarRow/unit
+        //             tarPos.y = tarCol/unit
+
+        //                 if(JSON.stringify(objPos) == JSON.stringify(tarPos) && trueT){                        
+        //                     console.log('Hit');
+        //                     tarCol += unit
+        //                     target.style.top = tarCol + 'px'
+        //                 }
+        //             }
+        //         }        
+        //     } 
+        // });       
     
      }
 }
