@@ -53,9 +53,24 @@
     position: relative;
 }
 
-.grid-block{
-    display: flex;
-    flex-wrap: wrap;
+/* STYLE TO GRID */
+.grid{
+    margin: 0 auto;
+    position: relative;
+    top: 10vh;
+    left: 2%;
+}
+
+.blocks-container{
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border: 1px solid #ddd;
+}
+
+.wall{
+    width: 32px;
+    height: 32px;
 }
 
 .block{
@@ -65,7 +80,8 @@
 }
 
 .avatar,
-.goal{
+.boxes,
+.goals{
     width: 32px;
     height: 32px;
     position: absolute;  
@@ -73,49 +89,10 @@
 }
 
 .avatar{
-    width: 32px;
-    height: 32px;
     background-image: url(../img/avatar.jpg);
 }
 
-.box{
-    width: 32px;
-    height: 32px;
-}
-
-.box{
-    position: absolute;
+.boxes{
     background: #d3a13b;
     border: 1px solid #ddd;
-}
-
-/* .goal{
-    background: #3bd3a05e;
-    left: 128px;
-    top: 160px;
-} */
-
-
-/* STYLE TO GRID */
-
-.grid{
-    margin: 0 auto;
-    position: relative;
-    top: 10vh;
-    left: 2%;
-}
-
-.all-blocks{
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    /* background: #f34533; */
-    border: 1px solid #ddd;
-    /* background: url("../img/brick.gif"); */
-}
-
-.wall,
-.object{
-    width: 32px;
-    height: 32px;
 }
