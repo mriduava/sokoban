@@ -135,16 +135,6 @@ export default {
                       y: avatarPosition[0].y}
 
 
-        let boxRow = 1*unit;
-        let boxCol = 1*unit;
-        // let boxPos = [{x: boxPositions[0].x,
-        //               y: boxPositions[0].y}];
-
-        let boxPos = {x: boxPositions[0].x, 
-                      y: boxPositions[0].y}
-
-
-
         /**
         * To find if an object exist in the array
         * The function takes one array of objects and one comparable object
@@ -168,6 +158,9 @@ export default {
         let box2Row = (box2Pos.x)*unit;
         let box2Col = (box2Pos.y)*unit;
 
+        /**
+        * Functions to control boxes
+        */
         function leftRightDirection() {                                            
             console.log('Hit');
             box2Pos.x = box2Row/unit
@@ -204,7 +197,7 @@ export default {
                     let trueT =true
                     for(valueOfW of wallPositions){
                         
-                        if(valueOfW.x*unit == boxRow+unit & valueOfW.y*unit == boxCol){
+                        if(valueOfW.x*unit == box2Row+unit & valueOfW.y*unit == box2Col){
                             trueT = false
                             console.log(trueT)
                         }
@@ -246,7 +239,7 @@ export default {
                     let trueT = true;
                     let valueOfW = 0;
                     for(valueOfW of wallPositions){
-                        if(valueOfW.x*unit == boxRow-unit & valueOfW.y*unit == boxCol){
+                        if(valueOfW.x*unit == box2Row-unit & valueOfW.y*unit == box2Col){
                             trueT = false
                         }
                         if(valueOfW.x*unit == avtRow & valueOfW.y*unit == avtCol){
@@ -283,7 +276,7 @@ export default {
                     let trueW = true;
                     let trueT= true;
                     for(valueOfW of wallPositions){
-                        if(valueOfW.x*unit == boxRow & valueOfW.y*unit == boxCol-unit){
+                        if(valueOfW.x*unit == box2Row & valueOfW.y*unit == box2Col-unit){
                             trueT = false
                         }
                         if(valueOfW.x *unit == avtRow & valueOfW.y*unit == avtCol){
@@ -318,7 +311,7 @@ export default {
                     let trueT=true;
                     let trueW = true;
                     for(valueOfW of wallPositions){
-                        if(valueOfW.x*unit == boxRow & valueOfW.y*unit == boxCol+unit){
+                        if(valueOfW.x*unit == box2Row & valueOfW.y*unit == box2Col+unit){
                             trueT = false
                         }
                         if(valueOfW.x*unit == avtRow & valueOfW.y*unit == avtCol){
@@ -339,7 +332,6 @@ export default {
                 }        
             } 
         }
-
         
         document.addEventListener('keydown', rightKeyPress)
         document.addEventListener('keydown', leftKeyPress)
