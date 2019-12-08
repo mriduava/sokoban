@@ -31,9 +31,9 @@ export default {
                 ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
+                ['W', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', 'G', 'W'],
+                ['W', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
             ]
@@ -113,17 +113,7 @@ export default {
         //To select the Avatar
         let avatar = document.querySelector('.avatar')
         //To select all Targets which is created by the createTargets function
-        let boxes = document.querySelector('.boxes')
-
-
-        //ToDo
-        for(let i=0; i<boxes.length; i++){
-            boxes[i].addEventListener('click', ()=> {
-                let leftDist = boxes[i].style.left.replace('px', '')
-                let topDist = boxes[i].style.top.replace('px', '')
-                console.log(leftDist, topDist);
-            })
-        }
+        let boxes = document.querySelectorAll('.boxes')
  
 
         let goalPos = [{x: goalPostions[0].x,
@@ -151,31 +141,11 @@ export default {
         }
 
 
-        //TEST FUNCTIONS
         let box2Pos = {x: boxPositions[0].x, 
                       y: boxPositions[0].y}
 
         let box2Row = (box2Pos.x)*unit;
         let box2Col = (box2Pos.y)*unit;
-
-        /**
-        * Functions to control boxes
-        */
-        function leftRightDirection() {                                            
-            console.log('Hit');
-            box2Pos.x = box2Row/unit
-            boxes.style.left = box2Row + 'px' 
-            box2Pos.x = box2Row/unit
-            box2Pos.y = box2Col/unit              
-        }
-
-        function upDownDirection() {                                            
-            console.log('Hit');
-            box2Pos.y = box2Col/unit
-            boxes.style.top = box2Col + 'px' 
-            box2Pos.x = box2Row/unit
-            box2Pos.y = box2Col/unit              
-        }
 
          /**
         * Event key listener
@@ -183,7 +153,7 @@ export default {
         * pressing Arrow Key from Keyboard
         */
         // Right arrow key
-        function rightKeyPress(e){ 
+        const rightKeyPress = (e) => { 
             
             if (e.keyCode == 39) {
                 if (avtRow < gridWidth-unit && !existObj(wallPositions, avtPos)) {
@@ -214,13 +184,13 @@ export default {
                        avatar.style.left = avtRow + 'px' 
                     }   
 
-                    if(JSON.stringify(avtPos) === JSON.stringify(box2Pos) && trueT){                                  
-                        box2Row += unit                    
-                        leftRightDirection()                        
-                    }
-
-                    console.log(box2Pos);
-                    console.log(avtPos);        
+                    for(let i=0; i<boxes.length; i++){
+                        let leftDist = (boxes[i].style.left.replace('px', ''))/unit
+                        let topDist = (boxes[i].style.top.replace('px', ''))/unit
+                        if(leftDist === avtPos.x && topDist === avtPos.y){
+                            boxes[i].style.setProperty('left', leftDist*unit + unit + 'px')
+                        }
+                    }     
                 }
             } 
         }
@@ -253,13 +223,14 @@ export default {
                     if(trueW){
                         avatar.style.left = avtRow + 'px'                                     
                     }
-                    if(JSON.stringify(avtPos) === JSON.stringify(box2Pos)){                                  
-                        box2Row -= unit                    
-                        leftRightDirection()                        
-                    } 
 
-                    console.log(box2Pos);
-                    console.log(avtPos);                                  
+                    for(let i=0; i<boxes.length; i++){
+                        let leftDist = (boxes[i].style.left.replace('px', ''))/unit
+                        let topDist = (boxes[i].style.top.replace('px', ''))/unit
+                        if(leftDist === avtPos.x && topDist === avtPos.y){
+                            boxes[i].style.setProperty('left', leftDist*unit - unit + 'px')
+                        }
+                    }                                
                 }
             }
         }
@@ -290,10 +261,14 @@ export default {
                     if(trueW){
                        avatar.style.top = avtCol + 'px'
                     }
-                    if(JSON.stringify(avtPos) === JSON.stringify(box2Pos)){                                  
-                        box2Col -= unit                    
-                        upDownDirection()                        
-                    }                         
+
+                    for(let i=0; i<boxes.length; i++){
+                        let leftDist = (boxes[i].style.left.replace('px', ''))/unit
+                        let topDist = (boxes[i].style.top.replace('px', ''))/unit
+                        if(leftDist === avtPos.x && topDist === avtPos.y){
+                            boxes[i].style.setProperty('top', topDist*unit - unit + 'px')
+                        }
+                    }                          
                 }
             }
         }
@@ -325,10 +300,14 @@ export default {
                     if(trueW){
                         avatar.style.top = avtCol + 'px'
                     }
-                    if(JSON.stringify(avtPos) === JSON.stringify(box2Pos)){                                  
-                        box2Col += unit                    
-                        upDownDirection()                        
-                    }
+
+                    for(let i=0; i<boxes.length; i++){
+                        let leftDist = (boxes[i].style.left.replace('px', ''))/unit
+                        let topDist = (boxes[i].style.top.replace('px', ''))/unit
+                        if(leftDist === avtPos.x && topDist === avtPos.y){
+                            boxes[i].style.setProperty('top', topDist*unit + unit + 'px')
+                        }
+                    } 
                 }        
             } 
         }
