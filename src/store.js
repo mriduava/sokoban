@@ -1,3 +1,5 @@
+// import {grids} from './data/grids.js'
+
 export const store = new Vuex.Store({
     state: {
         score: 0,
@@ -14,3 +16,4 @@ export const store = new Vuex.Store({
             ],
     }
 })
+

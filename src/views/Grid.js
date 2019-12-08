@@ -1,4 +1,4 @@
-import {store} from '../js/store.js'
+import {store} from '../store.js'
 
 export default {
     store,
@@ -25,6 +25,7 @@ export default {
      </div>`,
      data() {
          return {
+            // grids: [],
             grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
                 ['W', 'A', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W'],
@@ -41,6 +42,7 @@ export default {
          }
      },
      mounted() {
+
         /**
         * To find the position of each blocks in the array
         * It takes two parameters. 
