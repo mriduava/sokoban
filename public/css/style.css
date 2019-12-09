@@ -13,112 +13,82 @@
 }
 
 #home{
-    max-width: 410px;
-    border: 2px solid #ddd;
-    margin: 5vw auto;
+    margin: 2% auto;
+    padding: 5px auto;
 }
 
 .nav{
-    display: flex;
-    justify-content: space-around;
-    margin: 10px 10px;
+    margin: 0 auto;
     font-family: sans-serif;
-    padding-bottom: 10px;
+    text-align: center;
 }
 
-.nav> .label, .score{
-    padding: 4px 5px;
-    font-size: 19px;
-    border: 1px solid #ddd;
-    color: #0abde3;
+.sub-nav{
+    margin-top: 2%;;
+    display: flex;
+    background: #d3a13b;
+    justify-content: space-around;
+
+}
+
+ .level, 
+ .score{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 21px;
+    color: #fff;
 }
 
 .game-name{
     font-family: 'pacfont';
-    font-size: 2em;
-    color: #d3a13b;
+    font-size: 2.5em;
+    color: #ff0a91;
 }
-
-.board{
-    margin: 15px auto;
-}
-
-
-/* BOARD STYLE */
-#grid{
-    width: 386px;
-    height: 386px;
-    border: 1px solid #d3a13b;
-    margin: 0 auto;
-    position: relative;
-}
-
-.grid-block{
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.block{
-    width: 32px;
-    height: 32px;
-    border: 1px dotted #ddd;
-}
-
-.avatar,
-.target,
-.goal{
-    width: 32px;
-    height: 32px;
-    position: absolute;  
-    z-index: +1;  
-}
-
-.avatar{
-    top: 32px;
-    left: 32px;
-    font-size: 32px;
-    color: rgb(118, 13, 216);
-}
-
-.target,
-.target2{
-    width: 32px;
-    height: 32px;
-}
-
-.target2{
-    position: absolute;
-    background: #d3a13b;
-    border: 1px solid #ddd;
-}
-
-/* .goal{
-    background: #3bd3a05e;
-    left: 128px;
-    top: 160px;
-} */
 
 
 /* STYLE TO GRID */
+.game{
+    max-width: 95%;
+    margin: 5% auto;
+}
 
 .grid{
-    margin: 0 auto;
     position: relative;
-    top: 10vh;
-    left: 2%;
 }
 
 .all-blocks{
     width: 32px;
     height: 32px;
     position: absolute;
-    /* background: #f34533; */
-    border: 1px solid #ddd;
-    /* background: url("../img/brick.gif"); */
 }
 
-.wall,
-.object{
+.walls,
+.goals{
     width: 32px;
     height: 32px;
+}
+
+.goals{
+    border: 1px solid #e0c07e;
+}
+
+.boxes{
+    background: url("../img/box.jpg");
+}
+
+.walls{
+    background: url("../img/bricks.jpg");
+}
+
+.avatar,
+.boxes{
+    width: 32px;
+    height: 32px;
+    position: absolute;  
+    z-index: +1; 
+}
+
+.avatar{
+    font-size: 32px;
+    color: rgb(118, 13, 216);
 }
