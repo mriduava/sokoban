@@ -118,7 +118,7 @@ export default {
                             }
                             
                             //check if there is any nearby which has same position
-                            if(arrayNext(tarPos,i)){
+                            else if(arrayNext(tarPos,i)){
                                 //if target position is not same as wall move 1 step
                                 if(checkSamePosObjectList(tarPos[i],wallPos)){
                                     tarPos[i].x = targetPositions[i].x
@@ -261,8 +261,8 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
                         objPos.x +=1
                     }
-                    //moves object to the left
-                    if(checkSamePosObjectList(objPos,wallPositions)){
+                    //moves avatar to the left
+                    else{
                         avatar.style.left = objPos.x*32 + 'px'
                         //moves target to the left
                         moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"left")
@@ -278,7 +278,7 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
                         objPos.y +=1
                     }
-                    if(checkSamePosObjectList(objPos,wallPositions)){
+                    else{
                         avatar.style.top = objPos.y*32 + 'px'
                         moveTarget(avatar,objPos,wallPositions,targetPositions,listZeroY,"up")
                     }
@@ -292,7 +292,7 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
                         objPos.x -=1
                     }
-                    if(checkSamePosObjectList(objPos,wallPositions)){
+                    else{
                         avatar.style.left = objPos.x *32 + 'px'
                         moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"right")
                     }
@@ -306,7 +306,7 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
                         objPos.y-=1
                     }
-                    if(checkSamePosObjectList(objPos,wallPositions)){
+                    else{
                         avatar.style.top = objPos.y*32 + 'px'
                         moveTarget(avatar,objPos,wallPositions, targetPositions,listZeroY,"down")
                     }
