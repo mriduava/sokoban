@@ -36,8 +36,8 @@ export default {
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'T', ' ', 'W', 'W'],
                 ['W', ' ', ' ', 'T', ' ', 'W', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'G', 'G', 'W'],
-                ['W', ' ', ' ', ' ', 'A', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', ' ', ' ', ' ', ' ', 'G', ' ', 'W', ' ', 'G', ' ', 'W'],
+                ['W', ' ', ' ', ' ', 'A', ' ', 'G', ' ', ' ', ' ', 'G', 'W'],
                 ['W', ' ', 'T', 'T', '', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', 'W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'W'],
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
@@ -65,7 +65,9 @@ export default {
             }
             return array
         }
-        /*checkSamePosObjectList: Checks that an object has the same position as any element in an array. */
+        /*
+        checkSamePosObjectList: Checks that an object has the same position as any element in an array.
+        */
         function checkSamePosObjectList(object,array){
             let element = 0;
             let trueW = true;
@@ -81,7 +83,9 @@ export default {
             }
             return trueW
         }
-        /*Checks if element at array[index] has same value as array[j] where j!=index.  */
+        /*
+        Checks if element at array[index] has same value as array[j] where j!=index.
+        */
         function arrayNext(array,index){
             let nextValue = true;
             for(let j=0;j<array.length;j++){
@@ -131,7 +135,7 @@ export default {
                         case "up":
                             listZero[i]-=1
                             tarPos[i].y-=1   
-                            
+
                             //if targetposition is the same as wall stop
                             if(checkSamePosObjectList(tarPos[i],wallPos) == false || arrayNext(tarPos,i) == false){
                                 listZero[i]+=1
@@ -205,6 +209,23 @@ export default {
             
             }
         }
+
+        /*Checks if all element in two arrays are the same. We want this when checking if the player has all targets on the goals.*/
+        function checkArraySameElements(array1, array2){
+            let element1 = 0;
+            let element2 = 0;
+            let sameElement = 0;
+            for(element1 of array1){
+                for(element2 of array2){
+                    if(JSON.stringify(element1) == JSON.stringify(element2)){
+                        sameElement++;
+                    }
+                }
+            }
+            if(sameElement==array1.length){
+                return true
+            }
+        }
         
         //All positions of different letters in this.grids.
         let wallPositions=findPositions('W',this.grids)
@@ -215,8 +236,6 @@ export default {
         //Finds all tags with the with certain tag-names.
         let target = document.getElementsByClassName('target')
         let avatar = document.querySelector('.avatar')
-        let goal = document.querySelector('.goal')
-        
         
         let score = 0;
 
@@ -242,9 +261,15 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
                         objPos.x +=1
                     }
+                    //moves object to the left
                     if(checkSamePosObjectList(objPos,wallPositions)){
                         avatar.style.left = objPos.x*32 + 'px'
+                        //moves target to the left
                         moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"left")
+                    }
+                    //checks if all targets are on the goal positions
+                    if(checkArraySameElements(goalPositions,targetPositions)){
+                        console.log("You have won.")
                     }
                     break;
              // Up arrow key   
@@ -257,6 +282,9 @@ export default {
                         avatar.style.top = objPos.y*32 + 'px'
                         moveTarget(avatar,objPos,wallPositions,targetPositions,listZeroY,"up")
                     }
+                    if(checkArraySameElements(goalPositions,targetPositions)){
+                        console.log("You have won.")
+                    }
                     break;                  
             // Right arrow key 
                 case 39: 
@@ -268,6 +296,9 @@ export default {
                         avatar.style.left = objPos.x *32 + 'px'
                         moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"right")
                     }
+                    if(checkArraySameElements(goalPositions,targetPositions)){
+                        console.log("You have won.")
+                    }
                     break;
             // Down arrow key
                 case 40:
@@ -278,6 +309,9 @@ export default {
                     if(checkSamePosObjectList(objPos,wallPositions)){
                         avatar.style.top = objPos.y*32 + 'px'
                         moveTarget(avatar,objPos,wallPositions, targetPositions,listZeroY,"down")
+                    }
+                    if(checkArraySameElements(goalPositions,targetPositions)){
+                        console.log("You have won.")
                     }
                     break;
             }
