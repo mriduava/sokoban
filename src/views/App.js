@@ -1,5 +1,6 @@
 import Home from './Home.js'
 
+
 export default{
     name: "app",
     components: {
@@ -7,8 +8,6 @@ export default{
     },
     template: `
         <div id="app">
-            <div>
-                <Home/>
-            </div>                     
+            <Home/>   
         </div>`,
 }
