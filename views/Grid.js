@@ -4,16 +4,16 @@ export default {
     store,
     template: `
      <div class="grid">
-        <div class="path" v-for="(blockRow, row) in grids">
+        <div v-for="(blockRow, row) in grids">
 
-            <div class="all-blocks" v-for="(block, col) in blockRow" 
+            <div class="blocks-container" v-for="(block, col) in blockRow" 
                  :style="{ top: row*32 + 'px', left: col*32 + 'px'}">
-                <div class="wall" v-if="block == 'W'" 
+                <div class="wall" v-if="block === 'W'" 
                      :style="{backgroundColor: '#F93409'}">
                      <!-- {{block}}   -->
                 </div>              
 
-                <div class="object" v-else-if="block === 'G'" 
+                <div class="goals" v-else-if="block === 'G'" 
                      :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
                     {{block}}
                 </div>
@@ -45,7 +45,6 @@ export default {
          }
      },
      mounted() {
-
         /*
         findPositions: Goes through the list this.grids and finds position of a certain element in the list.
         parameters: Takes two parameters; the first os of datatype string and other is of type array.
@@ -247,9 +246,10 @@ export default {
         let listZeroX = [0,0,0,0]
         let listZeroY = [0,0,0,0]
 
-        /**
+
+         /**
         * Event key listener
-        * For the movement of the Avatar and Target by
+        * For the movement of the Avatar and Boxes by
         * pressing Arrow Key from Keyboard
         */
         document.addEventListener('keydown', (e) => {

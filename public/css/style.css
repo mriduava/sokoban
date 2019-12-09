@@ -1,6 +1,3 @@
-
-@import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
-
 @font-face{
     font-family: 'pacfont';
     src: url(../fonts/pacfont.TTF);
@@ -44,7 +41,7 @@
 }
 
 
-/* BOARD STYLE */
+/* GRID STYLE */
 #grid{
     width: 386px;
     height: 386px;
@@ -53,9 +50,24 @@
     position: relative;
 }
 
-.grid-block{
-    display: flex;
-    flex-wrap: wrap;
+/* STYLE TO GRID */
+.grid{
+    margin: 0 auto;
+    position: relative;
+    top: 1vh;
+    left: 1%;
+}
+
+.blocks-container{
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border: 1px solid #ddd;
+}
+
+.wall{
+    width: 32px;
+    height: 32px;
 }
 
 .block{
@@ -65,8 +77,8 @@
 }
 
 .avatar,
-.target,
-.goal{
+.boxes,
+.goals{
     width: 32px;
     height: 32px;
     position: absolute;  
@@ -74,51 +86,10 @@
 }
 
 .avatar{
-    top: 32px;
-    left: 32px;
-    font-size: 32px;
-    color: rgb(118, 13, 216);
+    background-image: url(../img/avatar.jpg);
 }
 
-.target,
-.target2{
-    width: 32px;
-    height: 32px;
-}
-
-.target2{
-    position: absolute;
+.boxes{
     background: #d3a13b;
     border: 1px solid #ddd;
-}
-
-/* .goal{
-    background: #3bd3a05e;
-    left: 128px;
-    top: 160px;
-} */
-
-
-/* STYLE TO GRID */
-
-.grid{
-    margin: 0 auto;
-    position: relative;
-    top: 10vh;
-    left: 2%;
-}
-
-.all-blocks{
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    /* background: #f34533; */
-    border: 1px solid #ddd;
-    /* background: url("../img/brick.gif"); */
-}
-
-.wall,
-.object{
-    width: 32px;
-    height: 32px;
 }

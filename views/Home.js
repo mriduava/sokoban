@@ -1,10 +1,8 @@
-import Board from './Board.js'
 import Grid from './Grid.js'
 
 export default{
     name: "home",
     components: {
-        Board,
         Grid      
     },
     template: `
@@ -16,8 +14,7 @@ export default{
                 <span class="score" >SCORE {{totalScore}}</span>
             </div>
 
-            <div class="board">
-                <!-- <Board/> -->
+            <div class="grid">
                 <Grid/>
             </div>
 
