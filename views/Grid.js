@@ -33,10 +33,10 @@ export default {
             grids: [
                 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'W', 'W', 'W', 'W'],
-                ['W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'T', ' ', 'W', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'T', ' ', 'W', 'W'],
                 ['W', ' ', ' ', 'T', ' ', 'W', ' ', ' ', ' ', ' ', 'W', 'W'],
                 ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W'],
-                ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
+                ['W', ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'G', 'G', 'W'],
                 ['W', ' ', ' ', ' ', 'A', ' ', ' ', ' ', ' ', 'G', 'G', 'W'],
                 ['W', ' ', 'T', 'T', '', ' ', ' ', ' ', ' ', ' ', ' ', 'W'],
                 ['W', ' ', ' ', 'W', ' ', ' ', 'W', ' ', ' ', ' ', ' ', 'W'],
@@ -81,46 +81,129 @@ export default {
             }
             return trueW
         }
-        
-        /*moveTarget: The avatar moves the target either left,up, right or down */
-        function moveTarget(objectPos, array, listZero,direction){
-            for(let i = 0; i<array.length;i++){
-                let tarPos = array[i]
-                if(JSON.stringify(objectPos)===JSON.stringify(tarPos)){
+        /*Checks if element at array[index] has same value as array[j] where j!=index.  */
+        function arrayNext(array,index){
+            let nextValue = true;
+            for(let j=0;j<array.length;j++){
+                if(j!=index){
+                    if(JSON.stringify(array[index])===JSON.stringify(array[j])){
+                        nextValue = false;
+                        break;
+                    }
+                }
+            }
+            return nextValue
+        }
+        /*
+        moveTarget: The avatar moves the target either left,up, right or down
+        */
+        function moveTarget(avaPos,objectPos,wallPos,tarPos,listZero,direction){
+            
+            for(let i = 0; i<tarPos.length;i++){
+                if(JSON.stringify(objectPos)===JSON.stringify(tarPos[i])){
                     switch(direction){
                         case "left":
                             listZero[i]-=1
-                            array[i].x-=1
-                            console.log('Hit');
-                            tarPos.x = targetPositions[i].x 
-                            target[i].style.left = listZero[i]*unit + 'px'
+                            tarPos[i].x-=1
+                             
+
+                            //if targetposition is the same as wall stop
+                            if(checkSamePosObjectList(tarPos[i],wallPos) == false || arrayNext(tarPos,i) == false){
+                                listZero[i]+=1
+                                tarPos[i].x+=1
+                            }
+                            
+                            //check if there is any nearby which has same position
+                            if(arrayNext(tarPos,i)){
+                                //if target position is not same as wall move 1 step
+                                if(checkSamePosObjectList(tarPos[i],wallPos)){
+                                    tarPos[i].x = targetPositions[i].x
+                                    target[i].style.left = listZero[i]*32 + 'px'
+                                }
+                                
+                            }
+                            //if avatar position is same as target, doesn't go into target
+                            if(objectPos.x == tarPos[i].x){
+                                objectPos.x = tarPos[i].x + 1
+                                avaPos.style.left = objectPos.x * 32 + 'px'
+                            }
                             break;
                         case "up":
                             listZero[i]-=1
-                            array[i].y-=1        
-                            console.log('Hit');
-                            tarPos.y = targetPositions[i].y
-                            target[i].style.top = listZero[i]*unit + 'px'
+                            tarPos[i].y-=1   
+                            
+                            //if targetposition is the same as wall stop
+                            if(checkSamePosObjectList(tarPos[i],wallPos) == false || arrayNext(tarPos,i) == false){
+                                listZero[i]+=1
+                                tarPos[i].y+=1
+                            }
+                            
+                            if(arrayNext(tarPos,i)){
+                                //if target position is not same as wall move 1 step
+                                if(checkSamePosObjectList(tarPos[i],wallPos)){
+                                    tarPos[i].y = targetPositions[i].y
+                                    target[i].style.top = listZero[i]*32 + 'px'
+                                }
+                                
+                            }
+                            //if avatar position is same as target, doesn't go into target
+                            if(objectPos.y == tarPos[i].y){
+                                objectPos.y = tarPos[i].y + 1
+                                avaPos.style.top = objectPos.y * 32 + 'px'
+                            }
                             break;
                         case "right":
                             listZero[i]+=1
-                            array[i].x+=1   
-                            console.log('Hit');
-                            tarPos.x = targetPositions[i].x
-                            target[i].style.left = listZero[i]*unit + 'px'
+                            tarPos[i].x+=1   
+                              ;
+                            if(checkSamePosObjectList(tarPos[i],wallPos) == false || arrayNext(tarPos,i) == false){
+                                listZero[i]-=1
+                                tarPos[i].x-=1
+                            }
+                            
+                            //check if there is any nearby which has same position
+                            if(arrayNext(tarPos,i)){
+                                //if target position is not same as wall move 1 step
+                                if(checkSamePosObjectList(tarPos[i],wallPos)){
+                                    tarPos[i].x = targetPositions[i].x
+                                    target[i].style.left = listZero[i]*32 + 'px'
+                                }
+                                
+                            }
+                            //if avatar position is same as target, doesn't go into target
+                            if(objectPos.x == tarPos[i].x){
+                                objectPos.x = tarPos[i].x - 1
+                                avaPos.style.left = objectPos.x * 32 + 'px'
+                            }
                             break;
                         case "down":{
                             listZero[i]+=1
-                            array[i].y+=1    
-                            console.log('Hit');
-                            tarPos.y = targetPositions[i].y 
-                            target[i].style.top = listZero[i]*unit + 'px'
+                            tarPos[i].y+=1    
+                              ;
+                            if(checkSamePosObjectList(tarPos[i],wallPos) == false || arrayNext(tarPos,i) == false){
+                                listZero[i]-=1
+                                tarPos[i].y-=1
+                            }
+                            
+                            if(arrayNext(tarPos,i)){
+                                //if target position is not same as wall move 1 step
+                                if(checkSamePosObjectList(tarPos[i],wallPos)){
+                                    tarPos[i].y = targetPositions[i].y
+                                    target[i].style.top = listZero[i]*32 + 'px'
+                                }
+                                
+                            }
+                            //if avatar position is same as target, doesn't go into target
+                            if(objectPos.y == tarPos[i].y){
+                                objectPos.y = tarPos[i].y - 1
+                                avaPos.style.top = objectPos.y * 32 + 'px'
+                            }
                             break;
                         }
                     }  
+                }
+            
             }
-        
-    }
         }
         
         //All positions of different letters in this.grids.
@@ -136,19 +219,10 @@ export default {
         
         
         let score = 0;
-        let unit = 32;
 
         //Start position of object.
-        avatar.style.left = objPos.x * unit + 'px'
-        avatar.style.top = objPos.y * unit + 'px'
-
-        //Values which are later used for determining the pixels for moving the avatar.
-        let row = objPos.x*unit;
-        let col = objPos.y*unit;
-
-        //Width and height of the this.grid. 
-        let gridWidth = this.grids.length * unit
-        let gridHeight = this.grids[0].length * unit
+        avatar.style.left = objPos.x * 32 + 'px'
+        avatar.style.top = objPos.y * 32 + 'px'
 
         //Values which are later used for determining the pixels for moving the targets.
         let listZeroX = [0,0,0,0]
@@ -161,70 +235,52 @@ export default {
         */
         document.addEventListener('keydown', (e) => {
             // Left arrow key
-            if (e.keyCode == 37) {
-                row -= unit;        
-                objPos.x = row/unit
-                objPos.y = col/unit
-
-                //Check if avatar has same position as any wall.
-                if(checkSamePosObjectList(objPos,wallPositions)==false){
-                    row += unit;
-                    objPos.x = row/unit
-                }
-                if(checkSamePosObjectList(objPos,wallPositions)){
-                    avatar.style.left = row + 'px'
-                    //Move target to left.  
-                    moveTarget(objPos,targetPositions,listZeroX,"left")
-                }
-            }
+            switch(e.keyCode){
+                case 37:      
+                    objPos.x -=1
+                    //Check if avatar has same position as any wall.
+                    if(checkSamePosObjectList(objPos,wallPositions)==false){
+                        objPos.x +=1
+                    }
+                    if(checkSamePosObjectList(objPos,wallPositions)){
+                        avatar.style.left = objPos.x*32 + 'px'
+                        moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"left")
+                    }
+                    break;
              // Up arrow key   
-            else if (e.keyCode == 38) {
-                
-                    col -= unit;
-                    objPos.x = row/unit
-                    objPos.y = col/unit
-
+                case 38:
+                    objPos.y -=1
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
-                        col += unit;
-                        objPos.y = col/unit
+                        objPos.y +=1
                     }
                     if(checkSamePosObjectList(objPos,wallPositions)){
-                            avatar.style.top = col + 'px'
-                            moveTarget(objPos,targetPositions,listZeroY,"up")
+                        avatar.style.top = objPos.y*32 + 'px'
+                        moveTarget(avatar,objPos,wallPositions,targetPositions,listZeroY,"up")
                     }
-                }                         
+                    break;                  
             // Right arrow key 
-            else if (e.keyCode == 39) {
-
-                    row += unit;        
-                    objPos.x = row/unit
-                    objPos.y = col/unit
-
+                case 39: 
+                    objPos.x +=1
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
-                        row -= unit;
-                        objPos.x = row/unit
+                        objPos.x -=1
                     }
                     if(checkSamePosObjectList(objPos,wallPositions)){
-                        avatar.style.left = row + 'px'
-                        moveTarget(objPos,targetPositions,listZeroX,"right")
+                        avatar.style.left = objPos.x *32 + 'px'
+                        moveTarget(avatar, objPos,wallPositions,targetPositions,listZeroX,"right")
                     }
-                }
+                    break;
             // Down arrow key
-            else if (e.keyCode == 40) {
-
-                    col += unit;
-                    objPos.x = row/unit
-                    objPos.y = col/unit
-
+                case 40:
+                    objPos.y+=1
                     if(checkSamePosObjectList(objPos,wallPositions)==false){
-                        col -= unit;
-                        objPos.y = col/unit
+                        objPos.y-=1
                     }
                     if(checkSamePosObjectList(objPos,wallPositions)){
-                        avatar.style.top = col + 'px'
-                        moveTarget(objPos,targetPositions,listZeroY,"down")
+                        avatar.style.top = objPos.y*32 + 'px'
+                        moveTarget(avatar,objPos,wallPositions, targetPositions,listZeroY,"down")
                     }
-                }
-            });
+                    break;
+            }
+        });
      }
 }
