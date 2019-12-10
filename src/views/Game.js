@@ -135,6 +135,10 @@ export default {
                                 if(checkSamePosObjectList(tarPos[i], wallPos)){
                                     tarPos[i].x = targetPositions[i].x
                                     target[i].style.left = listZero[i]*unit + 'px'
+                                    console.log('X:' + listZeroX);
+                                    console.log('Y:' + listZeroY);
+                                    console.log(JSON.stringify(targetPositions));   
+                                    console.log(JSON.stringify(avatarPosition));
                                 }                                
                             }
                             //if avatar position is same as target, doesn't go into target
@@ -156,6 +160,10 @@ export default {
                                 if(checkSamePosObjectList(tarPos[i],wallPos)){
                                     tarPos[i].y = targetPositions[i].y
                                     target[i].style.top = listZero[i]*unit + 'px'
+                                    console.log('X:'+listZeroX);
+                                    console.log('Y:'+listZeroY);
+                                    console.log(JSON.stringify(targetPositions));
+                                    console.log(JSON.stringify(avatarPosition));
                                 }                                
                             }
                             //if avatar position is same as target, doesn't go into target
@@ -178,6 +186,10 @@ export default {
                                 if(checkSamePosObjectList(tarPos[i], wallPos)){
                                     tarPos[i].x = targetPositions[i].x
                                     target[i].style.left = listZero[i]*unit + 'px'
+                                    console.log('X:'+listZeroX);
+                                    console.log('Y:'+listZeroY);
+                                    console.log(JSON.stringify(targetPositions));
+                                    console.log(JSON.stringify(avatarPosition));
                                 }
                             }
                             //if avatar position is same as target, doesn't go into target
@@ -200,6 +212,10 @@ export default {
                                 if(checkSamePosObjectList(tarPos[i],wallPos)){
                                     tarPos[i].y = targetPositions[i].y
                                     target[i].style.top = listZero[i]*unit + 'px'
+                                    console.log('X:'+listZeroX);
+                                    console.log('Y:'+listZeroY);
+                                    console.log(JSON.stringify(targetPositions));
+                                    console.log(JSON.stringify(avatarPosition));
                                 }                                
                             }
                             //if avatar position is same as target, doesn't go into target
@@ -229,14 +245,19 @@ export default {
             }
         }
         
-
+        // Takes in an array and an object, if the object shares coordinates with an element in the array, the element is removed
         function destroyArrayElement(array, object) {
-
+            let indexOfFound = -1;
             for(let i = 0; i<array.length; i++){
                 if(JSON.stringify(array[i]) == JSON.stringify(object)){
                     array.splice(i, 1);
+                    indexOfFound = i;
+                    console.log(indexOfFound);
+                    console.log(i);
+                    
                 }
             }
+            return indexOfFound;
         }
 
         /**
@@ -254,11 +275,18 @@ export default {
                         destroyArrayElement(wallPositions, avatarPosition);
                         avatarPosition.x +=1
                         drillActive = false;
-                        console.log('drill used'); 
+                        console.log('drill used');
                     }
                     else if(checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive){
-                        destroyArrayElement(targetPositions, avatarPosition);
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
                         avatarPosition.x +=1
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        
                         bombActive = false;
                         console.log('bomb used');                        
                     }
@@ -273,7 +301,7 @@ export default {
                         moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left")
                     }
                     //checks if all targets are on the goal positions
-                    if(checkArraySameElements(goalPositions, targetPositions)){
+                    if(checkArraySameElements(targetPositions, goalPositions)){
                         console.log("You have won.")
                     }
                     break;
@@ -286,6 +314,18 @@ export default {
                         drillActive = false;
                         console.log('no drill');
                     }
+                    else if(checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive){
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.y +=1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');                        
+                    }
                     else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.y += 1
                     }
@@ -293,7 +333,7 @@ export default {
                         avatar.style.top = avatarPosition.y*unit + 'px'
                         moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "up")
                     }
-                    if(checkArraySameElements(goalPositions, targetPositions)){
+                    if(checkArraySameElements(targetPositions, goalPositions)){
                         console.log("You have won.")
                     }
                     break;                  
@@ -306,6 +346,18 @@ export default {
                         drillActive = false;
                         console.log('no drill');
                     }
+                    else if(checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive){
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.x -=1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');                        
+                    }
                     else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x -= 1
                     }
@@ -313,7 +365,7 @@ export default {
                         avatar.style.left = avatarPosition.x *unit + 'px'
                         moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "right")
                     }
-                    if(checkArraySameElements(goalPositions, targetPositions)){
+                    if(checkArraySameElements(targetPositions, goalPositions)){
                         console.log("You have won.")
                     }
                     break;
@@ -326,6 +378,18 @@ export default {
                         drillActive = false;
                         console.log('no drill');
                     }
+                    else if(checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive){
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.y -=1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');                        
+                    }
                     else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.y -= 1
                     }
@@ -333,7 +397,7 @@ export default {
                         avatar.style.top = avatarPosition.y*unit + 'px'
                         moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down")
                     }
-                    if(checkArraySameElements(goalPositions, targetPositions)){
+                    if(checkArraySameElements(targetPositions, goalPositions)){
                         console.log("You have won.")
                     }
                     break;
