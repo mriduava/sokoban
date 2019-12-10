@@ -13,14 +13,16 @@
 }
 
 #home{
-    margin: 2% auto;
+    margin: 0 auto;
     padding: 5px auto;
 }
 
 .nav{
+    padding-top: 2%;
     margin: 0 auto;
     font-family: sans-serif;
     text-align: center;
+    background: rgb(220, 221, 212);
 }
 
 .sub-nav{
@@ -43,6 +45,8 @@
     font-family: 'pacfont';
     font-size: 2.5em;
     color: #ff0a91;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
+
 }
 
 
@@ -50,6 +54,9 @@
 .game{
     max-width: 95%;
     margin: 5% auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -240px;
 }
 
 .grid{

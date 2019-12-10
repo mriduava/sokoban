@@ -1,6 +1,8 @@
+import {store} from '../store.js'
 import Game from './Game.js'
 
 export default{
+    store,
     name: "home",
     components: {
           Game        
@@ -20,16 +22,16 @@ export default{
                 
             </div>
 
-            <div class="game">
-                <Game/>
+            <div class="game">                    
+                <Game/>                
             </div> 
 
         </div>`,
     data() {
         return {
             gameName: 'SoKoBAN',
-            level: 1,
-            steps: 0,
+            level: 0,
+            steps: this.$store.state.steps,
             time: 0,
             score: this.$store.state.score
         }        
