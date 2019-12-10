@@ -234,7 +234,6 @@ export default {
 
             for(let i = 0; i<array.length; i++){
                 if(JSON.stringify(array[i]) == JSON.stringify(object)){
-                    
                     array.splice(i, 1);
                 }
             }
@@ -252,9 +251,16 @@ export default {
                     avatarPosition.x -=1
                     //Check if avatar has same position as any wall and has the drill active
                     if((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive){
-                        destroyArrayElement(wallPositions, avatarPosition)
+                        destroyArrayElement(wallPositions, avatarPosition);
                         avatarPosition.x +=1
                         drillActive = false;
+                        console.log('drill used'); 
+                    }
+                    else if(checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive){
+                        destroyArrayElement(targetPositions, avatarPosition);
+                        avatarPosition.x +=1
+                        bombActive = false;
+                        console.log('bomb used');                        
                     }
                     //Check if avatar has same position as any wall.
                     else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
@@ -274,7 +280,13 @@ export default {
              // Up arrow key   
                 case 38:
                     avatarPosition.y -= 1
-                    if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive){
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.y +=1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.y += 1
                     }
                     else{
@@ -288,7 +300,13 @@ export default {
             // Right arrow key 
                 case 39: 
                     avatarPosition.x += 1
-                    if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive){
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.x -= 1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x -= 1
                     }
                     else{
@@ -302,7 +320,13 @@ export default {
             // Down arrow key
                 case 40:
                     avatarPosition.y += 1
-                    if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive){
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.y -= 1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.y -= 1
                     }
                     else{
@@ -316,14 +340,17 @@ export default {
             // a key 
                 case 65:
                     bombActive = true;
+                    console.log('bomb');
                     break;
             // s key
                 case 83:
                     strengthActive = true;
+                    console.log('strength');
                     break;
             // d key
                 case 68:
                     drillActive = true;
+                    console.log('drill');                    
                     break;
             }
         });
