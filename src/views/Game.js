@@ -114,13 +114,16 @@ export default {
             return nextValue
         }
         /*
-        
+        Send in two coordinates and an object, return true if object coordinates matches sent coordinates
         */
         function compareCoordinates(x, y, object) {
             let coordinateMatch = false;
             if (object.x == x && object.y == y) {
                 coordinateMatch = true;
                 console.log('coord match');
+                console.log(JSON.stringify(object));
+                console.log('x:' + x);
+                console.log('y:' + y);
                 
             }
             return coordinateMatch;
@@ -136,27 +139,30 @@ export default {
                     switch (direction) {
                         case "left":
                             listZero[i] -= 1
-                            tarPos[i].x -= 1
-                            for (let j = 0; j < tarPos.length; j++) {
-                                if (compareCoordinates((tarPos[i].x), tarPos[i].y, tarPos[j]) && strengthActive) {
+                            
+                            for (let j = 0; j < tarPos.length; j++) { //Looks for a box to the left of the box already found (that's where the x-1 on the next row comes in) 
+                                if (compareCoordinates((tarPos[i].x - 1), tarPos[i].y, tarPos[j]) && strengthActive) {
                                     listZero[j] -= 1
                                     tarPos[j].x -= 1
+                                    tarPos[i].x -= 1
                                     console.log('strength & coord true');
-                                    if (checkSamePosObjectList(tarPos[j], wallPos)) {
+                                    if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) { //we want neither walls nor blocks to the left of the second block
                                         /* console.log('not blocked by wall'); */
                                         
-
                                         tarPos[i].x = targetPositions[i].x
                                         target[i].style.left = listZero[i] * unit + 'px'
 
                                         tarPos[j].x = targetPositions[j].x
                                         target[j].style.left = listZero[j] * unit + 'px'
+                                        break;
                                     }else{
                                         listZero[j] += 1
                                         tarPos[j].x += 1
+                                        tarPos[i].x += 1
                                     }
                                 }
                             }
+                            tarPos[i].x -= 1
                             //if targetposition is the same as wall stop
                             if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                                 listZero[i] += 1
@@ -182,6 +188,29 @@ export default {
                             break;
                         case "up":
                             listZero[i] -= 1
+                            
+                            for (let j = 0; j < tarPos.length; j++) {
+                                if (compareCoordinates(tarPos[i].x, (tarPos[i].y - 1), tarPos[j]) && strengthActive) {
+                                    listZero[j] -= 1
+                                    tarPos[j].y -= 1
+                                    tarPos[i].y -= 1
+                                    console.log('strength & coord true');
+                                    if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) {
+                                        /* console.log('not blocked by wall'); */
+                                        
+                                        tarPos[i].y = targetPositions[i].y
+                                        target[i].style.top = listZero[i] * unit + 'px'
+
+                                        tarPos[j].y = targetPositions[j].y
+                                        target[j].style.top = listZero[j] * unit + 'px'
+                                        break;
+                                    }else{
+                                        listZero[j] += 1
+                                        tarPos[j].y += 1
+                                        tarPos[i].y += 1
+                                    }
+                                }
+                            }
                             tarPos[i].y -= 1
                             //if targetposition is the same as wall stop
                             if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
@@ -207,8 +236,30 @@ export default {
                             break;
                         case "right":
                             listZero[i] += 1
+                            
+                            for (let j = 0; j < tarPos.length; j++) {
+                                if (compareCoordinates((tarPos[i].x + 1), tarPos[i].y, tarPos[j]) && strengthActive) {
+                                    listZero[j] += 1
+                                    tarPos[j].x += 1
+                                    tarPos[i].x += 1
+                                    console.log('strength & coord true');
+                                    if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) {
+                                        /* console.log('not blocked by wall'); */
+                                        
+                                        tarPos[i].x = targetPositions[i].x
+                                        target[i].style.left = listZero[i] * unit + 'px'
+
+                                        tarPos[j].x = targetPositions[j].x
+                                        target[j].style.left = listZero[j] * unit + 'px'
+                                        break;
+                                    }else{
+                                        listZero[j] -= 1
+                                        tarPos[j].x -= 1
+                                        tarPos[i].x -= 1
+                                    }
+                                }
+                            }
                             tarPos[i].x += 1
-                                ;
                             if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                                 listZero[i] -= 1
                                 tarPos[i].x -= 1
@@ -233,8 +284,29 @@ export default {
                             break;
                         case "down": {
                             listZero[i] += 1
+                            for (let j = 0; j < tarPos.length; j++) {
+                                if (compareCoordinates(tarPos[i].x, (tarPos[i].y + 1), tarPos[j]) && strengthActive) {
+                                    listZero[j] += 1
+                                    tarPos[j].y += 1
+                                    tarPos[i].y += 1
+                                    console.log('strength & coord true');
+                                    if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) {
+                                        /* console.log('not blocked by wall'); */
+                                        
+                                        tarPos[i].y = targetPositions[i].y
+                                        target[i].style.top = listZero[i] * unit + 'px'
+
+                                        tarPos[j].y = targetPositions[j].y
+                                        target[j].style.top = listZero[j] * unit + 'px'
+                                        break;
+                                    }else{
+                                        listZero[j] -= 1
+                                        tarPos[j].y -= 1
+                                        tarPos[i].y -= 1
+                                    }
+                                }
+                            }
                             tarPos[i].y += 1
-                                ;
                             if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                                 listZero[i] -= 1
                                 tarPos[i].y -= 1
@@ -285,8 +357,8 @@ export default {
                 if (JSON.stringify(array[i]) == JSON.stringify(object)) {
                     array.splice(i, 1);
                     indexOfFound = i;
-                    console.log(indexOfFound);
-                    console.log(i);
+                    /* console.log(indexOfFound);
+                    console.log(i); */
 
                 }
             }
@@ -305,14 +377,15 @@ export default {
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        destroyArrayElement(wallPositions, avatarPosition);
+                        destroyArrayElement(wallPositions, avatarPosition); //Removes wall from the array, still visible but doesn't block movement
                         avatarPosition.x += 1
                         drillActive = false;
                         console.log('drill used');
                     }
+                    //Check if avatar has same position as a box and a bomb active
                     else if (checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
-                        listZeroX.splice(indexOfDestroyed, 1);
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); //Removes block from array, still visible, doesn't block movement nor count for win
+                        listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here
                         listZeroY.splice(indexOfDestroyed, 1);
                         avatarPosition.x += 1
                         /* console.log(listZeroX);
