@@ -21,7 +21,7 @@ export default {
                 </div>
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>
+            <div class="avatar"><i class="far fa-smile"></i></div>           
      </div>`,
      data() {
          return {
@@ -80,6 +80,10 @@ export default {
         let listZeroX = [0, 0, 0, 0, 0, 0]
         let listZeroY = [0, 0, 0, 0, 0, 0]
 
+        // Powerups
+        let bombActive = false;
+        let strengthActive = false;
+        let drillActive = false;
 
         /*
         checkSamePosObjectList: Checks that an object has the same position as any element in an array.
@@ -226,6 +230,16 @@ export default {
         }
         
 
+        function destroyArrayElement(array, object) {
+
+            for(let i = 0; i<array.length; i++){
+                if(JSON.stringify(array[i]) == JSON.stringify(object)){
+                    
+                    array.splice(i, 1);
+                }
+            }
+        }
+
         /**
         * Event key listener
         * For the movement of the Avatar and Target by
@@ -236,8 +250,14 @@ export default {
             switch(e.keyCode){
                 case 37:      
                     avatarPosition.x -=1
+                    //Check if avatar has same position as any wall and has the drill active
+                    if((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive){
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.x +=1
+                        drillActive = false;
+                    }
                     //Check if avatar has same position as any wall.
-                    if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    else if(checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x +=1
                     }
                     //moves avatar to the left
@@ -292,6 +312,18 @@ export default {
                     if(checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
                     }
+                    break;
+            // a key 
+                case 65:
+                    bombActive = true;
+                    break;
+            // s key
+                case 83:
+                    strengthActive = true;
+                    break;
+            // d key
+                case 68:
+                    drillActive = true;
                     break;
             }
         });
