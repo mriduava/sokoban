@@ -90,14 +90,14 @@ export default {
                 case 37:
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
-                    if ((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         destroyArrayElement(wallPositions, avatarPosition); //Removes wall from the array, still visible but doesn't block movement
                         avatarPosition.x += 1
                         drillActive = false;
                         console.log('drill used');
                     }
                     //Check if avatar has same position as a box and a bomb active
-                    else if (checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
                         let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); //Removes block from array, still visible, doesn't block movement nor count for win
                         listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here
                         listZeroY.splice(indexOfDestroyed, 1);
@@ -134,13 +134,13 @@ export default {
                     console.log(this.$store.state.steps++);
                     
                     avatarPosition.y -= 1
-                    if ((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         destroyArrayElement(wallPositions, avatarPosition)
                         avatarPosition.y += 1
                         drillActive = false;
                         console.log('no drill');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
                         let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
                         listZeroX.splice(indexOfDestroyed, 1);
                         listZeroY.splice(indexOfDestroyed, 1);
@@ -152,7 +152,7 @@ export default {
                         console.log(JSON.stringify(avatarPosition));
                         console.log('bomb used');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, wallPositions) == false) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.y += 1
                     }
                     else{
@@ -169,13 +169,13 @@ export default {
                 // Right arrow key 
                 case 39:
                     avatarPosition.x += 1
-                    if ((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         destroyArrayElement(wallPositions, avatarPosition)
                         avatarPosition.x -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
                         let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
                         listZeroX.splice(indexOfDestroyed, 1);
                         listZeroY.splice(indexOfDestroyed, 1);
@@ -187,7 +187,7 @@ export default {
                         console.log(JSON.stringify(avatarPosition));
                         console.log('bomb used');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, wallPositions) == false) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.x -= 1
                     }
                     else{
@@ -204,13 +204,13 @@ export default {
                 // Down arrow key
                 case 40:
                     avatarPosition.y += 1
-                    if ((checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         destroyArrayElement(wallPositions, avatarPosition)
                         avatarPosition.y -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
                         let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
                         listZeroX.splice(indexOfDestroyed, 1);
                         listZeroY.splice(indexOfDestroyed, 1);
@@ -222,7 +222,7 @@ export default {
                         console.log(JSON.stringify(avatarPosition));
                         console.log('bomb used');
                     }
-                    else if (checkSamePosObjectList(avatarPosition, wallPositions) == false) {
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.y -= 1
                     }
                     else{
