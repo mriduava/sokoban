@@ -48,7 +48,9 @@ export default {
 
         //Finds all tags with the with certain tag-names.
         let target = document.getElementsByClassName('boxes')
+        let walls = document.getElementsByClassName('walls')
         let avatar = document.querySelector('.avatar')
+
 
 
         //Start position of object.
@@ -78,6 +80,19 @@ export default {
             }
             return indexOfFound;
         }
+        function findArrayElementId(array, object) {
+            let indexOfFound = -1;
+            for (let i = 0; i < array.length; i++) {
+                if (JSON.stringify(array[i]) == JSON.stringify(object)) {
+                    indexOfFound = i;
+                    return indexOfFound;
+                    /* console.log(indexOfFound);
+                    console.log(i); */
+
+                }
+            }
+            return indexOfFound;
+        }
 
         /**
         * Event key listener
@@ -91,20 +106,30 @@ export default {
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                        walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
+                        console.log(JSON.stringify(walls));
+                        
+                        destroyArrayElement(walls, findArrayElementId(wallPositions, avatarPosition)); //Hack it to set other wallposition?
+                        /* walls.splice(findArrayElementId(wallPositions, avatarPosition), 1); */
+                       /*  delete walls[findArrayElementId(wallPositions, avatarPosition)]; */
                         destroyArrayElement(wallPositions, avatarPosition); //Removes wall from the array, still visible but doesn't block movement
                         avatarPosition.x += 1
                         drillActive = false;
                         console.log('drill used');
+
                     }
                     //Check if avatar has same position as a box and a bomb active
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); //Removes block from array, still visible, doesn't block movement nor count for win
-                        listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here
-                        listZeroY.splice(indexOfDestroyed, 1);
+                        /* let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); */ //Removes block from array, still visible, doesn't block movement nor count for win
+                        
+                        target[findArrayElementId(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[findArrayElementId(targetPositions, avatarPosition)]; //this method should work for drill as well, need to trim empty entries before win
+                        /* listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here. Target can't be spliced, will need hack 
+                        listZeroY.splice(indexOfDestroyed, 1); */ //These splices won't work, maybe set an element to null? delete array[i] might work
                         avatarPosition.x += 1
                         /* console.log(listZeroX);
                         console.log(listZeroY); */
-                        console.log(indexOfDestroyed);
+                        /* console.log(indexOfDestroyed); */
                         console.log(JSON.stringify(avatarPosition));
 
                         bombActive = false;
@@ -124,8 +149,7 @@ export default {
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
-                        // isComplete()
-                      
+                        // isComplete()                      
                     }
                     break;
                 // Up arrow key   
