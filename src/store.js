@@ -3,12 +3,19 @@ import {grids} from './data/grids.js'
 export const store = new Vuex.Store({
     state: {
         score: 0,
-        grids: grids[0].grid
+        steps: 1,
+        grids: grids
     },
     getters:{
-        grids: state => state.grids
+        grids: state => state.grids,
+        complete: state => state.complete
     },
     mutations: {
+        completLevel(state, i){
+            if (i> state.grids.length) {
+                
+            }
+        }
 
     }
 })
