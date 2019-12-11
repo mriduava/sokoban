@@ -1,4 +1,4 @@
-let strengthActive = false;
+/* let strengthActive = true; */
 
 /*
 findPositions: Goes through the list this.grids and finds position of a certain element in the list.
@@ -65,7 +65,7 @@ export function compareCoordinates(x, y, object) {
 /*
 moveTarget: The avatar moves the target either left,up, right or down
 */
-export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, direction, boxes, boxPosArray) {
+export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, direction, boxes, boxPosArray, strengthActive) {
 
     for (let i = 0; i < tarPos.length; i++) {
         if (JSON.stringify(objectPos) === JSON.stringify(tarPos[i])) {
@@ -83,10 +83,10 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].x = boxPosArray[i].x
-                                    target[i].style.left = listZero[i] * 32 + 'px'
+                                    boxes[i].style.left = listZero[i] * 32 + 'px'
 
                                     tarPos[j].x = boxPosArray[j].x
-                                    target[j].style.left = listZero[j] * 32 + 'px'
+                                    boxes[j].style.left = listZero[j] * 32 + 'px'
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -129,10 +129,10 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].y = boxPosArray[i].y
-                                    target[i].style.top = listZero[i] * 32 + 'px'
+                                    boxes[i].style.top = listZero[i] * 32 + 'px'
 
                                     tarPos[j].y = boxPosArray[j].y
-                                    target[j].style.top = listZero[j] * 32 + 'px'
+                                    boxes[j].style.top = listZero[j] * 32 + 'px'
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -174,10 +174,10 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].x = boxPosArray[i].x
-                                    target[i].style.left = listZero[i] * 32 + 'px'
+                                    boxes[i].style.left = listZero[i] * 32 + 'px'
 
                                     tarPos[j].x = boxPosArray[j].x
-                                    target[j].style.left = listZero[j] * 32 + 'px'
+                                    boxes[j].style.left = listZero[j] * 32 + 'px'
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -220,10 +220,10 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].y = boxPosArray[i].y
-                                    target[i].style.top = listZero[i] * 32 + 'px'
+                                    boxes[i].style.top = listZero[i] * 32 + 'px'
 
                                     tarPos[j].y = boxPosArray[j].y
-                                    target[j].style.top = listZero[j] * 32 + 'px'
+                                    boxes[j].style.top = listZero[j] * 32 + 'px'
                                     break;
                                 } else {
                                     listZero[j] -= 1

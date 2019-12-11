@@ -118,7 +118,7 @@ export default {
                     else {
                         avatar.style.left = avatarPosition.x * unit + 'px'
                         //moves target to the left
-                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left", target, targetPositions)
+                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left", target, targetPositions, strengthActive)
                     }
                     //checks if all targets are on the goal positions
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
@@ -157,7 +157,7 @@ export default {
                     }
                     else{
                         avatar.style.top = avatarPosition.y*unit + 'px'
-                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "up", target, targetPositions)
+                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "up", target, targetPositions, strengthActive)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
@@ -192,7 +192,7 @@ export default {
                     }
                     else{
                         avatar.style.left = avatarPosition.x *unit + 'px'
-                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "right", target, targetPositions)
+                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "right", target, targetPositions, strengthActive)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
@@ -227,7 +227,7 @@ export default {
                     }
                     else{
                         avatar.style.top = avatarPosition.y*unit + 'px'
-                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions)
+                        logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions, strengthActive)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
