@@ -22,29 +22,67 @@
     margin: 0 auto;
     font-family: sans-serif;
     text-align: center;
-    background: rgb(220, 221, 212);
+    background: #667db6;
+    background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+
+
 }
 
 .sub-nav{
     margin-top: 2%;;
-    display: flex;
-    background: #d3a13b;
-    justify-content: space-around;
-
+    background: #4398f8c7;
 }
 
- .level, 
- .score{
+.nav-width{
+    margin: 0 auto;
+    display: flex;
+    max-width: 600px;
+    justify-content: space-around;
+}
+
+.under-nav{
+    border-bottom: 2px solid #07e2ff;
+    box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.reset,
+.life,
+.bonus-points{
     padding-top: 5px;
     padding-bottom: 5px;
-    font-size: 21px;
+    font-size: 18px;
+    color: #e0bb6f;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.reset:hover{
+    cursor: pointer;
+    color: #ddd;
+}
+
+.level,
+.steps,
+.time, 
+.score,
+.star{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 18px;
+    color: #07e2ff;
+}
+
+.steps-num,
+.stop-watch,
+.score-num,
+.level-num{
     color: #fff;
 }
 
 .game-name{
     font-family: 'pacfont';
     font-size: 2.5em;
-    color: #ff0a91;
+    color: #fff;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
 
 }
@@ -53,7 +91,7 @@
 /* STYLE TO GRID */
 .game{
     max-width: 95%;
-    margin: 5% auto;
+    margin: 4% auto;
     position: absolute;
     left: 50%;
     margin-left: -240px;
@@ -67,6 +105,7 @@
     width: 32px;
     height: 32px;
     position: absolute;
+    border: 1px dotted #ddd;
 }
 
 .walls,
@@ -98,4 +137,13 @@
 .avatar{
     font-size: 32px;
     color: rgb(118, 13, 216);
+}
+
+/* FINAL COMPONENT */
+.final{
+    max-width: 95%;
+    margin: 10% auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -240px;
 }

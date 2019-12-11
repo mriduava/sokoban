@@ -19,10 +19,10 @@ export default {
                 </div>
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>
+            <div class="avatar"><i class="far fa-smile"></i></div>           
      </div>`,
-     data() {
-         return {
+    data() {
+        return {
             unit: 32,
             grids: [],
             complete: false
@@ -37,9 +37,8 @@ export default {
         * Defined object's movement unit
         */
         let score = 0;
-        let unit = this.unit;
-
-
+        let unit = this.unit;       
+        
         //All positions of different letters in this.grids.
         let wallPositions = logic.findPositions('W',this.grids)
         let targetPositions = logic.findPositions('B',this.grids)
@@ -49,7 +48,7 @@ export default {
         //Finds all tags with the with certain tag-names.
         let target = document.getElementsByClassName('boxes')
         let avatar = document.querySelector('.avatar')
-        
+
 
         //Start position of object.
         avatar.style.left = avatarPosition.x * unit + 'px'
@@ -58,7 +57,36 @@ export default {
         //Values which are later used for determining the pixels for moving the targets.
         let listZeroX = [0, 0, 0, 0, 0, 0]
         let listZeroY = [0, 0, 0, 0, 0, 0]
-        
+
+        // Powerups
+        let bombActive = false;
+        let strengthActive = false;
+        let drillActive = false;
+
+        // Takes in an array and an object, if the object shares coordinates with an element in the array, the element is removed
+        function destroyArrayElement(array, object) {
+            let indexOfFound = -1;
+            for (let i = 0; i < array.length; i++) {
+                if (JSON.stringify(array[i]) == JSON.stringify(object)) {
+                    array.splice(i, 1);
+                    indexOfFound = i;
+                }
+            }
+            return indexOfFound;
+        }
+
+        function levelUp(store, thisGame) {
+            store.level += 1
+            thisGame.grids = store.grids[store.level].grid 
+            avatarPosition = logic.findPositions('A', thisGame.grids)[0]
+            wallPositions = logic.findPositions('W',thisGame.grids)
+            targetPositions = logic.findPositions('B',thisGame.grids)
+            goalPositions = logic.findPositions('G',thisGame.grids)                        
+            avatar.style.left = avatarPosition.x * unit + 'px'
+            avatar.style.top = avatarPosition.y * unit + 'px'
+            listZeroX = [0,0,0,0,0]
+            listZeroY = [0,0,0,0,0]
+        }
 
         /**
         * Event key listener
@@ -67,35 +95,75 @@ export default {
         */
         document.addEventListener('keydown', (e) => {
             // Left arrow key
-            switch(e.keyCode){
-                case 37:      
-                    avatarPosition.x -=1
+            switch (e.keyCode) {
+                case 37:
+                   this.$store.state.steps += 1  
+                    avatarPosition.x -= 1
+                    //Check if avatar has same position as any wall and has the drill active
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                        destroyArrayElement(wallPositions, avatarPosition); //Removes wall from the array, still visible but doesn't block movement
+                        avatarPosition.x += 1
+                        drillActive = false;
+                        console.log('drill used');
+                    }
+                    //Check if avatar has same position as a box and a bomb active
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); //Removes block from array, still visible, doesn't block movement nor count for win
+                        listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.x += 1
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+
+                        bombActive = false;
+                        console.log('bomb used');
+                    }
                     //Check if avatar has same position as any wall.
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x +=1
                     }
                     //moves avatar to the left
-                    else{
-                        avatar.style.left = avatarPosition.x*unit + 'px'
+                    else {
+                        avatar.style.left = avatarPosition.x * unit + 'px'
                         //moves target to the left
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left", target, targetPositions)
                     }
                     //checks if all targets are on the goal positions
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
+                        levelUp(this.$store.state, this)
+                        // if (this.$state.grids.length > this.$store.state.grids.level ) {
+                        //     levelUp()
+                        // }
+                      
                       
                     }
                     break;
-             // Up arrow key   
+                // Up arrow key   
                 case 38:
-                    this.$store.state.steps++
-                    console.log(this.$store.state.steps++);
-                    
+                    this.$store.state.steps += 1                    
                     avatarPosition.y -= 1
-                    
-                    if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.y += 1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.y += 1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.y += 1
                     }
                     else{
@@ -104,15 +172,37 @@ export default {
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
-                        
+
+                        if (this.$store.state.level<2) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level=0;
+                        }
                     }
-                    break;                  
-            // Right arrow key 
-                case 39: 
+                    break;
+                // Right arrow key 
+                case 39:
+                    this.$store.state.steps += 1
                     avatarPosition.x += 1
-                    if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.x -= 1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.x -= 1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.x -= 1
                     }
                     else{
@@ -121,15 +211,40 @@ export default {
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
-                      
+
+                        if (this.$store.state.level< this.$store.state.grids.length-1) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level = 0;
+                            this.$store.state.complete = true;
+                        }
+                        
+                        
                     }
                     break;
-            // Down arrow key
+                // Down arrow key
                 case 40:
+                    this.$store.state.steps += 1
                     avatarPosition.y += 1
-                    if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
+                        destroyArrayElement(wallPositions, avatarPosition)
+                        avatarPosition.y -= 1
+                        drillActive = false;
+                        console.log('no drill');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
+                        let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition);
+                        listZeroX.splice(indexOfDestroyed, 1);
+                        listZeroY.splice(indexOfDestroyed, 1);
+                        avatarPosition.y -= 1
+                        bombActive = false;
+                        /* console.log(listZeroX);
+                        console.log(listZeroY); */
+                        console.log(indexOfDestroyed);
+                        console.log(JSON.stringify(avatarPosition));
+                        console.log('bomb used');
+                    }
+                    else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
                         avatarPosition.y -= 1
                     }
                     else{
@@ -137,13 +252,27 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
-                        console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
+
+                       levelUp(this.$store.state, this)
                         
                     }
                     break;
+                // a key 
+                case 65:
+                    bombActive = true;
+                    console.log('bomb');
+                    break;
+                // s key
+                case 83:
+                    strengthActive = true;
+                    console.log('strength');
+                    break;
+                // d key
+                case 68:
+                    drillActive = true;
+                    console.log('drill');
+                    break;
             }
         });
-     }
+    }
 }
