@@ -37,7 +37,8 @@ export default {
         * Defined object's movement unit
         */
         let score = 0;
-        let unit = this.unit;
+        let unit = this.unit;       
+        
 
 
         //All positions of different letters in this.grids.
@@ -68,7 +69,9 @@ export default {
         document.addEventListener('keydown', (e) => {
             // Left arrow key
             switch(e.keyCode){
-                case 37:      
+                case 37:
+                    this.$store.state.steps += 1 
+
                     avatarPosition.x -=1
                     //Check if avatar has same position as any wall.
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
@@ -84,15 +87,15 @@ export default {
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
-                        // isComplete()
+                        setTimeout(() => {
+                            this.grids = this.$store.state.grids[1].grid
+                        }, 1000);
                       
                     }
                     break;
              // Up arrow key   
                 case 38:
-                    this.$store.state.steps++
-                    console.log(this.$store.state.steps++);
-                    
+                    this.$store.state.steps += 1                    
                     avatarPosition.y -= 1
                     
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
@@ -105,12 +108,15 @@ export default {
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
-                        // isComplete()
+                        setTimeout(() => {
+                            this.grids = this.$store.state.grids[1].grid
+                        }, 1000);
                         
                     }
                     break;                  
             // Right arrow key 
-                case 39: 
+                case 39:
+                    this.$store.state.steps += 1 
                     avatarPosition.x += 1
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x -= 1
@@ -121,13 +127,18 @@ export default {
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
+                        this.$store.state.complete = true;
+                        setTimeout(() => {
+                            this.grids = this.$store.state.grids[1].grid
+                            avatar.style.left = avatarPosition.x * unit + 'px'
+                            avatar.style.top = avatarPosition.y * unit + 'px'
+                        }, 5000);
                       
                     }
                     break;
             // Down arrow key
                 case 40:
+                    this.$store.state.steps += 1
                     avatarPosition.y += 1
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.y -= 1
@@ -137,9 +148,9 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
-                        console.log("You have won.")
-                        this.complete = true;
-                        // isComplete()
+                        setTimeout(() => {
+                            this.grids = this.$store.state.grids[1].grid
+                        }, 1000);
                         
                     }
                     break;

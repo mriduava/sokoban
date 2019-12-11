@@ -164,5 +164,3 @@ export function checkArraySameElements(array1, array2){
     }
 }
 
-
-
