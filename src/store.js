@@ -6,7 +6,7 @@ export const store = new Vuex.Store({
         steps: 0,
         time: 0,
         grids: grids,
-        levelComplete: false,
-        gameStart: false
+        level: 0,
+        complete: false
     }
 })

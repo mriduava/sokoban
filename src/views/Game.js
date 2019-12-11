@@ -39,8 +39,6 @@ export default {
         let score = 0;
         let unit = this.unit;       
         
-
-
         //All positions of different letters in this.grids.
         let wallPositions = logic.findPositions('W',this.grids)
         let targetPositions = logic.findPositions('B',this.grids)
@@ -72,12 +70,22 @@ export default {
                 if (JSON.stringify(array[i]) == JSON.stringify(object)) {
                     array.splice(i, 1);
                     indexOfFound = i;
-                    /* console.log(indexOfFound);
-                    console.log(i); */
-
                 }
             }
             return indexOfFound;
+        }
+
+        function levelUp(store, thisGame) {
+            store.level += 1
+            thisGame.grids = store.grids[store.level].grid 
+            avatarPosition = logic.findPositions('A', thisGame.grids)[0]
+            wallPositions = logic.findPositions('W',thisGame.grids)
+            targetPositions = logic.findPositions('B',thisGame.grids)
+            goalPositions = logic.findPositions('G',thisGame.grids)                        
+            avatar.style.left = avatarPosition.x * unit + 'px'
+            avatar.style.top = avatarPosition.y * unit + 'px'
+            listZeroX = [0,0,0,0,0]
+            listZeroY = [0,0,0,0,0]
         }
 
         /**
@@ -87,15 +95,9 @@ export default {
         */
         document.addEventListener('keydown', (e) => {
             // Left arrow key
-<<<<<<< HEAD
-            switch(e.keyCode){
-                case 37:
-                    this.$store.state.steps += 1 
-
-                    avatarPosition.x -=1
-=======
             switch (e.keyCode) {
                 case 37:
+                   this.$store.state.steps += 1  
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
@@ -118,7 +120,6 @@ export default {
                         bombActive = false;
                         console.log('bomb used');
                     }
->>>>>>> b42b63a3e23dd30081bcc0cb22852ded56b6984d
                     //Check if avatar has same position as any wall.
                     if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x +=1
@@ -132,10 +133,11 @@ export default {
                     //checks if all targets are on the goal positions
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        setTimeout(() => {
-                            this.grids = this.$store.state.grids[1].grid
-                        }, 1000);
+                        levelUp(this.$store.state, this)
+                        // if (this.$state.grids.length > this.$store.state.grids.level ) {
+                        //     levelUp()
+                        // }
+                      
                       
                     }
                     break;
@@ -170,22 +172,17 @@ export default {
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.complete = true;
-                        setTimeout(() => {
-                            this.grids = this.$store.state.grids[1].grid
-                        }, 1000);
-                        
+
+                        if (this.$store.state.level<2) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level=0;
+                        }
                     }
-<<<<<<< HEAD
-                    break;                  
-            // Right arrow key 
-                case 39:
-                    this.$store.state.steps += 1 
-=======
                     break;
                 // Right arrow key 
                 case 39:
->>>>>>> b42b63a3e23dd30081bcc0cb22852ded56b6984d
+                    this.$store.state.steps += 1
                     avatarPosition.x += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         destroyArrayElement(wallPositions, avatarPosition)
@@ -214,13 +211,15 @@ export default {
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        this.$store.state.complete = true;
-                        setTimeout(() => {
-                            this.grids = this.$store.state.grids[1].grid
-                            avatar.style.left = avatarPosition.x * unit + 'px'
-                            avatar.style.top = avatarPosition.y * unit + 'px'
-                        }, 5000);
-                      
+
+                        if (this.$store.state.level< this.$store.state.grids.length-1) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level = 0;
+                            this.$store.state.complete = true;
+                        }
+                        
+                        
                     }
                     break;
                 // Down arrow key
@@ -253,9 +252,8 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions)
                     }
                     if(logic.checkArraySameElements(goalPositions, targetPositions)){
-                        setTimeout(() => {
-                            this.grids = this.$store.state.grids[1].grid
-                        }, 1000);
+
+                       levelUp(this.$store.state, this)
                         
                     }
                     break;

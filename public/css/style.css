@@ -105,6 +105,7 @@
     width: 32px;
     height: 32px;
     position: absolute;
+    border: 1px dotted #ddd;
 }
 
 .walls,
@@ -136,4 +137,13 @@
 .avatar{
     font-size: 32px;
     color: rgb(118, 13, 216);
+}
+
+/* FINAL COMPONENT */
+.final{
+    max-width: 95%;
+    margin: 10% auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -240px;
 }
