@@ -86,6 +86,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
 
                                     tarPos[j].x = boxPosArray[j].x
                                     boxes[j].style.left = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -95,6 +97,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
+                    if (!powerMove) {
                     tarPos[i].x -= 1
                     //if targetposition is the same as wall stop
                     if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
@@ -114,6 +117,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                         objectPos.x = tarPos[i].x + 1
                         avaPos.style.left = objectPos.x * 32 + 'px'
                     }
+                }
+                powerMove = false;
                     break;
                 case "up":
                     listZero[i] -= 1
@@ -132,6 +137,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
 
                                     tarPos[j].y = boxPosArray[j].y
                                     boxes[j].style.top = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -141,6 +148,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
+                    if (!powerMove) {
                     tarPos[i].y -= 1
                     //if targetposition is the same as wall stop
                     if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
@@ -159,6 +167,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                         objectPos.y = tarPos[i].y + 1
                         avaPos.style.top = objectPos.y * 32 + 'px'
                     }
+                }
+                powerMove = false;
                     break;
                 case "right":
                     listZero[i] += 1
@@ -177,10 +187,10 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
 
                                     tarPos[j].x = boxPosArray[j].x
                                     boxes[j].style.left = listZero[j] * 32 + 'px' 
-                                    console.log(i);
-                                    console.log(j);
+                                    /* console.log(i);
+                                    console.log(j); */
 
-                                    powerMove = true;
+                                    powerMove = true; //Implement in others
                                     
                                     break;
                                 } else {
@@ -191,7 +201,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    if (!powerMove){
+                    if (!powerMove) {
                     tarPos[i].x += 1
                     if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                         listZero[i] -= 1
@@ -231,6 +241,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
 
                                     tarPos[j].y = boxPosArray[j].y
                                     boxes[j].style.top = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -240,8 +252,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
+                    if (!powerMove) {
                     tarPos[i].y += 1
-                        ;
                     if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                         listZero[i] -= 1
                         tarPos[i].y -= 1
@@ -260,6 +272,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                         objectPos.y = tarPos[i].y - 1
                         avaPos.style.top = objectPos.y * 32 + 'px'
                     }
+                }
+                powerMove = false;
                     break;
                 }
             }
