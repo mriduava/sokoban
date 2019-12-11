@@ -107,9 +107,10 @@ export default {
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
-                        console.log(JSON.stringify(walls));
-                        
-                        destroyArrayElement(walls, findArrayElementId(wallPositions, avatarPosition)); //Hack it to set other wallposition?
+                        /* console.log(JSON.stringify(walls)); */
+                        delete wallPositions[findArrayElementId(wallPositions, avatarPosition)];
+
+                       /*  destroyArrayElement(walls, findArrayElementId(wallPositions, avatarPosition)); */ //Hack it to set other wallposition?
                         /* walls.splice(findArrayElementId(wallPositions, avatarPosition), 1); */
                        /*  delete walls[findArrayElementId(wallPositions, avatarPosition)]; */
                         destroyArrayElement(wallPositions, avatarPosition); //Removes wall from the array, still visible but doesn't block movement

@@ -1,5 +1,4 @@
-/* let strengthActive = true; */
-
+let powerMove = false;
 /*
 findPositions: Goes through the list this.grids and finds position of a certain element in the list.
 parameters: Takes two parameters; the first os of datatype string and other is of type array.
@@ -177,7 +176,12 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     boxes[i].style.left = listZero[i] * 32 + 'px'
 
                                     tarPos[j].x = boxPosArray[j].x
-                                    boxes[j].style.left = listZero[j] * 32 + 'px'
+                                    boxes[j].style.left = listZero[j] * 32 + 'px' 
+                                    console.log(i);
+                                    console.log(j);
+
+                                    powerMove = true;
+                                    
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -187,8 +191,8 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
+                    if (!powerMove){
                     tarPos[i].x += 1
-                        ;
                     if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
                         listZero[i] -= 1
                         tarPos[i].x -= 1
@@ -206,6 +210,9 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                         objectPos.x = tarPos[i].x - 1
                         avaPos.style.left = objectPos.x * 32 + 'px'
                     }
+                }
+                powerMove = false;
+                
                     break;
                 case "down": {
                     listZero[i] += 1
