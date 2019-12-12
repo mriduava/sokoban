@@ -18,7 +18,7 @@
     justify-content: center;
     width: 60%;
     height: 100vh;
-    background: #c5ebff;
+    background: #010b29;
     margin: 0 auto;
     padding: 5px auto;
     border:5px solid rgb(110, 49, 49)
@@ -167,6 +167,7 @@ footer{
 
 /* FINAL COMPONENT */
 .final{
+    color:rgb(216, 240, 252);
     display: flex;
     position: relative;
     text-align: center;
