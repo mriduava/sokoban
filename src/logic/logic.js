@@ -1,8 +1,7 @@
-let strengthActive = false;
-
+let powerMove = false;
 /*
 findPositions: Goes through the list this.grids and finds position of a certain element in the list.
-parameters: Takes two parameters; the first os of datatype string and other is of type array.
+parameters: Takes two parameters; the first is of datatype string and other is of type array.
 */
 export function findPositions(findElement, grids) {
     let array = [];
@@ -20,7 +19,7 @@ export function findPositions(findElement, grids) {
     return array
 }
 /*
-checkSamePosObjectList: Checks that an object has the same position as any element in an array.
+checkSamePosObjectList: Checks if an object has the same position as any element in an array.
 */
 export function checkSamePosObjectList(object, array) {
     let trueW = true;
@@ -52,20 +51,29 @@ Send in two coordinates and an object, return true if object coordinates matches
 */
 export function compareCoordinates(x, y, object) {
     let coordinateMatch = false;
-    if (object.x == x && object.y == y) {
+    if (object == null){
+        return coordinateMatch;
+    }
+    else if (object.x == x && object.y == y) {
         coordinateMatch = true;
-        console.log('coord match');
-        console.log(JSON.stringify(object));
-        console.log('x:' + x);
-        console.log('y:' + y);
-
     }
     return coordinateMatch;
+}
+//Returns the index of the element in the array that has the coordinates of the object sent
+export function findArrayElementIndex(array, object) {
+    let indexOfFound = -1;
+    for (let i = 0; i < array.length; i++) {
+        if (JSON.stringify(array[i]) == JSON.stringify(object)) {
+            indexOfFound = i;
+            return indexOfFound;
+        }
+    }
+    return indexOfFound;
 }
 /*
 moveTarget: The avatar moves the target either left,up, right or down
 */
-export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, direction, boxes, boxPosArray) {
+export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, direction, boxes, boxPosArray, strengthActive) {
 
     for (let i = 0; i < tarPos.length; i++) {
         if (JSON.stringify(objectPos) === JSON.stringify(tarPos[i])) {
@@ -80,13 +88,14 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                 tarPos[i].x -= 1
                                 console.log('strength & coord true');
                                 if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) { //we want neither walls nor blocks to the left of the second block
-                                    /* console.log('not blocked by wall'); */
 
                                     tarPos[i].x = boxPosArray[i].x
-                                    target[i].style.left = listZero[i] * 32 + 'px'
+                                    boxes[i].style.left = listZero[i] * 32 + 'px'
 
                                     tarPos[j].x = boxPosArray[j].x
-                                    target[j].style.left = listZero[j] * 32 + 'px'
+                                    boxes[j].style.left = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -96,25 +105,28 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    tarPos[i].x -= 1
-                    //if targetposition is the same as wall stop
-                    if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
-                        listZero[i] += 1
-                        tarPos[i].x += 1
-                    }
-                    //check if there is any nearby which has same position
-                    else if (arrayNext(tarPos, i)) {
-                        //if target position is not same as wall move 1 step
-                        if (checkSamePosObjectList(tarPos[i], wallPos)) {
-                            tarPos[i].x = boxPosArray[i].x
-                            boxes[i].style.left = listZero[i] * 32 + 'px'
+                    if (!powerMove) { //If we've moved 2 boxes, don't evaluate the other posibilities
+                        tarPos[i].x -= 1
+                        //if targetposition is the same as wall stop
+                        if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
+                            listZero[i] += 1
+                            tarPos[i].x += 1
+                        }
+                        //check if there is any nearby which has same position
+                        else if (arrayNext(tarPos, i)) {
+                            //if target position is not same as wall move 1 step
+                            if (checkSamePosObjectList(tarPos[i], wallPos)) {
+                                tarPos[i].x = boxPosArray[i].x
+                                boxes[i].style.left = listZero[i] * 32 + 'px'
+                            }
+                        }
+                        //if avatar position is same as target, doesn't go into target
+                        if (objectPos.x == tarPos[i].x) {
+                            objectPos.x = tarPos[i].x + 1
+                            avaPos.style.left = objectPos.x * 32 + 'px'
                         }
                     }
-                    //if avatar position is same as target, doesn't go into target
-                    if (objectPos.x == tarPos[i].x) {
-                        objectPos.x = tarPos[i].x + 1
-                        avaPos.style.left = objectPos.x * 32 + 'px'
-                    }
+                    powerMove = false;
                     break;
                 case "up":
                     listZero[i] -= 1
@@ -129,10 +141,12 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].y = boxPosArray[i].y
-                                    target[i].style.top = listZero[i] * 32 + 'px'
+                                    boxes[i].style.top = listZero[i] * 32 + 'px'
 
                                     tarPos[j].y = boxPosArray[j].y
-                                    target[j].style.top = listZero[j] * 32 + 'px'
+                                    boxes[j].style.top = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -142,24 +156,27 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    tarPos[i].y -= 1
-                    //if targetposition is the same as wall stop
-                    if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
-                        listZero[i] += 1
-                        tarPos[i].y += 1
-                    }
-                    if (arrayNext(tarPos, i)) {
-                        //if target position is not same as wall move 1 step
-                        if (checkSamePosObjectList(tarPos[i], wallPos)) {
-                            tarPos[i].y = boxPosArray[i].y
-                            boxes[i].style.top = listZero[i] * 32 + 'px'
+                    if (!powerMove) {
+                        tarPos[i].y -= 1
+                        //if targetposition is the same as wall stop
+                        if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
+                            listZero[i] += 1
+                            tarPos[i].y += 1
+                        }
+                        if (arrayNext(tarPos, i)) {
+                            //if target position is not same as wall move 1 step
+                            if (checkSamePosObjectList(tarPos[i], wallPos)) {
+                                tarPos[i].y = boxPosArray[i].y
+                                boxes[i].style.top = listZero[i] * 32 + 'px'
+                            }
+                        }
+                        //if avatar position is same as target, doesn't go into target
+                        if (objectPos.y == tarPos[i].y) {
+                            objectPos.y = tarPos[i].y + 1
+                            avaPos.style.top = objectPos.y * 32 + 'px'
                         }
                     }
-                    //if avatar position is same as target, doesn't go into target
-                    if (objectPos.y == tarPos[i].y) {
-                        objectPos.y = tarPos[i].y + 1
-                        avaPos.style.top = objectPos.y * 32 + 'px'
-                    }
+                    powerMove = false;
                     break;
                 case "right":
                     listZero[i] += 1
@@ -174,10 +191,15 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].x = boxPosArray[i].x
-                                    target[i].style.left = listZero[i] * 32 + 'px'
+                                    boxes[i].style.left = listZero[i] * 32 + 'px'
 
                                     tarPos[j].x = boxPosArray[j].x
-                                    target[j].style.left = listZero[j] * 32 + 'px'
+                                    boxes[j].style.left = listZero[j] * 32 + 'px'
+                                    /* console.log(i);
+                                    console.log(j); */
+
+                                    powerMove = true;
+
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -187,25 +209,28 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    tarPos[i].x += 1
-                        ;
-                    if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
-                        listZero[i] -= 1
-                        tarPos[i].x -= 1
-                    }
-                    //check if there is any nearby which has same position
-                    if (arrayNext(tarPos, i)) {
-                        //if target position is not same as wall move 1 step
-                        if (checkSamePosObjectList(tarPos[i], wallPos)) {
-                            tarPos[i].x = boxPosArray[i].x
-                            boxes[i].style.left = listZero[i] * 32 + 'px'
+                    if (!powerMove) {
+                        tarPos[i].x += 1
+                        if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
+                            listZero[i] -= 1
+                            tarPos[i].x -= 1
+                        }
+                        //check if there is any nearby which has same position
+                        if (arrayNext(tarPos, i)) {
+                            //if target position is not same as wall move 1 step
+                            if (checkSamePosObjectList(tarPos[i], wallPos)) {
+                                tarPos[i].x = boxPosArray[i].x
+                                boxes[i].style.left = listZero[i] * 32 + 'px'
+                            }
+                        }
+                        //if avatar position is same as target, doesn't go into target
+                        if (objectPos.x == tarPos[i].x) {
+                            objectPos.x = tarPos[i].x - 1
+                            avaPos.style.left = objectPos.x * 32 + 'px'
                         }
                     }
-                    //if avatar position is same as target, doesn't go into target
-                    if (objectPos.x == tarPos[i].x) {
-                        objectPos.x = tarPos[i].x - 1
-                        avaPos.style.left = objectPos.x * 32 + 'px'
-                    }
+                    powerMove = false;
+
                     break;
                 case "down": {
                     listZero[i] += 1
@@ -220,10 +245,12 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     /* console.log('not blocked by wall'); */
 
                                     tarPos[i].y = boxPosArray[i].y
-                                    target[i].style.top = listZero[i] * 32 + 'px'
+                                    boxes[i].style.top = listZero[i] * 32 + 'px'
 
                                     tarPos[j].y = boxPosArray[j].y
-                                    target[j].style.top = listZero[j] * 32 + 'px'
+                                    boxes[j].style.top = listZero[j] * 32 + 'px'
+
+                                    powerMove = true;
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -233,26 +260,28 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    tarPos[i].y += 1
-                        ;
-                    if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
-                        listZero[i] -= 1
-                        tarPos[i].y -= 1
-                    }
-
-                    if (arrayNext(tarPos, i)) {
-                        //if target position is not same as wall move 1 step
-                        if (checkSamePosObjectList(tarPos[i], wallPos)) {
-                            tarPos[i].y = boxPosArray[i].y
-                            boxes[i].style.top = listZero[i] * 32 + 'px'
+                    if (!powerMove) {
+                        tarPos[i].y += 1
+                        if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
+                            listZero[i] -= 1
+                            tarPos[i].y -= 1
                         }
 
+                        if (arrayNext(tarPos, i)) {
+                            //if target position is not same as wall move 1 step
+                            if (checkSamePosObjectList(tarPos[i], wallPos)) {
+                                tarPos[i].y = boxPosArray[i].y
+                                boxes[i].style.top = listZero[i] * 32 + 'px'
+                            }
+
+                        }
+                        //if avatar position is same as target, doesn't go into target
+                        if (objectPos.y == tarPos[i].y) {
+                            objectPos.y = tarPos[i].y - 1
+                            avaPos.style.top = objectPos.y * 32 + 'px'
+                        }
                     }
-                    //if avatar position is same as target, doesn't go into target
-                    if (objectPos.y == tarPos[i].y) {
-                        objectPos.y = tarPos[i].y - 1
-                        avaPos.style.top = objectPos.y * 32 + 'px'
-                    }
+                    powerMove = false;
                     break;
                 }
             }
@@ -260,17 +289,24 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
     }
 }
 
-/*Checks if all element in two arrays are the same. We want this when checking if the player has all targets on the goals.*/
-export function checkArraySameElements(array1, array2) {
-    let sameElement = 0;
-    for (let element1 of array1) {
-        for (let element2 of array2) {
-            if (JSON.stringify(element1) == JSON.stringify(element2)) {
-                sameElement++;
-            }
+/*Checks if the player has completed the level.*/
+export function evaluateWin(goalsArray, boxesArray) {
+    let boxesInGoalZone = 0;
+    let boxesRemaining = 0;
+    for (let goal of goalsArray) {
+        for (let box of boxesArray) {
+            if (JSON.stringify(goal) == JSON.stringify(box)) {
+                boxesInGoalZone++;
+            }            
         }
     }
-    if (sameElement == array1.length) {
+    for (let box in boxesArray){
+        if (box !== null){
+            boxesRemaining += 1;
+        }
+    }
+       
+    if (boxesInGoalZone == boxesRemaining) {
         return true
     }
 }
