@@ -27,7 +27,7 @@ export default{
 
                 <div class="under-nav">
                     <div class="nav-width">
-                        <div class="reset">RESET</div>
+                        <button class="reset" @click="$emit('reset')">RESET</button>
                         <div class="life">POWER 
                             <span class="star"><i class="fas fa-star"></i>
                                   <i class="fas fa-bomb"></i>
@@ -46,8 +46,9 @@ export default{
                 </div> 
            </transition>
 
-           <div class="completion" v-if="updateComplete">
-               <Final/>
+           <div class="completion" >
+            <Final v-if="updateComplete && complete" @close="complete = false">
+            </Final>
             </div>
 
         </div>`,

@@ -4,7 +4,7 @@ import * as logic from '../logic/logic.js'
 export default {
     store,
     template: `
-     <div class="grid">
+     <div class="grid" @reset="reset()">
         <div v-for="(blockRow, row) in grids">
             <div class="all-blocks" v-for="(block, col) in blockRow" 
                  :style="{ top: row*unit + 'px', left: col*unit + 'px'}">
@@ -19,7 +19,7 @@ export default {
                 </div>
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>           
+            <div class="avatar"><i class="far fa-smile"></i></div>       
      </div>`,
     data() {
         return {
@@ -28,7 +28,24 @@ export default {
             complete: false
          }
      },
+     computed: {
+        //  reset(){
+        //      console.log('hi')
+        //  }
+         
+     },
+     methods: {
+         reset(){
+             this.$emit('reset', 'deepthy')
+
+         }
+     },
      mounted() {
+
+         function reset(){
+             this.$emit('reset', 'deepthy')
+         }
+
         //Grids pattern coming from data/grids.js file via store
         this.grids = this.$store.state.grids[0].grid
 
