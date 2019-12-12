@@ -112,14 +112,6 @@ footer{
 
 
 /* STYLE TO GRID */
-.game{
-    /* display: flex; */
-    max-width: 95%;
-    margin: 4% auto;
-    left: 50%;
-    margin-left: -240px;
-}
-
 .grid{
     display: flex;
     position: relative;
@@ -181,6 +173,5 @@ footer{
     padding: 30px;
     width: 66%;
     height: 50vh;
-    position: relative;
     border: 1px solid rgb(56, 47, 47);
 }
