@@ -51,8 +51,6 @@ export default {
         let walls = document.getElementsByClassName('walls')
         let avatar = document.querySelector('.avatar')
 
-
-
         //Start position of object.
         avatar.style.left = avatarPosition.x * unit + 'px'
         avatar.style.top = avatarPosition.y * unit + 'px'
@@ -66,18 +64,6 @@ export default {
         let strengthActive = false;
         let drillActive = false;
 
-        //Returns
-        function findArrayElementIndex(array, object) {
-            let indexOfFound = -1;
-            for (let i = 0; i < array.length; i++) {
-                if (JSON.stringify(array[i]) == JSON.stringify(object)) {
-                    indexOfFound = i;
-                    return indexOfFound;
-                }
-            }
-            return indexOfFound;
-        }
-
         /**
         * Event key listener
         * For the movement of the Avatar and Target by
@@ -90,8 +76,8 @@ export default {
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+                        walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[logic.findArrayElementIndex(wallPositions, avatarPosition)];
 
                         avatarPosition.x += 1
                         drillActive = false;
@@ -101,8 +87,8 @@ export default {
                     //Check if avatar has same position as a box and a bomb active
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
                         
-                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)]; 
+                        target[logic.findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[logic.findArrayElementIndex(targetPositions, avatarPosition)]; 
 
                         avatarPosition.x += 1
                         bombActive = false;
@@ -128,20 +114,20 @@ export default {
                 // Up arrow key   
                 case 38:
                     this.$store.state.steps++
-                    console.log(this.$store.state.steps++);
+                    console.log(this.$store.state.steps);
                     
                     avatarPosition.y -= 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+                        walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[logic.findArrayElementIndex(wallPositions, avatarPosition)];
 
                         avatarPosition.y += 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+                        target[logic.findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[logic.findArrayElementIndex(targetPositions, avatarPosition)];
 
                         avatarPosition.y += 1
                         bombActive = false;
@@ -166,16 +152,16 @@ export default {
                 case 39:
                     avatarPosition.x += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+                        walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[logic.findArrayElementIndex(wallPositions, avatarPosition)];
 
                         avatarPosition.x -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+                        target[logic.findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[logic.findArrayElementIndex(targetPositions, avatarPosition)];
 
                         avatarPosition.x -= 1
                         bombActive = false;
@@ -200,16 +186,16 @@ export default {
                 case 40:
                     avatarPosition.y += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+                        walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[logic.findArrayElementIndex(wallPositions, avatarPosition)];
 
                         avatarPosition.y -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+                        target[logic.findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[logic.findArrayElementIndex(targetPositions, avatarPosition)];
 
                         avatarPosition.y -= 1
                         bombActive = false;

@@ -59,6 +59,17 @@ export function compareCoordinates(x, y, object) {
     }
     return coordinateMatch;
 }
+//Returns the index of the element in the array that has the coordinates of the object sent
+export function findArrayElementIndex(array, object) {
+    let indexOfFound = -1;
+    for (let i = 0; i < array.length; i++) {
+        if (JSON.stringify(array[i]) == JSON.stringify(object)) {
+            indexOfFound = i;
+            return indexOfFound;
+        }
+    }
+    return indexOfFound;
+}
 /*
 moveTarget: The avatar moves the target either left,up, right or down
 */
@@ -77,7 +88,6 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                 tarPos[i].x -= 1
                                 console.log('strength & coord true');
                                 if (checkSamePosObjectList(tarPos[j], wallPos) && arrayNext(tarPos, j)) { //we want neither walls nor blocks to the left of the second block
-                                    /* console.log('not blocked by wall'); */
 
                                     tarPos[i].x = boxPosArray[i].x
                                     boxes[i].style.left = listZero[i] * 32 + 'px'
@@ -95,7 +105,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             }
                         }
                     }
-                    if (!powerMove) {
+                    if (!powerMove) { //If we've moved 2 boxes, don't evaluate the other posibilities
                         tarPos[i].x -= 1
                         //if targetposition is the same as wall stop
                         if (checkSamePosObjectList(tarPos[i], wallPos) == false || arrayNext(tarPos, i) == false) {
@@ -295,7 +305,6 @@ export function evaluateWin(goalsArray, boxesArray) {
             boxesRemaining += 1;
         }
     }
-    console.log(boxesRemaining);
        
     if (boxesInGoalZone == boxesRemaining) {
         return true
