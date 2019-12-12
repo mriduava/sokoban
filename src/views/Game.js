@@ -54,13 +54,10 @@ export default {
         let walls = document.getElementsByClassName('walls')
         let avatar = document.querySelector('.avatar')
 
-<<<<<<< HEAD
-=======
         //Start position of object.
         avatar.style.left = avatarPosition.x * unit + 'px'
         avatar.style.top = avatarPosition.y * unit + 'px'
 
->>>>>>> master
         //Values which are later used for determining the pixels for moving the targets.
         let listZeroX = [0, 0, 0, 0, 0, 0]
         let listZeroY = [0, 0, 0, 0, 0, 0]
