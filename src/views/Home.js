@@ -13,7 +13,7 @@ export default{
     template: `
         <div id="home">
 
-            <div class="nav">
+            <nav>
                 <div class="game-name">{{gameName}}</div> 
 
                 <div class="sub-nav">
@@ -38,17 +38,15 @@ export default{
                     </div>
                 </div>
                 
-            </div>
+            </nav>     
 
-           <transition name="fade">
-                <div class="game" v-if="!updateComplete">                    
-                    <Game/>                
-                </div> 
-           </transition>
+            <Game v-if="!updateComplete"/>                
+               
+            <Final class="completion" v-if="updateComplete"/>
 
-           <div class="completion" v-if="updateComplete">
-               <Final/>
-            </div>
+            <footer>
+            <div id="sub-footer"></div>
+            </footer>
 
         </div>`,
     data() {

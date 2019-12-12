@@ -5,32 +5,36 @@ export default {
     store,
     template: `
      <div class="grid">
-        <div v-for="(blockRow, row) in grids">
+        <div class ="row" v-for="(blockRow, row) in grids">
             <div class="all-blocks" v-for="(block, col) in blockRow" 
                  :style="{ top: row*unit + 'px', left: col*unit + 'px'}">
                 <div class="walls" v-if="block == 'W'" 
                      :style="{backgroundColor: '#F93409'}">
                 </div>              
                 <div class="goals" v-else-if="block === 'G'" 
-                     :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
+                     :style="{backgroundColor: '#07e2ff', textAlign: 'center'}">
+                </div>
+                <div class="floor" v-else-if="block === 'F'" 
+                     :style="{backgroundColor: 'rgb(216, 240, 252)'}">
                 </div>
                 <div class="boxes" v-else-if="block === 'B'" 
-                     :style="{backgroundColor: '#d3a13b', textAlign: 'center'}">
+                     :style="{textAlign: 'center'}">
                 </div>
+                
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>           
+        <div class="avatar" :style="{top:7*unit+'px', left:10*unit+'px'}"><i class="far fa-smile"></i></div>           
      </div>`,
     data() {
         return {
             unit: 32,
-            grids: [],
+            grids: this.$store.state.grids[0].grid,
             complete: false
          }
      },
      mounted() {
         //Grids pattern coming from data/grids.js file via store
-        this.grids = this.$store.state.grids[0].grid
+        
 
         /**
         * Defined initial score
@@ -48,11 +52,6 @@ export default {
         //Finds all tags with the with certain tag-names.
         let target = document.getElementsByClassName('boxes')
         let avatar = document.querySelector('.avatar')
-
-
-        //Start position of object.
-        avatar.style.left = avatarPosition.x * unit + 'px'
-        avatar.style.top = avatarPosition.y * unit + 'px'
 
         //Values which are later used for determining the pixels for moving the targets.
         let listZeroX = [0, 0, 0, 0, 0, 0]
@@ -95,8 +94,10 @@ export default {
         */
         document.addEventListener('keydown', (e) => {
             // Left arrow key
+            
             switch (e.keyCode) {
                 case 37:
+                    
                    this.$store.state.steps += 1  
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
@@ -127,6 +128,7 @@ export default {
                     //moves avatar to the left
                     else {
                         avatar.style.left = avatarPosition.x * unit + 'px'
+                        
                         //moves target to the left
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left", target, targetPositions)
                     }
