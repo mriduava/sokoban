@@ -66,29 +66,13 @@ export default {
         let strengthActive = false;
         let drillActive = false;
 
-        // Takes in an array and an object, if the object shares coordinates with an element in the array, the element is removed
-        function destroyArrayElement(array, object) {
-            let indexOfFound = -1;
-            for (let i = 0; i < array.length; i++) {
-                if (JSON.stringify(array[i]) == JSON.stringify(object)) {
-                    array.splice(i, 1);
-                    indexOfFound = i;
-                    /* console.log(indexOfFound);
-                    console.log(i); */
-
-                }
-            }
-            return indexOfFound;
-        }
-        function findArrayElementId(array, object) {
+        //Returns
+        function findArrayElementIndex(array, object) {
             let indexOfFound = -1;
             for (let i = 0; i < array.length; i++) {
                 if (JSON.stringify(array[i]) == JSON.stringify(object)) {
                     indexOfFound = i;
                     return indexOfFound;
-                    /* console.log(indexOfFound);
-                    console.log(i); */
-
                 }
             }
             return indexOfFound;
@@ -106,13 +90,9 @@ export default {
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementId(wallPositions, avatarPosition)];
+                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
 
-                       /*  destroyArrayElement(walls, findArrayElementId(wallPositions, avatarPosition)); */ //Hack it to set other wallposition?
-                        /* walls.splice(findArrayElementId(wallPositions, avatarPosition), 1); */
-                       /*  delete walls[findArrayElementId(wallPositions, avatarPosition)]; */
-                        /* destroyArrayElement(wallPositions, avatarPosition) */; //Removes wall from the array, still visible but doesn't block movement
                         avatarPosition.x += 1
                         drillActive = false;
                         console.log('drill used');
@@ -120,23 +100,16 @@ export default {
                     }
                     //Check if avatar has same position as a box and a bomb active
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        /* let indexOfDestroyed = destroyArrayElement(targetPositions, avatarPosition); */ //Removes block from array, still visible, doesn't block movement nor count for win
                         
-                        target[findArrayElementId(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementId(targetPositions, avatarPosition)]; //this method should work for drill as well, need to trim empty entries before win
-                        /* listZeroX.splice(indexOfDestroyed, 1); // Should remove the correct number from these arrays, something seems to be glitchy here. Target can't be spliced, will need hack 
-                        listZeroY.splice(indexOfDestroyed, 1); */ //These splices won't work, maybe set an element to null? delete array[i] might work
-                        avatarPosition.x += 1
-                        /* console.log(listZeroX);
-                        console.log(listZeroY); */
-                        /* console.log(indexOfDestroyed); */
-                        console.log(JSON.stringify(avatarPosition));
+                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)]; 
 
+                        avatarPosition.x += 1
                         bombActive = false;
                         console.log('bomb used');
                     }
                     //Check if avatar has same position as any wall.
-                    if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
+                    else if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
                         avatarPosition.x +=1
                     }
                     //moves avatar to the left
@@ -146,7 +119,7 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "left", target, targetPositions, strengthActive)
                     }
                     //checks if all targets are on the goal positions
-                    if(logic.checkArraySameElements(goalPositions, targetPositions)){
+                    if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
                         // isComplete()                      
@@ -159,21 +132,20 @@ export default {
                     
                     avatarPosition.y -= 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementId(wallPositions, avatarPosition)];
+                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+
                         avatarPosition.y += 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementId(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementId(targetPositions, avatarPosition)];
+                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+
                         avatarPosition.y += 1
                         bombActive = false;
-                        /* console.log(listZeroX);
-                        console.log(listZeroY); */
-                        console.log(indexOfDestroyed);
-                        console.log(JSON.stringify(avatarPosition));
+                        
                         console.log('bomb used');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
@@ -183,7 +155,7 @@ export default {
                         avatar.style.top = avatarPosition.y*unit + 'px'
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "up", target, targetPositions, strengthActive)
                     }
-                    if(logic.checkArraySameElements(goalPositions, targetPositions)){
+                    if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
                         // isComplete()
@@ -194,21 +166,20 @@ export default {
                 case 39:
                     avatarPosition.x += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementId(wallPositions, avatarPosition)];
+                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+
                         avatarPosition.x -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementId(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementId(targetPositions, avatarPosition)];
+                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+
                         avatarPosition.x -= 1
                         bombActive = false;
-                        /* console.log(listZeroX);
-                        console.log(listZeroY); */
-                        console.log(indexOfDestroyed);
-                        console.log(JSON.stringify(avatarPosition));
+                    
                         console.log('bomb used');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
@@ -218,7 +189,7 @@ export default {
                         avatar.style.left = avatarPosition.x *unit + 'px'
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "right", target, targetPositions, strengthActive)
                     }
-                    if(logic.checkArraySameElements(goalPositions, targetPositions)){
+                    if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
                         // isComplete()
@@ -229,21 +200,19 @@ export default {
                 case 40:
                     avatarPosition.y += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
-                        walls[findArrayElementId(wallPositions, avatarPosition)].style.display = "none";
-                        delete wallPositions[findArrayElementId(wallPositions, avatarPosition)];
+                        walls[findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
+                        delete wallPositions[findArrayElementIndex(wallPositions, avatarPosition)];
+
                         avatarPosition.y -= 1
                         drillActive = false;
                         console.log('no drill');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, targetPositions) == false && bombActive) {
-                        target[findArrayElementId(targetPositions, avatarPosition)].style.display = "none";
-                        delete targetPositions[findArrayElementId(targetPositions, avatarPosition)];
+                        target[findArrayElementIndex(targetPositions, avatarPosition)].style.display = "none";
+                        delete targetPositions[findArrayElementIndex(targetPositions, avatarPosition)];
+
                         avatarPosition.y -= 1
                         bombActive = false;
-                        /* console.log(listZeroX);
-                        console.log(listZeroY); */
-                        console.log(indexOfDestroyed);
-                        console.log(JSON.stringify(avatarPosition));
                         console.log('bomb used');
                     }
                     else if (logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) {
@@ -253,7 +222,7 @@ export default {
                         avatar.style.top = avatarPosition.y*unit + 'px'
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions, strengthActive)
                     }
-                    if(logic.checkArraySameElements(goalPositions, targetPositions)){
+                    if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
                         this.complete = true;
                         // isComplete()
