@@ -11,8 +11,8 @@ export default {
                 <div class="walls" v-if="block == 'W'" 
                      :style="{backgroundColor: '#F93409'}">
                 </div>              
-                <div class="goals" v-else-if="block === 'G'" 
-                     :style="{backgroundColor: '#07e2ff', textAlign: 'center'}">
+                <div class="goals" v-else-if="block === 'G'">
+                     <div class="goalpic"></div>
                 </div>
                 <div class="floor" v-else-if="block === 'F'" 
                      :style="{backgroundColor: 'rgb(216, 240, 252)'}">
@@ -30,7 +30,10 @@ export default {
                 
             </div>
         </div>
-        <div class="avatar" :style="{top:7*unit+'px', left:10*unit+'px'}"><i class="far fa-smile"></i></div>           
+        <div class="avatar" :style="{top:7*unit+'px', left:10*unit+'px'}">
+        <div class="avatarpic">
+        <i class="far fa-smile"></i></div>
+        </div>         
      </div>`,
     data() {
         return {

@@ -124,7 +124,7 @@ footer{
     position:absolute;
     width: 32px;
     height: 32px;
-    border: 1px dotted rgb(58, 55, 55);
+    border: 0.1px dotted rgb(58, 55, 55);
 }
 
 .walls,
@@ -133,11 +133,16 @@ footer{
     height: 32px;
 }
 
-.goals{
+
+
+.goalpic{
+    width: 28px;
+    height: 28px;
+    background: white;
     border: 1px solid #e0c07e;
 }
 
-.boxes{
+.boxes,.goals{
     /* background: url("../img/box.jpg"); */
     display: flex;
     align-items: center;
@@ -164,7 +169,19 @@ footer{
 
 .avatar{
     position:absolute;
-    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(118, 13, 216);
+}
+.avatarpic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    position:absolute;
+    font-size: 25px;
     color: rgb(118, 13, 216);
 }
 
