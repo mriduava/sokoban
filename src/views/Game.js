@@ -80,6 +80,28 @@ export default {
         let strengthActive = false;
         let drillActive = false;
 
+        function resetLevel(store, thisGame){
+            listZeroX = [0,0,0,0,0,0]
+            listZeroY = [0,0,0,0,0,0]
+            thisGame.grids = store.grids[store.level].grid 
+            avatarPosition = logic.findPositions('A', thisGame.grids)[0]
+            targetPositions = logic.findPositions('B',thisGame.grids)                      
+            avatar.style.left = avatarPosition.x * unit + 'px'
+            avatar.style.top = avatarPosition.y * unit + 'px'
+ 
+            for (let i = 0; i < targetPositions.length; i++) {
+                target[i].style.left = targetPositions[i].x + 'px';
+                target[i].style.top = targetPositions[i].y + 'px'; 
+                console.log(i, targetPositions[i]);           
+            } 
+        }
+
+        setTimeout(() => {
+            resetLevel(this.$store.state, this)
+            console.log('Mridul');
+        }, 5000);
+        
+
         function levelUp(store, thisGame) {
             store.level += 1
             thisGame.grids = store.grids[store.level].grid 
@@ -89,9 +111,11 @@ export default {
             goalPositions = logic.findPositions('G',thisGame.grids)                        
             avatar.style.left = avatarPosition.x * unit + 'px'
             avatar.style.top = avatarPosition.y * unit + 'px'
-            listZeroX = [0,0,0,0,0]
-            listZeroY = [0,0,0,0,0]
+            listZeroX = [0,0,0,0,0,0]
+            listZeroY = [0,0,0,0,0,0]
         }
+
+        
 
         /**
         * Event key listener
@@ -126,7 +150,7 @@ export default {
                     }
                     //Check if avatar has same position as any wall.
                     else if(logic.checkSamePosObjectList(avatarPosition, wallPositions) == false){
-                        avatarPosition.x +=1
+                        avatarPosition.x += 1
                     }
                     //moves avatar to the left
                     else {
@@ -137,12 +161,12 @@ export default {
                     //checks if all targets are on the goal positions
                     if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
-                        levelUp(this.$store.state, this)
-                        // if (this.$state.grids.length > this.$store.state.grids.level ) {
-                        //     levelUp()
-                        // }
-                      
-                      
+                        if (this.$store.state.level< this.$store.state.grids.length-1) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level = 0;
+                            this.$store.state.complete = true;
+                        }
                     }
                     break;
                 // Up arrow key   
@@ -176,10 +200,11 @@ export default {
                     if(logic.evaluateWin(goalPositions, targetPositions)){
                         console.log("You have won.")
 
-                        if (this.$store.state.level<2) {
+                        if (this.$store.state.level< this.$store.state.grids.length-1) {
                             levelUp(this.$store.state, this)
                         }else{
-                            this.$store.state.level=0;
+                            this.$store.state.level = 0;
+                            this.$store.state.complete = true;
                         }
                     }
                     break;
@@ -252,7 +277,12 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "down", target, targetPositions, strengthActive)
                     }
                     if(logic.evaluateWin(goalPositions, targetPositions)){
-                       levelUp(this.$store.state, this)
+                       if (this.$store.state.level< this.$store.state.grids.length-1) {
+                            levelUp(this.$store.state, this)
+                        }else{
+                            this.$store.state.level = 0;
+                            this.$store.state.complete = true;
+                        }
                         
                     }
                     break;
