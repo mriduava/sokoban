@@ -1,5 +1,6 @@
 import {store} from '../store.js'
 import * as logic from '../logic/logic.js'
+import {eventBus} from "../main.js";
 
 export default {
     store,
@@ -24,39 +25,19 @@ export default {
     data() {
         return {
             unit: 32,
-            grids: [],
-            complete: false
-         }
-     },
-     computed: {
-        //  reset(){
-        //      console.log('hi')
-        //  }
-         
-     },
-     methods: {
-         reset(){
-             this.$emit('reset', 'deepthy')
-
+            grids: []
          }
      },
      mounted() {
-
-         function reset(){
-             this.$emit('reset', 'deepthy')
-         }
-
         //Grids pattern coming from data/grids.js file via store
         this.grids = this.$store.state.grids[0].grid
 
         /**
-        * Defined initial score
         * Defined object's movement unit
         */
-        let score = 0;
         let unit = this.unit;       
         
-        //All positions of different letters in this.grids.
+        //All positions of different letters in grids.
         let wallPositions = logic.findPositions('W',this.grids)
         let targetPositions = logic.findPositions('B',this.grids)
         let goalPositions = logic.findPositions('G',this.grids)
@@ -96,10 +77,10 @@ export default {
             } 
         }
 
-        setTimeout(() => {
-            resetLevel(this.$store.state, this)
-            console.log('Mridul');
-        }, 5000);
+        // setTimeout(() => {
+        //     resetLevel(this.$store.state, this)
+        //     console.log('Mridul');
+        // }, 5000);
         
 
         function levelUp(store, thisGame) {
@@ -119,7 +100,7 @@ export default {
 
         /**
         * Event key listener
-        * For the movement of the Avatar and Target by
+        * For the movement of the Avatar and Boxes by
         * pressing Arrow Key from Keyboard
         */
         document.addEventListener('keydown', (e) => {
@@ -127,7 +108,10 @@ export default {
             switch (e.keyCode) {
                 case 37:
                    this.$store.state.steps += 1  
+                   this.$store.state.stopWatch = true
+
                     avatarPosition.x -= 1
+                    
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
@@ -166,12 +150,15 @@ export default {
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
+                            this.$store.state.stopWatch = false;
                         }
                     }
                     break;
                 // Up arrow key   
                 case 38:
-                    this.$store.state.steps += 1                    
+                
+                    this.$store.state.steps += 1 
+                    this.$store.state.stopWatch = true                   
                     avatarPosition.y -= 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
@@ -204,13 +191,15 @@ export default {
                             levelUp(this.$store.state, this)
                         }else{
                             this.$store.state.level = 0;
-                            this.$store.state.complete = true;
+                            this.$store.state.complete = true;  
                         }
                     }
                     break;
                 // Right arrow key 
                 case 39:
+               
                     this.$store.state.steps += 1
+                    this.$store.state.stopWatch = true
                     avatarPosition.x += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
@@ -244,6 +233,7 @@ export default {
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
+                            this.$store.state.stopWatch = false;
                         }
                         
                         
@@ -251,7 +241,9 @@ export default {
                     break;
                 // Down arrow key
                 case 40:
+               
                     this.$store.state.steps += 1
+                    this.$store.state.stopWatch = true
                     avatarPosition.y += 1
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && drillActive) {
                         walls[logic.findArrayElementIndex(wallPositions, avatarPosition)].style.display = "none";
@@ -282,6 +274,7 @@ export default {
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
+                            this.$store.state.stopWatch = false;
                         }
                         
                     }

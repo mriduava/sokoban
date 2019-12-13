@@ -15,9 +15,9 @@ export default {
 
                 <div class="modal-body">
                     <slot name="body">
-                        <h4>Your total score {{fianlScore}}</h4>
-                        <h4>Your played {{levelPlayed}} Levls</h4>
-                        <h4>Time spend {{spendTime}} minutes</h4>
+                        <h4>Your total score {{updateScore}}</h4>
+                        <h4>You played {{updateLevelPlayed}} levls</h4>
+                        <h4>Time spend {{updateSpendTime}} minutes</h4>
                     </slot>
                 </div>
 
@@ -38,6 +38,17 @@ export default {
                fianlScore: 0,
                levelPlayed: 0,
                spendTime: 0
+           }
+       },
+       computed: {
+           updateSpendTime(){
+               return this.$store.state.spendTime
+           },
+           updateLevelPlayed(){
+               return this.$store.state.level
+           },
+           updateScore(){
+               return this.$store.state.score
            }
        },
 }

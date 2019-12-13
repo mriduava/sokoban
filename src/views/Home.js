@@ -20,7 +20,7 @@ export default{
                     <div class="nav-width">
                         <div class="level">LEVEL <span class="level-num">{{updateLevel}}</span></div>
                         <div class="steps">STEPS <span class="steps-num">{{updateSteps}}</span></div>
-                        <div class="time">TIME <span class="stop-watch"> 00:00:00</span></div>
+                        <div class="time">TIME <span v-if="!updateStopWatch">00:00:00</span> <span class="stop-watch" v-if="updateStopWatch"></span></div>
                         <div class="score">SCORE <span class="score-num">{{score}}</span></div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ export default{
 
            <transition name="fade">
                 <div class="game" v-if="!updateComplete">                    
-                    <Game/>                
+                    <Game ref="samoy"/>                
                 </div> 
            </transition>
 
@@ -59,7 +59,8 @@ export default{
             score: this.$store.state.score,
             bonus: 0,
             power: 3,
-            complete: false
+            complete: false,
+            stopWatch: false
         }        
     },
     computed: {
@@ -76,6 +77,42 @@ export default{
         },
         updateComplete(){
             return this.complete = this.$store.state.complete
+        },
+        updateStopWatch(){
+            return this.stopWatch = this.$store.state.stopWatch            
+        }
+        
+    },
+    methods: {
+        stopClock(){
+            let watch = document.querySelector('.stop-watch')
+            let milseconds = 0, seconds = 0, minutes = 0;
+            function time() {
+                milseconds++;
+                if (milseconds >= 99) {
+                    milseconds = 0;
+                    seconds++;
+                    if (seconds >= 60) {
+                        seconds = 0;
+                        minutes++;
+                    }
+                }
+                watch.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + 
+                                    (seconds ? (seconds > 9 ? seconds : "0" + seconds) : "00") + ":" + 
+                                    (milseconds > 9 ? milseconds : "0" + milseconds);
+            }
+            function stopWatch() {
+                setInterval(time, 10);
+            }
+            stopWatch();
+        }
+    
+    },
+    watch: {
+        'stopWatch' (){
+            if (this.$store.state.stopWatch ) {
+                this.stopClock()
+            }
         }
     },
     mounted() {
