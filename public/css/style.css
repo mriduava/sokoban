@@ -138,7 +138,10 @@ footer{
 }
 
 .boxes{
-    background: url("../img/box.jpg");
+    /* background: url("../img/box.jpg"); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 }
 
@@ -175,4 +178,26 @@ footer{
     width: 66%;
     height: 50vh;
     border: 1px solid rgb(56, 47, 47);
+}
+.picture{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #9c592c;
+    border-radius: 2px;
+}
+.picture2{
+    display: flex;
+    width: 23px;
+    height: 23px;
+    border: 1px solid rgba(0, 0, 0, 0.199);
+    border-radius: 1.5px;
+}
+
+.picture3{
+    width: 34%;
+    height: 20.6px;
+    border: 1px solid rgba(0, 0, 0, 0.199);
 }

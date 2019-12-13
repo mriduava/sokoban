@@ -19,6 +19,13 @@ export default {
                 </div>
                 <div class="boxes" v-else-if="block === 'B'" 
                      :style="{textAlign: 'center'}">
+                     <div class="picture" >
+                        <div class="picture2">
+                        <div class="picture3" v-for="(box, i) in [0,0,0]">
+                        </div>
+                        </div>
+                     </div>
+                     
                 </div>
                 
             </div>
