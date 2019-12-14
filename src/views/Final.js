@@ -23,9 +23,13 @@ export default {
 
                 <div class="modal-footer">
                     <slot name="footer">
-                    <button class="modal-default-button" @click="$emit('close')">
-                        No
-                    </button>
+                      <h2>Do you want to play again?</h2>
+                        <button class="modal-default-button" @click="$emit('restart')">
+                           Yes
+                        </button>
+                        <button class="modal-default-button" @click="$emit('close')">
+                            No
+                        </button>
                     </slot>
                 </div>
                 </div>
@@ -35,9 +39,7 @@ export default {
        </div>`,
        data() {
            return {
-               fianlScore: 0,
-               levelPlayed: 0,
-               spendTime: 0
+
            }
        },
        computed: {

@@ -20,50 +20,55 @@ export default{
                     <div class="nav-width">
                         <div class="level">LEVEL <span class="level-num">{{updateLevel}}</span></div>
                         <div class="steps">STEPS <span class="steps-num">{{updateSteps}}</span></div>
-                        <div class="time">TIME <span v-if="!updateStopWatch">00:00:00</span> <span class="stop-watch" v-if="updateStopWatch"></span></div>
-                        <div class="score">SCORE <span class="score-num">{{score}}</span></div>
+                        <div class="time">TIME <span v-if="!updateStopWatch">00:00:00</span>
+                                                <span class="stop-watch" v-if="updateStopWatch"></span>
+                        </div>
+                        <div class="score">SCORE <span class="score-num">{{updateScore}}</span></div>
                     </div>
                 </div>
 
                 <div class="under-nav">
                     <div class="nav-width">
                         <button class="reset" @click="$emit('reset')">RESET</button>
-                        <div class="life">POWER 
-                            <span class="star"><i class="fas fa-star"></i>
-                                  <i class="fas fa-bomb"></i>
-                                  <i class="far fa-star"></i>
+                        <div class="power">POWER 
+                            <span class="star"><i @click="activeStrength" class="fas fa-user-friends"></i>
+                                  <i @click="activeBomb" class="fas fa-bomb"></i>
+                                  <i @click="activeDrill" class="fas fa-hammer"></i>
                             </span>
                         </div>
-                        <div class="bonus-points">BONUS POINTS {{bonus}}</div>
+                        <div class="message">{{message}}</div>
                     </div>
                 </div>
-                
             </div>
 
            <transition name="fade">
                 <div class="game" v-if="!updateComplete">                    
-                    <Game ref="samoy"/>                
+                    <Game/>                
                 </div> 
            </transition>
 
            <div class="completion" >
-            <Final v-if="updateComplete && complete" @close="complete = false">
-            </Final>
-            </div>
+                <Final v-if="updateComplete && complete" 
+                    @close="complete = false">
+                </Final>
+           </div>
 
         </div>`,
     data() {
         return {
             gameName: 'sOkObAn',
-            level: 1,
-            score: this.$store.state.score,
-            bonus: 0,
-            power: 3,
             complete: false,
-            stopWatch: false
+            bombActive: false,
+            strengthActive: false,
+            drillActive: false,
+            stopWatch: false,
+            message: 'No power used!'
         }        
     },
     computed: {
+        updateScore(){
+            return this.$store.state.score
+        },
         updateSteps(){
             return this.$store.state.steps
         },
@@ -81,9 +86,21 @@ export default{
         updateStopWatch(){
             return this.stopWatch = this.$store.state.stopWatch            
         }
-        
     },
     methods: {
+        activeStrength(){
+            this.$store.state.strengthActive = true
+            this.message = 'Strength is active!'
+        },
+        activeBomb(){
+            this.$store.state.bombActive = true
+            this.message = 'Bomb is avtive!'
+            console.log(this.$store.state.bombActive);           
+        },
+        activeDrill(){
+            this.$store.state.drillActive = true
+            this.message = 'Drill is active!'
+        },
         stopClock(){
             let watch = document.querySelector('.stop-watch')
             let milseconds = 0, seconds = 0, minutes = 0;
@@ -106,26 +123,15 @@ export default{
             }
             stopWatch();
         }
-    
     },
     watch: {
         'stopWatch' (){
-            if (this.$store.state.stopWatch ) {
+            if (this.$store.state.stopWatch) {
                 this.stopClock()
             }
         }
     },
     mounted() {
-      
-      
-        // let game = document.querySelector('.game')
-        // let store = this.complete
-        // // game.style.setProperty('opacity', '1');
-        // if (this.complete == true) {
-        //     game.style.setProperty('display', 'none');
-        //     (function fadeGame(){
-        //     (game.style.opacity -= 0.1 ) < 0 ? game.style.display="none": setTimeout(fadeGame, 1000)})(); 
-        // }
     }
 
 }
