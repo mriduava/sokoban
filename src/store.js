@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
         strengthActive: false,
         bombActive: false,
         drillActive: false,
-        resetLevel: false
+        resetLevel: false,
+        restart: false
     }
 })

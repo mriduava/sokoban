@@ -13,10 +13,10 @@ export default {
                      :style="{backgroundColor: '#F93409'}">
                 </div>              
                 <div class="goals" v-else-if="block === 'G'" 
-                     :style="{backgroundColor: '#99ffff', textAlign: 'center'}">
+                     :style="{backgroundColor: '#99ffff'}">
                 </div>
                 <div class="boxes" v-else-if="block === 'B'" 
-                     :style="{backgroundColor: '#d3a13b', textAlign: 'center'}">
+                     :style="{backgroundColor: '#d3a13b'}">
                 </div>
             </div>
         </div>
@@ -35,7 +35,6 @@ export default {
         //Grids pattern coming from data/grids.js file via store
         this.grids = this.$store.state.grids[0].grid
 
-        console.log(this.$store.state.bombActive);
         /**
         * Defined object's movement unit
         */

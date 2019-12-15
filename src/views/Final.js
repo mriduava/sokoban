@@ -9,14 +9,15 @@ export default {
 
                 <div class="modal-header">
                     <slot name="header">
-                            <h1>Thanks to play SOKOBAN!</h1>
+                            <h1>Thanks to play Sokoban!</h1>
+                            <hr>
                     </slot>
                 </div>
 
                 <div class="modal-body">
                     <slot name="body">
                         <h4>Your total score {{updateScore}}</h4>
-                        <h4>You played {{updateLevelPlayed}} levls</h4>
+                        <h4>You played {{updateLevelPlayed}} levels</h4>
                         <h4>Time spend {{updateSpendTime}} minutes</h4>
                     </slot>
                 </div>
@@ -24,12 +25,14 @@ export default {
                 <div class="modal-footer">
                     <slot name="footer">
                       <h2>Do you want to play again?</h2>
+                       <div class="modal-button">
                         <button class="modal-default-button" @click="$emit('restart')">
                            Yes
                         </button>
                         <button class="modal-default-button" @click="$emit('close')">
                             No
                         </button>
+                     </div>
                     </slot>
                 </div>
                 </div>
