@@ -10,7 +10,7 @@ export default {
             <div class="all-blocks" v-for="(block, col) in blockRow" 
                  :style="{ top: row*unit + 'px', left: col*unit + 'px'}">
                 <div class="walls" v-if="block == 'W'" 
-                     :style="{backgroundColor: '#F93409'}">
+                     :style="{backgroundColor: '#A9A9A9'}">
                 </div>              
                 <div class="goals" v-else-if="block === 'G'" 
                      :style="{backgroundColor: '#99ffff'}">
@@ -20,7 +20,7 @@ export default {
                 </div>
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>       
+            <div class="avatar"><img :src="this.avatarImage" width="32" height="32"></div>       
      </div>`,
     data() {
         return {
@@ -28,7 +28,8 @@ export default {
             grids: [],
             strengthActive: false,
             bombActive: false,
-            drillActive: false
+            drillActive: false,
+            avatarImage: "../public/img/player_down.png",
          }
      },
      mounted() {
@@ -123,6 +124,7 @@ export default {
             // Left arrow key
             switch (e.keyCode) {
                 case 37:
+                this.avatarImage = "../public/img/player_left.png";
                    this.$store.state.steps += 1  
                    this.$store.state.stopWatch = true
                     avatarPosition.x -= 1
@@ -166,6 +168,7 @@ export default {
                     break;
                 // Up arrow key   
                 case 38:
+                    this.avatarImage = "../public/img/player_up.png";
                     this.$store.state.steps += 1 
                     this.$store.state.stopWatch = true                   
                     avatarPosition.y -= 1
@@ -203,6 +206,7 @@ export default {
                     break;
                 // Right arrow key 
                 case 39:
+                    this.avatarImage = "../public/img/player_right.png";
                     this.$store.state.steps += 1
                     this.$store.state.stopWatch = true
                     avatarPosition.x += 1
@@ -241,6 +245,7 @@ export default {
                     break;
                 // Down arrow key
                 case 40:
+                    this.avatarImage = "../public/img/player_down.png";
                     this.$store.state.steps += 1
                     this.$store.state.stopWatch = true
                     avatarPosition.y += 1

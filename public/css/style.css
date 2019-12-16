@@ -173,7 +173,9 @@
     width: 32px;
     height: 32px;
     position: absolute;
-    border: 1px dotted #ddd;
+    /* border: 1px dotted #ddd; */
+    background: url("../img/ground.png");
+    background-size: cover;
 }
 
 .walls,
@@ -183,15 +185,19 @@
 }
 
 .goals{
-    border: 1px solid #e0c07e;
+    /* border: 1px solid #e0c07e; */
+    background: url("../img/goal.png");
+    background-size: cover;
 }
 
 .boxes{
-    background: url("../img/box.jpg");
+    background: url("../img/box.png");
+    background-size: cover;
 }
 
 .walls{
-    background: url("../img/bricks.jpg");
+    background: url("../img/wall.png");
+    background-size: cover;
 }
 
 .avatar,
@@ -199,13 +205,8 @@
     width: 32px;
     height: 32px;
     position: absolute;  
-    z-index: +1; 
-}
-
-.avatar{
-    font-size: 32px;
-    padding-left: 2px;
-    color: rgb(0, 204, 109);
+    z-index: +1;
+    margin: 0 auto;
 }
 
 /* FINAL COMPONENT */
