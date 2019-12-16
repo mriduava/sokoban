@@ -116,11 +116,11 @@
     height: 160px;
     margin: 0 auto;
     list-style: none;
-    z-index: +1px;
+    z-index: 9998;
     box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.3);
-    background: #667db6;
-    background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
-    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+    background: rgba(102, 125, 182, 0.2);
+    background: -webkit-linear-gradient(to right, rgba(102, 125, 182, 0.2), #0082c8, #0082c8, #667db6);
+    background: linear-gradient(to top, rgba(102, 125, 182, 0.1), #0082c8, #0082c8, #667db6);
 }
 
 .game-info>.info-text{
@@ -162,18 +162,21 @@
     margin: 4% auto;
     position: absolute;
     left: 50%;
+    top:24%;
     margin-left: -240px;
+    z-index: -1;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
 }
 
 .grid{
-    position: relative;
+    position: fixed;
 }
 
 .all-blocks{
     width: 32px;
     height: 32px;
     position: absolute;
-    border: 1px dotted #ddd;
+    /* border: 1px dotted #ddd; */
 }
 
 .walls,
@@ -188,10 +191,12 @@
 
 .boxes{
     background: url("../img/box.jpg");
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 .walls{
     background: url("../img/bricks.jpg");
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .avatar,
@@ -204,8 +209,9 @@
 
 .avatar{
     font-size: 32px;
-    padding-left: 2px;
-    color: rgb(0, 204, 109);
+    color: rgb(255, 251, 7);
+    /* background: url("../img/avatar.gif"); */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 /* FINAL COMPONENT */
@@ -295,4 +301,18 @@
   .modal-leave-active .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
+  }
+
+  /* STYLE BACKGROUND */
+  .background-one{
+    position: absolute;
+    top: 1%;
+    width: 100vw;
+    height: 99vh;
+    background: #0082c8;
+    z-index: -2;
+    background: rgba(102, 125, 182, 0.2);
+    background: -webkit-linear-gradient(to right, rgba(240, 240, 240, 0.2), #ffffff, #ffffff, #667db6);
+    background: linear-gradient(to top, rgba(102, 125, 182, 0.1), rgba(242, 251, 255, 0.9), rgba(9, 165, 255, 0.2), #88d4ff);
+    clip-path: polygon(95% 40%, 90% 90%, 50% 0%, 10% 70%);
   }

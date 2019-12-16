@@ -12,9 +12,9 @@ export default{
     },
     template: `
         <div id="home">
+            <!-- Display the Navbar -->
             <div class="nav">
                 <div class="game-name">{{gameName}}</div> 
-
                 <div class="sub-nav">
                     <div class="nav-width">
                         <div class="level"><i class="fas fa-layer-group"></i> LEVEL <span class="level-num">{{updateLevel}}</span></div>
@@ -25,7 +25,6 @@ export default{
                         <div class="score"><i class="fas fa-chart-line"></i> SCORE <span class="score-num">{{updateScore}}</span></div>
                     </div>
                 </div>
-
                 <div class="under-nav">
                     <div class="nav-width">
                         <button class="reset" @click="showInfo"><i class="fas fa-info-circle"></i> INFO</button>
@@ -41,6 +40,7 @@ export default{
                 </div>
             </div>
 
+            <!-- Game Information Box -->
             <div ref="show" class="game-info">
               <div class="info-text">
                 <h1>How to play</h1>
@@ -53,10 +53,15 @@ export default{
               </div>
             </div>
 
+            <!-- To design the Bankground -->
+            <div class="background-one"></div>
+
+            <!-- Game Component -->
             <div class="game" v-if="!updateComplete">                    
                 <Game/>                
             </div> 
 
+            <!-- Display the Modal -->
             <div class="completion" >
                 <Final v-if="updateComplete && complete" 
                     @close="complete = false"
@@ -64,9 +69,11 @@ export default{
                 </Final>
             </div>
 
+            <!-- Display the Gmae Name at the End of the Program -->
             <div>
                 <div v-if="updateComplete" class="game-name-end">{{gameName}}</div> 
             </div>
+
         </div>`,
     data() {
         return {
@@ -158,6 +165,11 @@ export default{
         },
         showInfo(){
             this.$refs.show.classList.toggle('show-info')            
+        },
+        stopStopWatch(){
+            function stopTime() {
+                clearInterval(time)
+            }
         }
     },
     watch: {

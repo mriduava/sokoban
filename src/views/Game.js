@@ -20,9 +20,9 @@ export default {
                 </div>
             </div>
         </div>
-            <div class="avatar"><i class="far fa-smile"></i></div>       
+            <div class="avatar"><i class="fas fa-smile"></i></div>       
      </div>`,
-    data() {
+     data() {
         return {
             unit: 32,
             grids: [],
@@ -45,8 +45,6 @@ export default {
         let targetPositions = logic.findPositions('B',this.grids)
         let goalPositions = logic.findPositions('G',this.grids)
         let avatarPosition = logic.findPositions('A', this.grids)[0]
-
-        // console.log(goalPositions.length);
         
 
         //Finds all tags with the with certain tag-names.
