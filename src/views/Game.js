@@ -72,15 +72,24 @@ export default {
             listZeroY = [0,0,0,0,0,0]
             thisGame.grids = store.grids[store.level].grid 
             avatarPosition = logic.findPositions('A', thisGame.grids)[0]
+            wallPositions = logic.findPositions('W',thisGame.grids)
             targetPositions = logic.findPositions('B',thisGame.grids)                      
             avatar.style.left = avatarPosition.x * unit + 'px'
             avatar.style.top = avatarPosition.y * unit + 'px'
+            target = document.getElementsByClassName('boxes')
+            walls = document.getElementsByClassName('walls')
  
             for (let i = 0; i < targetPositions.length; i++) {
-                target[i].style.left = targetPositions[i].x + 'px';
-                target[i].style.top = targetPositions[i].y + 'px'; 
+                target[i].style.display = "";
+                target[i].style.left = 0 + 'px';
+                target[i].style.top = 0 + 'px'; 
                 console.log(i, targetPositions[i]);           
-            } 
+                console.log(i, target[i]);           
+            }
+            for (let i = 0; i < wallPositions.length; i++){
+                walls[i].style.display = "";
+            }
+
         }
 
         // setTimeout(() => {
@@ -265,6 +274,9 @@ export default {
                             this.$store.state.stopWatch = false;
                         }
                     }
+                    break;
+                    case 82:
+                        resetLevel(this.$store.state, this);
                     break;
             }
         });
