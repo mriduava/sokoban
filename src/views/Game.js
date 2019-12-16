@@ -9,18 +9,15 @@ export default {
         <div v-for="(blockRow, row) in grids">
             <div class="all-blocks" v-for="(block, col) in blockRow" 
                  :style="{ top: row*unit + 'px', left: col*unit + 'px'}">
-                <div class="walls" v-if="block == 'W'" 
-                     :style="{backgroundColor: '#A9A9A9'}">
+                <div class="walls" v-if="block == 'W'" >
                 </div>              
-                <div class="goals" v-else-if="block === 'G'" 
-                     :style="{backgroundColor: '#99ffff'}">
+                <div class="goals" v-else-if="block === 'G'" >
                 </div>
-                <div class="boxes" v-else-if="block === 'B'" 
-                     :style="{backgroundColor: '#d3a13b'}">
+                <div class="boxes" v-else-if="block === 'B'" >
                 </div>
             </div>
         </div>
-            <div class="avatar"><img :src="this.avatarImage" width="32" height="32"></div>       
+            <div class="avatar"><img :src="this.avatarImageSrc" width="32" height="32"></div>       
      </div>`,
     data() {
         return {
@@ -29,7 +26,7 @@ export default {
             strengthActive: false,
             bombActive: false,
             drillActive: false,
-            avatarImage: "../public/img/player_down.png",
+            avatarImageSrc: "../public/img/player_down.png",
          }
      },
      mounted() {
@@ -39,7 +36,7 @@ export default {
         /**
         * Defined object's movement unit
         */
-        let unit = this.unit;       
+        let unit = this.unit;
         
         //All positions of different letters in grids.
         let wallPositions = logic.findPositions('W',this.grids)
@@ -124,7 +121,7 @@ export default {
             // Left arrow key
             switch (e.keyCode) {
                 case 37:
-                this.avatarImage = "../public/img/player_left.png";
+                this.avatarImageSrc = "../public/img/player_left.png";
                    this.$store.state.steps += 1  
                    this.$store.state.stopWatch = true
                     avatarPosition.x -= 1
@@ -168,7 +165,7 @@ export default {
                     break;
                 // Up arrow key   
                 case 38:
-                    this.avatarImage = "../public/img/player_up.png";
+                    this.avatarImageSrc = "../public/img/player_up.png";
                     this.$store.state.steps += 1 
                     this.$store.state.stopWatch = true                   
                     avatarPosition.y -= 1
@@ -206,7 +203,7 @@ export default {
                     break;
                 // Right arrow key 
                 case 39:
-                    this.avatarImage = "../public/img/player_right.png";
+                    this.avatarImageSrc = "../public/img/player_right.png";
                     this.$store.state.steps += 1
                     this.$store.state.stopWatch = true
                     avatarPosition.x += 1
@@ -245,7 +242,7 @@ export default {
                     break;
                 // Down arrow key
                 case 40:
-                    this.avatarImage = "../public/img/player_down.png";
+                    this.avatarImageSrc = "../public/img/player_down.png";
                     this.$store.state.steps += 1
                     this.$store.state.stopWatch = true
                     avatarPosition.y += 1
