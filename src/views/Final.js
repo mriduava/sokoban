@@ -2,25 +2,58 @@
 export default {
     template: `
        <div class="final">
-           <div class="final-message">
-               <div><h1>Thanks to play SOKOBAN!</h1></div>
-               <div>
-                   <h4>Your total score {{fianlScore}}</h4>
-                   <h4>Your played {{levelPlayed}} Levls</h4>
-                   <h4>Time spend {{spendTime}} minutes</h4>
-               </div>
-               <div><h2>Do you want to play again?</h2></div>
-               <div>
-                   <button>Yes?</button>
-                   <button>No?</button>
-               </div>
-           </div>
+        <transition name="modal">
+            <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+
+                <div class="modal-header">
+                    <slot name="header">
+                            <h1>Thanks to play Sokoban!</h1>
+                            <hr>
+                    </slot>
+                </div>
+
+                <div class="modal-body">
+                    <slot name="body">
+                        <h4>Your total score {{updateScore}}</h4>
+                        <h4>You played {{updateLevelPlayed}} levels</h4>
+                        <h4>Time spend {{updateSpendTime}} minutes</h4>
+                    </slot>
+                </div>
+
+                <div class="modal-footer">
+                    <slot name="footer">
+                      <h2>Do you want to play again?</h2>
+                       <div class="modal-button">
+                        <button class="modal-default-button" @click="$emit('restart')">
+                           Yes
+                        </button>
+                        <button class="modal-default-button" @click="$emit('close')">
+                            No
+                        </button>
+                     </div>
+                    </slot>
+                </div>
+                </div>
+            </div>
+            </div>
+        </transition>
        </div>`,
        data() {
            return {
-               fianlScore: 0,
-               levelPlayed: 0,
-               spendTime: 0
+
+           }
+       },
+       computed: {
+           updateSpendTime(){
+               return this.$store.state.spendTime
+           },
+           updateLevelPlayed(){
+               return this.$store.state.level
+           },
+           updateScore(){
+               return this.$store.state.score
            }
        },
 }

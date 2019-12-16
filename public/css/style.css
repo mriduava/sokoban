@@ -25,11 +25,10 @@
     background: #667db6;
     background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
     background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
-
-
 }
 
 .sub-nav{
+    padding: 0 20px;
     margin-top: 2%;;
     background: #4398f8c7;
 }
@@ -38,22 +37,37 @@
     margin: 0 auto;
     display: flex;
     max-width: 600px;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .under-nav{
+    padding: 0 20px;
     border-bottom: 2px solid #07e2ff;
     box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
+.fas-bar{
+    font-size: 42px;
+}
+
 .reset,
-.life,
-.bonus-points{
+.power,
+.message{
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 18px;
-    color: #e0bb6f;
+    color: #fbff00;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.message{
+    color: #fff;
+}
+
+.reset{
+    background: none;
+    border: none;
+    
 }
 
 .reset:hover{
@@ -72,6 +86,23 @@
     color: #07e2ff;
 }
 
+.star{
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #07e2ff;
+}
+
+.star>.fa-user-friends:hover,
+.star>.fa-bomb:hover,
+.star>.fa-hammer:hover{
+    color: #fff;
+    cursor: pointer;
+}
+
+.selected{
+    color: #fff;
+}
+
 .steps-num,
 .stop-watch,
 .score-num,
@@ -79,16 +110,53 @@
     color: #fff;
 }
 
-.game-name{
+.game-info{
+    display: none;
+    max-width: 600px;
+    height: 160px;
+    margin: 0 auto;
+    list-style: none;
+    z-index: +1px;
+    box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.3);
+    background: #667db6;
+    background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+}
+
+.game-info>.info-text{
+    padding: 4%;
+    color: #fff;
+}
+
+.game-info> .info-text> ul{
+    margin-top: 5px;
+    font-size: 18px;
+    list-style: none;
+    line-height: 1.4;
+}
+
+.show-info{
+    display: block;
+}
+
+
+/* STYLE TO GAME*/
+.game-name,
+.game-name-end{
     font-family: 'pacfont';
     font-size: 2.5em;
     color: #fff;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
-
 }
 
+.game-name-end{
+    font-size: 4em;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -210px;
+}
 
-/* STYLE TO GRID */
 .game{
     max-width: 95%;
     margin: 4% auto;
@@ -136,7 +204,8 @@
 
 .avatar{
     font-size: 32px;
-    color: rgb(118, 13, 216);
+    padding-left: 2px;
+    color: rgb(0, 204, 109);
 }
 
 /* FINAL COMPONENT */
@@ -147,3 +216,83 @@
     left: 50%;
     margin-left: -240px;
 }
+
+
+/* MODAL STYLE */
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+  
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .modal-container {
+    width: 600px;
+    text-align: center;
+    margin: 0px auto;
+    padding: 20px 30px;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: rgba(0, 148, 185, 0.5);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  
+  .modal-header h1 {
+    margin-top: 0;
+    color: #ffffff;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-body {
+    margin: 20px 0;
+  }
+  
+  .modal-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal-button> button{
+      width: 60px;
+      font-size: 20px;
+      margin: 15px 5px 6px 5px;
+      outline: none;
+      color: #0082c8;
+      padding: 5px;
+      cursor: pointer;
+      border: 1px solid #0502b4;
+      background: #fff;
+  }
+
+  .modal-button> button:hover{
+      border: 1px solid #fff;
+      color: #fff;
+      background: #0082c8;
+  }
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }

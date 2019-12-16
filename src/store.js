@@ -4,9 +4,15 @@ export const store = new Vuex.Store({
     state: {
         score: 0,
         steps: 0,
-        time: 0,
-        grids: grids,
         level: 0,
-        complete: false
+        spendTime: 0,
+        grids: grids,
+        complete: false,
+        stopWatch: false,
+        strengthActive: false,
+        bombActive: false,
+        drillActive: false,
+        resetLevel: false,
+        restart: false
     }
 })

@@ -1,5 +1,6 @@
 import App from './views/App.js'
 import {store} from './store.js'
+export const eventBus = new Vue();
 
 
 Vue.config.devtools = true;

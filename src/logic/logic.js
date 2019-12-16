@@ -268,14 +268,14 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                         }
 
                         if (arrayNext(tarPos, i)) {
-                            //if target position is not same as wall move 1 step
+                            //if Boxes positions are not same as walls move 1 step
                             if (checkSamePosObjectList(tarPos[i], wallPos)) {
                                 tarPos[i].y = boxPosArray[i].y
                                 boxes[i].style.top = listZero[i] * 32 + 'px'
                             }
 
                         }
-                        //if avatar position is same as target, doesn't go into target
+                        //if avatar position is same as Boxes, doesn't go into Boxes
                         if (objectPos.y == tarPos[i].y) {
                             objectPos.y = tarPos[i].y - 1
                             avaPos.style.top = objectPos.y * 32 + 'px'
