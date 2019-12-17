@@ -19,7 +19,7 @@ export function findPositions(findElement, grids) {
     return array
 }
 /*
-checkSamePosObjectList: Checks if an object has the same position as any element in an array.
+checkSamePosObjectList: Checks if an object has the same position as any element in an array. Returns false if found
 */
 export function checkSamePosObjectList(object, array) {
     let trueW = true;
@@ -96,6 +96,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     boxes[j].style.left = listZero[j] * 32 + 'px'
 
                                     powerMove = true;
+                                    /* strengthActive = false; */
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -118,6 +119,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                             if (checkSamePosObjectList(tarPos[i], wallPos)) {
                                 tarPos[i].x = boxPosArray[i].x
                                 boxes[i].style.left = listZero[i] * 32 + 'px'
+                                /* boxes[i].className = "floors" */
                             }
                         }
                         //if avatar position is same as target, doesn't go into target
@@ -147,6 +149,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     boxes[j].style.top = listZero[j] * 32 + 'px'
 
                                     powerMove = true;
+                                    /* this.$store.state.strengthActive = false; */
                                     break;
                                 } else {
                                     listZero[j] += 1
@@ -195,11 +198,9 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
 
                                     tarPos[j].x = boxPosArray[j].x
                                     boxes[j].style.left = listZero[j] * 32 + 'px'
-                                    /* console.log(i);
-                                    console.log(j); */
 
                                     powerMove = true;
-
+                                    /* this.$store.state.strengthActive = false; */
                                     break;
                                 } else {
                                     listZero[j] -= 1
@@ -251,6 +252,7 @@ export function moveTarget(avaPos, objectPos, wallPos, tarPos, listZero, directi
                                     boxes[j].style.top = listZero[j] * 32 + 'px'
 
                                     powerMove = true;
+                                    /* this.$store.state.strengthActive = false; */
                                     break;
                                 } else {
                                     listZero[j] -= 1
