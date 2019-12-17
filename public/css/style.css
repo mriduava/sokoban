@@ -113,7 +113,7 @@
 .game-info{
     display: none;
     max-width: 600px;
-    height: 180px;
+    height: 160px;
     margin: 0 auto;
     list-style: none;
     z-index: 9998;
@@ -172,31 +172,45 @@
     position: fixed;
 }
 
+
+
 .all-blocks{
     width: 32px;
     height: 32px;
     position: absolute;
+    /* background: black; */
     /* border: 1px dotted #ddd; */
+    background: url("../img/ground.png");
+    background-size: cover;
 }
 
 .walls,
+.out-of-bounds,
 .goals{
     width: 32px;
     height: 32px;
+    
 }
 
 .goals{
-    border: 1px solid #e0c07e;
+    /* border: 1px solid #e0c07e; */
+    background: url("../img/goal.png");
+    background-size: cover;
 }
 
 .boxes{
-    background: url("../img/box.jpg");
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+    background: url("../img/box.png");
+    background-size: cover;
 }
 
 .walls{
-    background: url("../img/bricks.jpg");
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    background: url("../img/wall.png");
+    background-size: cover;
+}
+
+.out-of-bounds{
+    background: black;
+    opacity: 0.5;
 }
 
 .avatar,
@@ -204,14 +218,10 @@
     width: 32px;
     height: 32px;
     position: absolute;  
-    z-index: +1; 
+    z-index: +1;
+    margin: 0 auto;
 }
 
-.avatar{
-    font-size: 32px;
-    color: rgb(255, 251, 7);
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
-}
 
 /* FINAL COMPONENT */
 .final{

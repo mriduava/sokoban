@@ -1,5 +1,6 @@
 import {store} from '../store.js'
 import * as logic from '../logic/logic.js'
+import {eventBus} from "../main.js";
 import Game from './Game.js'
 import Final from './Final.js'
 
@@ -46,7 +47,7 @@ export default{
                 <hr>
                  <ul>
                     <li>Complete level within minimum steps.</li>
-                    <li>Minimum time can give extra points.</li>
+                    <li>Reset button can undo the level.</li>
                     <li>Each power can be used only once.</li>
                  </ul>
               </div>
@@ -162,6 +163,9 @@ export default{
         restartGame(){
             this.$store.state.restart = true;
             location.reload()
+        },
+        resetLevel(){
+            eventBus.$emit('reset');
         },
         showInfo(){
             this.$refs.show.classList.toggle('show-info')    
