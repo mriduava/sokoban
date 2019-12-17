@@ -22,7 +22,6 @@ export default{
                         <div class="time"><i class="far fa-clock"></i> TIME <span v-if="!updateStopWatch">00:00:00</span>
                                                 <span class="stop-watch" v-if="updateStopWatch"></span>
                         </div>
-                        <div class="score"><i class="fas fa-chart-line"></i> SCORE <span class="score-num">{{updateScore}}</span></div>
                     </div>
                 </div>
                 <div class="under-nav">
@@ -35,7 +34,7 @@ export default{
                             </span>
                         </div>
                         <span class="message">{{message}}</span>
-                        <button class="reset" @click="$emit('reset')"><i class="fas fa-undo-alt"></i> RESET</button>
+                        <button class="reset" @click="resetLevel()"><i class="fas fa-undo-alt"></i> RESET</button>
                     </div>
                 </div>
             </div>
@@ -45,11 +44,11 @@ export default{
               <div class="info-text">
                 <h1>How to play</h1>
                 <hr>
-                <ul>
+                 <ul>
                     <li>Complete level within minimum steps.</li>
                     <li>Minimum time can give extra points.</li>
                     <li>Each power can be used only once.</li>
-                </ul>
+                 </ul>
               </div>
             </div>
 
@@ -58,7 +57,7 @@ export default{
 
             <!-- Game Component -->
             <div class="game" v-if="!updateComplete">                    
-                <Game/>                
+                <Game :myFunc="resetLevel"/>                
             </div> 
 
             <!-- Display the Modal -->
@@ -84,18 +83,15 @@ export default{
             strengthActive: false,
             hammerActive: false,
             stopWatch: false,
-            message: 'No power used!'
+            message: 'No power used!',
+            start: 0,
+            end: 0,
+            timeSpend: 0
         }        
     },
     computed: {
-        updateScore(){
-            return this.$store.state.score
-        },
         updateSteps(){
             return this.$store.state.steps
-        },
-        updateTime(){
-            return this.$store.state.time
         },
         updateLevel(){
             return this.complete?
@@ -110,6 +106,10 @@ export default{
         }
     },
     methods: {
+        resetLevel(value){
+            this.$store.state.resetLevel = true
+            console.log('Parent', value);      
+        },
         activeStrength(){
             !this.strengthActive?
             (this.strengthActive = true,
@@ -155,7 +155,7 @@ export default{
                                     (milseconds > 9 ? milseconds : "0" + milseconds);
             }
             function stopWatch() {
-                setInterval(time, 10);
+               let x = setInterval(time, 10);
             }
             stopWatch();
         },
@@ -164,19 +164,22 @@ export default{
             location.reload()
         },
         showInfo(){
-            this.$refs.show.classList.toggle('show-info')            
+            this.$refs.show.classList.toggle('show-info')    
         },
-        stopStopWatch(){
-            function stopTime() {
-                clearInterval(time)
-            }
+        startTime(){
+            this.start = new Date()
+        },
+        endTime(){
+            this.end = new Date()
+            this.$store.state.timeSpend = (this.end - this.start)
         }
     },
     watch: {
         stopWatch(){
-            if (this.$store.state.stopWatch) {
-                this.stopClock()
-            }
+            this.$store.state.stopWatch?
+            (this.stopClock(),
+            this.startTime()): 
+            this.endTime()
         }
     }
 

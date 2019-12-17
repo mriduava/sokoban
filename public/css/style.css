@@ -113,12 +113,12 @@
 .game-info{
     display: none;
     max-width: 600px;
-    height: 160px;
+    height: 180px;
     margin: 0 auto;
     list-style: none;
     z-index: 9998;
     box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.3);
-    background: rgba(102, 125, 182, 0.2);
+    background: rgba(102, 125, 182, 0.5);
     background: -webkit-linear-gradient(to right, rgba(102, 125, 182, 0.2), #0082c8, #0082c8, #667db6);
     background: linear-gradient(to top, rgba(102, 125, 182, 0.1), #0082c8, #0082c8, #667db6);
 }
@@ -210,7 +210,6 @@
 .avatar{
     font-size: 32px;
     color: rgb(255, 251, 7);
-    /* background: url("../img/avatar.gif"); */
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
 }
 
@@ -243,6 +242,7 @@
   }
   
   .modal-container {
+    position: relative;
     width: 600px;
     text-align: center;
     margin: 0px auto;
@@ -264,6 +264,22 @@
   
   .modal-body {
     margin: 20px 0;
+    position: relative;
+  }
+
+  h4{
+    font-size: 1.1em;
+    color: rgb(255, 251, 0);
+    line-height: 1.7em;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  h4>span{
+      color: #fff;
+  }
+
+  .modal-footer> h2{
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
   }
   
   .modal-button {
@@ -281,6 +297,15 @@
       cursor: pointer;
       border: 1px solid #0502b4;
       background: #fff;
+  }
+
+  .modal-button .no{
+      color: rgb(243, 22, 22);
+  }
+
+  
+  .modal-button .yes{
+      color: rgb(13, 189, 66);
   }
 
   .modal-button> button:hover{

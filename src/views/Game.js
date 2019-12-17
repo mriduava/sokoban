@@ -5,7 +5,7 @@ import {eventBus} from "../main.js";
 export default {
     store,
     template: `
-     <div class="grid" @reset="reset()">
+     <div class="grid" v-bind="resetLevels">
         <div v-for="(blockRow, row) in grids">
             <div class="all-blocks" v-for="(block, col) in blockRow" 
                  :style="{ top: row*unit + 'px', left: col*unit + 'px'}">
@@ -22,16 +22,38 @@ export default {
         </div>
             <div class="avatar"><i class="fas fa-smile"></i></div>       
      </div>`,
+     props: { 
+         myFunc: {type: Function}
+     },
      data() {
         return {
             unit: 32,
             grids: [],
             strengthActive: false,
             bombActive: false,
-            drillActive: false
+            drillActive: false,
+            resetLevels: false
+         }
+     },
+     computed: {
+         resetGame(){
+           return this.resetLevels = this.$store.state.resetLevel
+         }
+     },
+     watch: {
+         resetLevels(){
+             this.$store.state.resetLevel
          }
      },
      mounted() {
+         
+        //  setTimeout(() => {
+        //      console.log(this.resetLevels);
+        //  }, 5000);
+
+        
+        
+         
         //Grids pattern coming from data/grids.js file via store
         this.grids = this.$store.state.grids[0].grid
 
@@ -87,14 +109,16 @@ export default {
             for (let i = 0; i < wallPositions.length; i++){
                 walls[i].style.display = "";
             }
-
         }
 
-        // setTimeout(() => {
-        //     resetLevel(this.$store.state, this)
-        //     console.log('Mridul');
-        // }, 5000);
-        
+        // this.myFunc({
+        //     resetLevel(this.$store.state, this);
+        // })
+
+        if (this.resetLevels) {
+            resetLevel(this.$store.state, this);
+        }
+
         /**
         * To navigate to the next level
         * 
@@ -112,6 +136,7 @@ export default {
             listZeroY = [0,0,0,0,0,0]
         }
 
+
         /**
         * Event key listener
         * For the movement of the Avatar and Boxes by
@@ -121,8 +146,8 @@ export default {
             // Left arrow key
             switch (e.keyCode) {
                 case 37:
-                   this.$store.state.steps += 1  
-                   this.$store.state.stopWatch = true
+                    this.$store.state.steps += 1  
+                    this.$store.state.stopWatch = true
                     avatarPosition.x -= 1
                     //Check if avatar has same position as any wall and has the drill active
                     if ((logic.checkSamePosObjectList(avatarPosition, wallPositions) == false) && this.$store.state.drillActive) {
@@ -155,6 +180,7 @@ export default {
                         console.log("You have won.")
                         if (this.$store.state.level< this.$store.state.grids.length-1) {
                             levelUp(this.$store.state, this)
+                            this.$store.state.score += goalPositions.length
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
@@ -189,10 +215,9 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroY, "up", target, targetPositions, this.$store.state.strengthActive)
                     }
                     if(logic.evaluateWin(goalPositions, targetPositions)){
-                        console.log("You have won.")
-
                         if (this.$store.state.level < this.$store.state.grids.length-1) {
                             levelUp(this.$store.state, this)
+                            this.$store.state.score += goalPositions.length
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;  
@@ -200,7 +225,7 @@ export default {
                     }
                     break;
                 // Right arrow key 
-                case 39:
+                case 39:    
                     this.$store.state.steps += 1
                     this.$store.state.stopWatch = true
                     avatarPosition.x += 1
@@ -226,14 +251,15 @@ export default {
                         logic.moveTarget(avatar, avatarPosition, wallPositions, targetPositions, listZeroX, "right", target, targetPositions, this.$store.state.strengthActive)
                     }
                     if(logic.evaluateWin(goalPositions, targetPositions)){
-                        console.log("You have won.")
+                        console.log("You have won.")                        
                         if (this.$store.state.level< this.$store.state.grids.length-1) {
                             levelUp(this.$store.state, this)
                             this.$store.state.score += goalPositions.length
+                            console.log(goalPositions.length);
                         }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
-                            this.$store.state.stopWatch = false;
+                            this.$store.state.stopWatch = false; 
                         } 
                     }
                     break;
@@ -266,7 +292,8 @@ export default {
                     if(logic.evaluateWin(goalPositions, targetPositions)){
                        if (this.$store.state.level < this.$store.state.grids.length-1) {
                             levelUp(this.$store.state, this)
-                        }else{
+                            this.$store.state.score += goalPositions.length
+                       }else{
                             this.$store.state.level = 0;
                             this.$store.state.complete = true;
                             this.$store.state.stopWatch = false;
