@@ -120,6 +120,10 @@ export default {
             listZeroY = [0,0,0,0,0,0]
         }
 
+        eventBus.$on('reset', () => {
+            resetLevel(this.$store.state, this);
+        }) 
+
         /**
         * Event key listener
         * For the movement of the Avatar and Boxes by

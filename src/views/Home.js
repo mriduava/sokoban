@@ -1,5 +1,6 @@
 import {store} from '../store.js'
 import * as logic from '../logic/logic.js'
+import {eventBus} from "../main.js";
 import Game from './Game.js'
 import Final from './Final.js'
 
@@ -36,7 +37,7 @@ export default{
                             </span>
                         </div>
                         <span class="message">{{message}}</span>
-                        <button class="reset" @click="$emit('reset')"><i class="fas fa-undo-alt"></i> RESET</button>
+                        <button class="reset" @click="resetLevel()"><i class="fas fa-undo-alt"></i> RESET</button>
                     </div>
                 </div>
             </div>
@@ -155,6 +156,9 @@ export default{
         restartGame(){
             this.$store.state.restart = true;
             location.reload()
+        },
+        resetLevel(){
+            eventBus.$emit('reset');
         },
         showInfo(){
             this.$refs.show.classList.toggle('show-info')            
