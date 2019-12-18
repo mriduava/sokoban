@@ -62,29 +62,12 @@ export default {
         let listZeroY = [0, 0, 0, 0, 0, 0]
 
         function resetLevel(store, thisGame){
-            listZeroX = [0,0,0,0,0,0]
-            listZeroY = [0,0,0,0,0,0]
-            thisGame.grids = store.grids[store.level].grid 
-            avatarPosition = logic.findPositions('A', thisGame.grids)[0]
-            wallPositions = logic.findPositions('W',thisGame.grids)
-            targetPositions = logic.findPositions('B',thisGame.grids)
-            outOfBoundsPositions = logic.findPositions('O', thisGame.grids)
-            collisionPositions = wallPositions.concat(outOfBoundsPositions)                 
-            avatar.style.left = avatarPosition.x * unit + 'px'
-            avatar.style.top = avatarPosition.y * unit + 'px'
+            
+            thisGame.grids = store.grids[store.level].grid
             target = document.getElementsByClassName('boxes')
             walls = document.getElementsByClassName('walls')
- 
-            for (let i = 0; i < targetPositions.length; i++) {
-                target[i].style.display = "";
-                target[i].style.left = 0 + 'px';
-                target[i].style.top = 0 + 'px'; 
-                console.log(i, targetPositions[i]);           
-                console.log(i, target[i]);           
-            }
-            for (let i = 0; i < wallPositions.length; i++){
-                walls[i].style.display = "";
-            }
+
+            resetTiles(thisGame.grids)
         }
 
         /**
@@ -92,17 +75,30 @@ export default {
         */
         function levelUp(store, thisGame) {
             store.level += 1
-            thisGame.grids = store.grids[store.level].grid 
-            avatarPosition = logic.findPositions('A', thisGame.grids)[0]
-            wallPositions = logic.findPositions('W',thisGame.grids)
-            targetPositions = logic.findPositions('B',thisGame.grids)
-            goalPositions = logic.findPositions('G',thisGame.grids)
-            outOfBoundsPositions = logic.findPositions('O', thisGame.grids)
+            thisGame.grids = store.grids[store.level].grid
+            resetTiles(thisGame.grids)
+        }
+
+        function resetTiles(grid){
+            avatarPosition = logic.findPositions('A', grid)[0]
+            wallPositions = logic.findPositions('W',grid)
+            targetPositions = logic.findPositions('B',grid)
+            goalPositions = logic.findPositions('G',grid)
+            outOfBoundsPositions = logic.findPositions('O', grid)
             collisionPositions = wallPositions.concat(outOfBoundsPositions);
             avatar.style.left = avatarPosition.x * unit + 'px'
             avatar.style.top = avatarPosition.y * unit + 'px'
             listZeroX = [0,0,0,0,0,0]
             listZeroY = [0,0,0,0,0,0]
+
+            for (let i = 0; i < targetPositions.length; i++) {
+                target[i].style.display = "";
+                target[i].style.left = 0 + 'px';
+                target[i].style.top = 0 + 'px';   
+            }
+            for (let i = 0; i < wallPositions.length; i++){
+                walls[i].style.display = "";
+            }
         }
 
         eventBus.$on('reset', () => {
