@@ -35,7 +35,7 @@ export default{
                             </span>
                         </div>
                         <span class="message">{{message}}</span>
-                        <button class="reset" @click="resetLevel()"><i class="fas fa-undo-alt"></i> RESET</button>
+                        <button class="reset" @click="resetGame()"><i class="fas fa-undo-alt"></i> RESET</button>
                     </div>
                 </div>
             </div>
@@ -46,9 +46,9 @@ export default{
                 <h1>How to play</h1>
                 <hr>
                  <ul>
-                    <li>Complete level within minimum steps.</li>
-                    <li>Reset button can undo the level.</li>
-                    <li>Each power can be used only once.</li>
+                    <li>Complete level with smallest amount of steps.</li>
+                    <li>Reset button resets the current level.</li>
+                    <li>Each power-up can be used only once.</li>
                  </ul>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default{
                 </Final>
             </div>
 
-            <!-- Display the Gmae Name at the End of the Program -->
+            <!-- Display the Game Name at the End of the Program -->
             <div>
                 <div v-if="updateComplete" class="game-name-end">{{gameName}}</div> 
             </div>
@@ -84,7 +84,7 @@ export default{
             strengthActive: false,
             hammerActive: false,
             stopWatch: false,
-            message: 'No power used!',
+            message: 'No power-up used!',
             start: 0,
             end: 0,
             timeSpend: 0
@@ -109,7 +109,7 @@ export default{
     methods: {
         resetLevel(value){
             this.$store.state.resetLevel = true
-            console.log('Parent', value);      
+            console.log('Parent', value); 
         },
         activeStrength(){
             !this.strengthActive?
@@ -124,7 +124,7 @@ export default{
             !this.bombActive?
             (this.bombActive = true, 
             this.$store.state.bombActive = true,
-            this.message = 'Bomb is avtive!',
+            this.message = 'Bomb is active!',
             this.$refs.bomb.classList.add('selected')):
             (this.$store.state.bombActive = false,
             this.message = "Bomb is used!")
@@ -164,7 +164,7 @@ export default{
             this.$store.state.restart = true;
             location.reload()
         },
-        resetLevel(){
+        resetGame(){
             eventBus.$emit('reset');
         },
         showInfo(){

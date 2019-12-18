@@ -10,7 +10,7 @@ export default {
                  <div class="background-modal"></div>
                 <div class="modal-header">
                     <slot name="header">
-                        <h1>Thanks to play Sokoban!</h1>
+                        <h1>Thank you for playing Sokoban!</h1>
                         <hr>
                     </slot>
                 </div>
@@ -18,7 +18,7 @@ export default {
                 <div class="modal-body">
                     <slot name="body">
                         <h4>You walked <span>{{updateSteps}}</span> steps</h4>
-                        <h4 v-bind="updateTime">Time spend <span>{{spendTime.minutes}}</span> minutes, <span>{{spendTime.seconds}}</span> seconds</h4>
+                        <h4 v-bind="updateTime">Time spent <span>{{spendTime.minutes}}</span> minutes, <span>{{spendTime.seconds}}</span> seconds</h4>
                     </slot>
                 </div>
 

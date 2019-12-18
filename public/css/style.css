@@ -209,8 +209,8 @@
 }
 
 .out-of-bounds{
-    background: black;
-    opacity: 0.5;
+    background: #758c8e;
+    /* opacity: 0.5; */
 }
 
 .avatar,
@@ -344,10 +344,11 @@
     top: 1%;
     width: 100vw;
     height: 99vh;
-    background: #0082c8;
     z-index: -2;
+    background-color: #758c8e;
+    /* background: #0082c8;
     background: rgba(102, 125, 182, 0.2);
     background: -webkit-linear-gradient(to right, rgba(240, 240, 240, 0.2), #ffffff, #ffffff, #667db6);
-    background: linear-gradient(to top, rgba(102, 125, 182, 0.1), rgba(242, 251, 255, 0.9), rgba(9, 165, 255, 0.2), #88d4ff);
+    background: linear-gradient(to top, rgba(102, 125, 182, 0.1), rgba(242, 251, 255, 0.9), rgba(9, 165, 255, 0.2), #88d4ff); */
     clip-path: polygon(95% 40%, 90% 90%, 50% 0%, 10% 70%);
   }

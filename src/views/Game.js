@@ -48,9 +48,6 @@ export default {
         let outOfBoundsPositions = logic.findPositions('O', this.grids)
         let collisionPositions = wallPositions.concat(outOfBoundsPositions);
 
-        // console.log(goalPositions.length);
-        
-
         //Finds all tags with the with certain tag-names.
         let target = document.getElementsByClassName('boxes')
         let walls = document.getElementsByClassName('walls')
@@ -63,11 +60,6 @@ export default {
         //Values which are later used for determining the pixels for moving the targets.
         let listZeroX = [0, 0, 0, 0, 0, 0]
         let listZeroY = [0, 0, 0, 0, 0, 0]
-
-        // Powerups
-        let bombActive = this.bombActive;
-        let strengthActive = this.strengthActive;
-        let drillActive = this.drillActive;
 
         function resetLevel(store, thisGame){
             listZeroX = [0,0,0,0,0,0]
@@ -97,7 +89,6 @@ export default {
 
         /**
         * To navigate to the next level
-        * 
         */
         function levelUp(store, thisGame) {
             store.level += 1
