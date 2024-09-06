@@ -1,4 +1,4 @@
 # SOKOBAN
 **A Type of Puzzle Game**<br>
 
-> Coming soon ...<br>
+> https://mriduava.github.io/sokoban<br>
